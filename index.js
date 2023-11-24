@@ -9,8 +9,13 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(express.static("./public"));
 
+//add retirement
 const { add_retirement } = require('./utils/RetirementUtil') 
 app.post('/add-retirement', add_retirement); 
+
+//retrieve retirement
+const { view_retirement } = require('./utils/RetirementUtil')
+app.get('/view-retirement', view_retirement); 
 
 
 
