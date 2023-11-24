@@ -6,6 +6,19 @@ var startPage = "index.html";
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(express.static("./public"));
+
+const {
+  addExpense,
+  viewExpenses,
+  editExpense,
+  deleteExpense,
+} = require("./utils/ExpenseUtil");
+
+app.post("/add-expense", addExpense);
+app.get("/view-expneses", viewExpenses);
+app.put("/edit-expense/:id", editExpense);
+app.delete('/delete-expense/:id', deleteExpense);;
+
 app.get("/", (req, res) => {
   res.sendFile(__dirname + "/public/" + startPage);
 });
