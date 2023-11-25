@@ -26,6 +26,15 @@ const { delete_retirement } = require("./utils/RetirementUtil");
 app.delete("/delete-retirement/:id", delete_retirement);
 
 
+
+// Monthly-budget
+const { addBudget,viewBudget,editBudget,deleteBudget} = require("./utils/monthly-budgetUtils");
+app.post("/add-budget", addBudget);
+app.get("/view-budget", viewBudget);
+app.put("/edit-budget/:id", editBudget);
+app.delete("/delete-budget/:id", deleteBudget);
+
+
 app.get("/", (req, res) => {
   res.sendFile(__dirname + "/public/" + startPage);
 });
