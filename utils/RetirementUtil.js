@@ -1,4 +1,4 @@
-const { Retirement } = require("../Resource.js/resource");
+const { Retirement } = require("../models/retirement");
 const fs = require("fs").promises;
 async function readJSON(filename) {
   try {
