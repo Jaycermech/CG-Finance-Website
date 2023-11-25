@@ -9,9 +9,21 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(express.static("./public"));
 
-const { add_retirement } = require('./utils/RetirementUtil') 
-app.post('/add-retirement', add_retirement); 
+//add retirement
+const { add_retirement } = require("./utils/RetirementUtil");
+app.post("/add-retirement", add_retirement);
 
+//retrieve retirement
+const { view_retirement } = require("./utils/RetirementUtil");
+app.get("/view-retirement", view_retirement);
+
+//update retirement
+const { edit_retirement } = require("./utils/RetirementUtil");
+app.put("/edit-retirement/:id", edit_retirement);
+
+//delete retirement
+const { delete_retirement } = require("./utils/RetirementUtil");
+app.delete("/delete-retirement/:id", delete_retirement);
 
 
 app.get("/", (req, res) => {
