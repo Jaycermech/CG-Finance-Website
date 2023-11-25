@@ -27,8 +27,9 @@ const { Monthly_budget } = require("../models/monthly-budget");
 async function addBudget(req, res) {
   try {
     const ammenities = req.body.ammenities;
-    const cost = req.body.cost;
-    const newBudget = new Monthly_budget(ammenities, cost);
+    const budget = req.body.budget;
+    const owner = req.body.owner;
+    const newBudget = new Monthly_budget(ammenities, budget, owner);
     const updatedBudgets = await writeJSON(newBudget,"utils/monthly-budget.json");
     return res.status(201).json(updatedBudgets);
   } catch (error) {
@@ -48,14 +49,14 @@ async function editBudget(req, res) {
     try {
         const id = req.params.id;
         const ammenities = req.body.ammenities;
-        const cost = req.body.cost;
+        const budget = req.body.budget;
         const allBudgets = await readJSON("utils/monthly-budget.json");
         var modified = false;
         for (var i = 0; i < allBudgets.length; i++) {
             var curcurrBudget = allBudgets[i];
             if (curcurrBudget.id == id) {
                 allBudgets[i].ammenities = ammenities;
-                allBudgets[i].cost = cost;
+                allBudgets[i].budget = budget;
                 modified = true;
             }
         }
