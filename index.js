@@ -9,6 +9,19 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(express.static("./public"));
 
+
+const {
+  addExpense,
+  viewExpenses,
+  editExpense,
+  deleteExpense,
+} = require("./utils/ExpenseUtil");
+
+app.post("/add-expense", addExpense);
+app.get("/view-expneses", viewExpenses);
+app.put("/edit-expense/:id", editExpense);
+app.delete('/delete-expense/:id', deleteExpense);;
+
 //add retirement
 const { add_retirement } = require("./utils/RetirementUtil");
 app.post("/add-retirement", add_retirement);
@@ -33,6 +46,7 @@ app.post("/add-budget", addBudget);
 app.get("/view-budget", viewBudget);
 app.put("/edit-budget/:id", editBudget);
 app.delete("/delete-budget/:id", deleteBudget);
+
 
 
 app.get("/", (req, res) => {
