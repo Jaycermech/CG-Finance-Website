@@ -4,22 +4,12 @@
     "f26282c7-4b6b-4f62-8b17-a059d86f30b9": { "parent": null, "children": [] }
   },
   "files": {
-    "C:\\Users\\Justin\\Documents\\CG_Finance_Website\\CG-Finance-Website\\utils\\ExpenseUtil.js": [
-      "6e7e743c-0bfb-47df-b9cf-da4cf6142bfb",
-      "f26282c7-4b6b-4f62-8b17-a059d86f30b9"
-    ],
-    "C:\\Users\\Justin\\Documents\\CG_Finance_Website\\CG-Finance-Website\\utils\\monthly-budgetUtils.js": [
-      "6e7e743c-0bfb-47df-b9cf-da4cf6142bfb",
-      "f26282c7-4b6b-4f62-8b17-a059d86f30b9"
-    ],
+   
     "C:\\Users\\Justin\\Documents\\CG_Finance_Website\\CG-Finance-Website\\utils\\RetirementUtil.js": [
       "6e7e743c-0bfb-47df-b9cf-da4cf6142bfb",
       "f26282c7-4b6b-4f62-8b17-a059d86f30b9"
     ],
-    "C:\\Users\\Justin\\Documents\\CG_Finance_Website\\CG-Finance-Website\\utils\\UserUtil.js": [
-      "6e7e743c-0bfb-47df-b9cf-da4cf6142bfb",
-      "f26282c7-4b6b-4f62-8b17-a059d86f30b9"
-    ]
+
   },
   "externalIds": {}
 }
