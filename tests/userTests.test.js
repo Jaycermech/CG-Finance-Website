@@ -1,6 +1,7 @@
 const { describe, it } = require("mocha");
 const { expect, should } = require("chai");
 const fs = require("fs").promises;
+const sinon = require("sinon");
 const {
   register,
   login,
@@ -12,14 +13,16 @@ const {
 should(); // Enable should syntax
 
 describe("register function", () => {
-  // Assuming you have a utility function to reset the users.json file to a known state
-  before(async () => {
-    // Clean up, reset the users.json file, or perform any necessary actions
+  let writeFileStub;
+
+  before(() => {
+    // Stub the fs.writeFile function to avoid writing to the file during tests
+    writeFileStub = sinon.stub(fs, "writeFile");
   });
 
-  // Assuming you have a utility function to clean up after tests
-  after(async () => {
-    // Clean up, reset the users.json file, or perform any necessary actions
+  after(() => {
+    // Restore the original function after tests
+    writeFileStub.restore();
   });
 
   it("should register a new user when valid data is provided", async () => {
@@ -33,16 +36,20 @@ describe("register function", () => {
       status: (statusCode) => ({
         json: (data) => {
           expect(statusCode).to.equal(201);
-          // Using expect syntax
           expect(data).to.be.an("array");
-          expect(data.length).to.equal(1); // Modify based on the number of users you added
+          expect(data.length).to.equal(1);
 
-          // Using should syntax
-          data.should.be.an("array");
-          data.should.have.lengthOf(1);
+          // Additional assertions...
 
-          // Add more assertions based on the expected structure of your data
-          data;
+          // Verify that fs.writeFile was called with the correct arguments
+          sinon.assert.calledOnce(writeFileStub);
+          sinon.assert.calledWith(
+            writeFileStub,
+            "utils/users.json",
+            // Add any expected data you want to check here
+            sinon.match.string,
+            "utf8"
+          );
         },
       }),
     };
@@ -72,6 +79,7 @@ describe("register function", () => {
     await register(req, res);
   });
 });
+
 describe("login function", () => {
     // Assuming you have a utility function to reset the users.json file to a known state
     before(async () => {
