@@ -1,7 +1,7 @@
 var express = require("express");
 var bodyParser = require("body-parser");
 var app = express();
-
+ 
 const PORT = process.env.PORT || 5050;
 var startPage = "index.html";
 
@@ -44,7 +44,7 @@ const {
 } = require("./utils/UserUtil");
 app.post("/register", register);
 app.post("/login", login);
-app.get("/viewuser", viewUser);
+app.get("/viewuser", viewUser); 
 app.put("/edit-user", editUser);
 app.delete("/delete-user", deleteUser);
 

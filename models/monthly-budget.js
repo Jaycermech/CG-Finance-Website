@@ -1,7 +1,8 @@
 class Monthly_budget {
-    constructor(ammenities,cost) {
+    constructor(ammenities,budget,owner) {
         this.ammenities = ammenities; 
-        this.cost = cost;
+        this.budget = budget;
+        this.owner = owner;
         const random = Math.floor(Math.random() * 1000);
         this.id = random.toString().padStart(3, '0');
     }

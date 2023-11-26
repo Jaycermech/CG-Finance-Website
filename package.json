@@ -6,7 +6,9 @@
   "nyc": {
     "include": [
       "utils/RetirementUtil.js",
-      "utils/ExpenseUtil.js"
+      "utils/ExpenseUtil.js",
+      "utils/UserUtil.js",
+      "utils/monthly-budgetUtils.js"
     ],
     "exclude": [],
     "reporter": [
