@@ -7,6 +7,7 @@ const {
   editExpense,
   deleteExpense,
 } = require("../utils/ExpenseUtil");
+
 describe("Testing addResource Function", () => {
   const resourcesFilePath = "utils/expenses.json";
   var orgContent = "";
@@ -24,8 +25,8 @@ describe("Testing addResource Function", () => {
   it("Should add a new resource successfully", async () => {
     const req = {
       body: {
-        description: "Groceries",
-        amount: "1420",
+        description: "Others",
+        amount: "3500",
       },
     };
     const res = {
@@ -48,28 +49,6 @@ describe("Testing addResource Function", () => {
     await addExpense(req, res);
     console.log("Expense added successfully!"); // Debugging statement
   });
-
-  // it("Should edit a resource successfully", async () => {
-  //   const req = {
-  //     body: {
-  //       description: "Groceries",
-  //       amount: "140",
-  //     },
-  //     params: {
-  //       id: orgContent[0].id,
-  //     },
-  //   };
-  //   const res = {
-  //     status: function (code) {
-  //       expect(code).to.equal(201);
-  //       return this;
-  //     },
-  //     json: function (data) {
-  //       expect(data.message).to.equal("Resource modified successfully!");
-  //     },
-  //   };
-  //   await editExpense(req, res);
-  // });
 
   it("Should edit a Expense successfully", async () => {
     const req = {
