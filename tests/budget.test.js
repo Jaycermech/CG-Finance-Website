@@ -2,79 +2,62 @@ const { describe, it } = require("mocha");
 const { expect } = require("chai");
 const fs = require("fs").promises;
 const {
-  addExpense,
-  viewExpenses,
-  editExpense,
-  deleteExpense,
-} = require("../utils/ExpenseUtil");
-
-describe("Testing addResource Function", () => {
-  const resourcesFilePath = "utils/expenses.json";
+  addBudget,
+  viewBudget,
+  editBudget,
+  deleteBudget,
+} = require("../utils/monthly-budgetUtils");
+describe("Testing budge related features", () => {
+  const budgetFilePath = "utils/monthly-budget.json";
   var orgContent = "";
-
   beforeEach(async () => {
-    orgContent = await fs.readFile(resourcesFilePath, "utf8");
+    orgContent = await fs.readFile(budgetFilePath, "utf8");
     orgContent = JSON.parse(orgContent);
   });
-
   afterEach(async () => {
-    if (orgContent != "")
-      await fs.writeFile(resourcesFilePath, JSON.stringify(orgContent), "utf8");
+    await fs.writeFile(budgetFilePath, JSON.stringify(orgContent), "utf8");
   });
-
-  it("Should add a new resource successfully", async () => {
+  it("Should add a new monthly budget successfully", async () => {
     const req = {
       body: {
-        description: "Others",
-        amount: "3500",
+        ammenities: "Others",
+        budget: "$1000",
+        owner: "Jordy312@gmail.com"
+
       },
     };
     const res = {
       status: function (code) {
-        console.log("Status code:", code); // Debugging statement
         expect(code).to.equal(201);
         return this;
       },
       json: function (data) {
-        console.log("Response data:", data); // Debugging statement
         expect(data).to.have.lengthOf(orgContent.length + 1);
-        console.log(orgContent);
-        expect(data[orgContent.length].description).to.equal(
-          req.body.description
-        );
+        expect(data[orgContent.length].ammenities).to.equal(req.body.ammenities);
         orgContent = data;
       },
     };
-    console.log("Adding expense..."); // Debugging statement
-    await addExpense(req, res);
-    console.log("Expense added successfully!"); // Debugging statement
+    await addBudget(req, res);
   });
-
-  it("Should edit a Expense successfully", async () => {
+  it("Should not be able to add budget due to incomplete input", async () => {
     const req = {
       body: {
-        description: "Groceries",
-        amount: "142609",
-      },
-      params: {
-        id: orgContent[0].id,
+        ammenities: "Others",
+        budget: "$100",
       },
     };
-
     const res = {
       status: function (code) {
-        expect(code).to.equal(201);
+        expect(code).to.equal(500);
         return this;
       },
       json: function (data) {
-        orgContent = data;
+        expect(data.message).to.not.equal(undefined);
       },
     };
-
-    await editExpense(req, res);
+    await addBudget(req, res);
   });
-
-  it("Should return an array when viewing resources", async () => {
+  it("Should return an array when viewing monthly budget", async () => {
     const req = {};
     const res = {
       status: function (code) {
@@ -82,17 +65,46 @@ describe("Testing addResource Function", () => {
         return this;
       },
       json: function (data) {
+        
         expect(Array.isArray(data)).to.be.true;
+        
+    
       },
     };
-    await viewExpenses(req, res);
+    await viewBudget(req, res);
   });
-
-  it("Should not be able to edit expense due to invalid id", async () => {
+  it("Should edit a monthly budget successfully", async () => {
     const req = {
       body: {
-        description: "Groceries",
-        amount: "100",
+        "ammenities": "Others",
+        "budget": "$80",
+        "owner": "mary@gmail.com"
+      },
+      params: {
+        id: orgContent[0].id,
+      },
+    };
+    
+    const res = {
+      status: function (code) {
+        expect(code).to.equal(201);
+        return this;
+      },
+      json: function (data) {
+    
+        orgContent = data;
+      
+      },
+    };
+  
+    await editBudget
+      (req, res);
+  });
+  it("Should not be able to edit budget due to invalid id", async () => {
+    const req = {
+      body: {
+        ammenities: "Others",
+        budget: "$100",
       },
       params: {
         id: "ABCDEFG",
@@ -107,10 +119,10 @@ describe("Testing addResource Function", () => {
         expect(data.message).to.equal("Error occurred, unable to modify!");
       },
     };
-    await editExpense(req, res);
+    await editBudget
+      (req, res);
   });
-
-  it("Should delete a expense successfully", async () => {
+  it("Should delete a budget successfully", async () => {
     const req = {
       params: {
         id: orgContent[0].id,
@@ -125,10 +137,10 @@ describe("Testing addResource Function", () => {
         orgContent = data;
       },
     };
-    await deleteExpense(req, res);
+    await deleteBudget
+      (req, res);
   });
-
-  it("Should not be able to delete expense due to invalid id", async () => {
+  it("Should not be able to delete budget due to invalid id", async () => {
     const req = {
       params: {
         id: "ABCDEFG",
@@ -143,6 +155,7 @@ describe("Testing addResource Function", () => {
         expect(data.message).to.equal("Error occurred, unable to delete!");
       },
     };
-    await deleteExpense(req, res);
+    await deleteBudget
+      (req, res);
   });
 });
