@@ -5,7 +5,8 @@
   "main": "index.js",
   "nyc": {
     "include": [
-      "utils/UserUtil.js"
+      "utils/UserUtil.js",
+      "utils/monthly-budgetUtils.js"
     ],
     "exclude": [],
     "reporter": [
@@ -19,21 +20,7 @@
     "functions": 80,
     "statements": 80
   },
-  "nyc": {
-    "include": [
-      "utils/monthly-budgetUtils.js"
-    ],
-    "exclude": [],
-    "reporter": [
-      "text-summary"
-    ],
-    "all": true,
-    "check-coverage": true,
-    "branches": 80,
-    "lines": 80,
-    "functions": 80,
-    "statements": 80
-  },
+  
   "scripts": {
     "test": "nyc mocha tests/*.test.js",
     "start": "node index.js"
