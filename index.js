@@ -25,10 +25,13 @@ app.put("/edit-retirement/:id", edit_retirement);
 const { delete_retirement } = require("./utils/RetirementUtil");
 app.delete("/delete-retirement/:id", delete_retirement);
 
-
-
 // Monthly-budget
-const { addBudget,viewBudget,editBudget,deleteBudget} = require("./utils/monthly-budgetUtils");
+const {
+  addBudget,
+  viewBudget,
+  editBudget,
+  deleteBudget,
+} = require("./utils/monthly-budgetUtils");
 app.post("/add-budget", addBudget);
 app.get("/view-budget", viewBudget);
 app.put("/edit-budget/:id", editBudget);
@@ -40,7 +43,7 @@ const {
   login,
   viewUser,
   editUser,
-  deleteUser
+  deleteUser,
 } = require("./utils/UserUtil");
 app.post("/register", register);
 app.post("/login", login);
@@ -60,8 +63,7 @@ const {
 app.post("/add-expense", addExpense);
 app.get("/view-expneses", viewExpenses);
 app.put("/edit-expense/:id", editExpense);
-app.delete('/delete-expense/:id', deleteExpense);;
-
+app.delete("/delete-expense/:id", deleteExpense);
 
 app.get("/", (req, res) => {
   res.sendFile(__dirname + "/public/" + startPage);
