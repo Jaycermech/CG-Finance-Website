@@ -6,8 +6,13 @@
   
 "nyc": {
   "include": [
-    "utils/RetirementUtil.js"
-  ],
+    "utils/RetirementUtil.js",
+    "utils/UserUtil.js",
+    "utils/monthly-budgetUtils.js",
+    "utils/ExpenseUtil.js"
+    ],
+
+  
   "exclude": [],
   "reporter": [
     "text-summary"
@@ -20,7 +25,8 @@
   "statements": 80
 },
 "scripts": {
-    "test": "nyc mocha tests/*.test.js"
+    "test": "nyc mocha tests/*.test.js",
+    "start": "node index.js"
   },
   "author": "",
   "license": "ISC",
