@@ -69,9 +69,7 @@ async function editExpense(req, res) {
 
         "utf8"
       );
-      return res
-        .status(201)
-        .json({ message: "Expense modified successfully!" });
+      return res.status(201).json(allExpenses);
     } else {
       return res
         .status(500)
@@ -85,20 +83,20 @@ async function editExpense(req, res) {
 async function deleteExpense(req, res) {
   try {
     const id = req.params.id;
-    const allExpenses = await readJSON("utils/expenses.json");
+    const allExpense = await readJSON("utils/expenses.json");
     var index = -1;
-    for (var i = 0; i < allExpenses.length; i++) {
-      var curcurrExpense = allExpenses[i];
+    for (var i = 0; i < allExpense.length; i++) {
+      var curcurrExpense = allExpense[i];
       if (curcurrExpense.id == id) index = i;
     }
     if (index != -1) {
-      allExpenses.splice(index, 1);
+      allExpense.splice(index, 1);
       await fs.writeFile(
         "utils/expenses.json",
-        JSON.stringify(allExpenses),
+        JSON.stringify(allExpense),
         "utf8"
       );
-      return res.status(201).json({ message: "Expense deleted successfully!" });
+      return res.status(201).json(allExpense);
     } else {
       return res
         .status(500)
@@ -108,7 +106,6 @@ async function deleteExpense(req, res) {
     return res.status(500).json({ message: error.message });
   }
 }
-
 module.exports = {
   addExpense,
   viewExpenses,

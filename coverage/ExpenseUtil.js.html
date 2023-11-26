@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">88.52% </span>
+                <span class="strong">86.88% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>54/61</span>
+                <span class='fraction'>53/61</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">87.93% </span>
+                <span class="strong">86.2% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>51/58</span>
+                <span class='fraction'>50/58</span>
             </div>
         
             
@@ -179,10 +179,7 @@
 <a name='L114'></a><a href='#L114'>114</a>
 <a name='L115'></a><a href='#L115'>115</a>
 <a name='L116'></a><a href='#L116'>116</a>
-<a name='L117'></a><a href='#L117'>117</a>
-<a name='L118'></a><a href='#L118'>118</a>
-<a name='L119'></a><a href='#L119'>119</a>
-<a name='L120'></a><a href='#L120'>120</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<a name='L117'></a><a href='#L117'>117</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -239,8 +236,8 @@
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">52x</span>
-<span class="cline-any cline-yes">52x</span>
+<span class="cline-any cline-yes">64x</span>
+<span class="cline-any cline-yes">64x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -255,14 +252,12 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -272,8 +267,8 @@
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">52x</span>
-<span class="cline-any cline-yes">52x</span>
+<span class="cline-any cline-yes">63x</span>
+<span class="cline-any cline-yes">63x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -290,7 +285,6 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
@@ -372,36 +366,34 @@ async function editExpense(req, res) {
 &nbsp;
         "utf8"
       );
-      return res
-        .status(201)
-        .json({ message: "Expense modified successfully!" });
+      return res.status(201).json(allExpenses);
     } else {
       return res
         .status(500)
         .json({ message: "Error occurred, unable to modify!" });
     }
   } catch (error) {
-    return res.status(500).json({ message: error.message });
+<span class="cstat-no" title="statement not covered" >    return res.status(500).json({ message: error.message });</span>
   }
 }
 &nbsp;
 async function deleteExpense(req, res) {
   try {
     const id = req.params.id;
-    const allExpenses = await readJSON("utils/expenses.json");
+    const allExpense = await readJSON("utils/expenses.json");
     var index = -1;
-    for (var i = 0; i &lt; allExpenses.length; i++) {
-      var curcurrExpense = allExpenses[i];
+    for (var i = 0; i &lt; allExpense.length; i++) {
+      var curcurrExpense = allExpense[i];
       if (curcurrExpense.id == id) index = i;
     }
     if (index != -1) {
-      allExpenses.splice(index, 1);
+      allExpense.splice(index, 1);
       await fs.writeFile(
         "utils/expenses.json",
-        JSON.stringify(allExpenses),
+        JSON.stringify(allExpense),
         "utf8"
       );
-      return res.status(201).json({ message: "Expense deleted successfully!" });
+      return res.status(201).json(allExpense);
     } else {
       return res
         .status(500)
@@ -411,7 +403,6 @@ async function deleteExpense(req, res) {
 <span class="cstat-no" title="statement not covered" >    return res.status(500).json({ message: error.message });</span>
   }
 }
-&nbsp;
 module.exports = {
   addExpense,
   viewExpenses,
@@ -427,7 +418,7 @@ module.exports = {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2023-11-25T16:21:08.294Z
+                at 2023-11-26T02:31:06.086Z
             </div>
         <script src="prettify.js"></script>
         <script>

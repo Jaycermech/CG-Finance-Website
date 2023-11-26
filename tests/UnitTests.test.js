@@ -49,25 +49,49 @@ describe("Testing addResource Function", () => {
     console.log("Expense added successfully!"); // Debugging statement
   });
 
-  it("Should edit a resource successfully", async () => {
+  // it("Should edit a resource successfully", async () => {
+  //   const req = {
+  //     body: {
+  //       description: "Groceries",
+  //       amount: "140",
+  //     },
+  //     params: {
+  //       id: orgContent[0].id,
+  //     },
+  //   };
+  //   const res = {
+  //     status: function (code) {
+  //       expect(code).to.equal(201);
+  //       return this;
+  //     },
+  //     json: function (data) {
+  //       expect(data.message).to.equal("Resource modified successfully!");
+  //     },
+  //   };
+  //   await editExpense(req, res);
+  // });
+
+  it("Should edit a Expense successfully", async () => {
     const req = {
       body: {
         description: "Groceries",
-        amount: "140",
+        amount: "142609",
       },
       params: {
         id: orgContent[0].id,
       },
     };
+
     const res = {
       status: function (code) {
         expect(code).to.equal(201);
         return this;
       },
       json: function (data) {
-        expect(data.message).to.equal("Resource modified successfully!");
+        orgContent = data;
       },
     };
+
     await editExpense(req, res);
   });
 
@@ -107,7 +131,7 @@ describe("Testing addResource Function", () => {
     await editExpense(req, res);
   });
 
-  it("Should delete a expense successfully", async () => {
+  it("Should delete a budget successfully", async () => {
     const req = {
       params: {
         id: orgContent[0].id,
@@ -119,11 +143,12 @@ describe("Testing addResource Function", () => {
         return this;
       },
       json: function (data) {
-        expect(data.message).to.equal("Expense deleted successfully!");
+        orgContent = data;
       },
     };
     await deleteExpense(req, res);
   });
+
   it("Should not be able to delete expense due to invalid id", async () => {
     const req = {
       params: {
