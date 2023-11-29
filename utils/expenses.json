@@ -1,1 +1,4 @@
-[{"description":"Others","amount":"3500","id":"1700990849109639"},{"description":"Others","amount":"3500","id":"1700991898494294"}]
+[
+  { "description": "Others", "amount": "100", "id": "1700990849109639" },
+  { "description": "Others", "amount": "3500", "id": "1700991898494294" }
+]
