@@ -1,7 +1,1 @@
-<<<<<<< HEAD
-{"processes":{"dca979ce-7e92-4485-82c9-8fea3d3ffcbd":{"parent":null,"children":[]},"f02e08b3-9992-448a-89e0-da26d07c46d4":{"parent":null,"children":[]}},"files":{"C:\\Users\\Bryan\\Documents\\DVOPS_Projects\\CG-Finance-Website\\CG-Finance-Website\\utils\\monthly-budgetUtils.js":["dca979ce-7e92-4485-82c9-8fea3d3ffcbd","f02e08b3-9992-448a-89e0-da26d07c46d4"]},"externalIds":{}}
-=======
-{"processes":{"324a82c3-e9ea-4de7-bea4-c8cd2e8bbf6b":{"parent":null,"children":[]},"72973551-a1a4-40d3-b74d-74928df48f40":{"parent":null,"children":[]}},"files":{"C:\\Users\\Tangt\\Desktop\\Poly study stuff (Sem2.2)\\DevOps\\CG-Finance-Website\\utils\\ExpenseUtil.js":["324a82c3-e9ea-4de7-bea4-c8cd2e8bbf6b","72973551-a1a4-40d3-b74d-74928df48f40"]},"externalIds":{}}
-
-
->>>>>>> 3dba335bf8933fcfc8cc92459e92d4f1203944ad
+{"processes":{"92df8da5-df6d-43f3-b6b0-b13b6ae10450":{"parent":null,"children":[]},"9e416f7b-6048-4db4-ba83-4ad237c36867":{"parent":null,"children":[]}},"files":{"C:\\Users\\Bryan\\Documents\\GitHub\\CG-Finance-Website\\utils\\monthly-budgetUtils.js":["92df8da5-df6d-43f3-b6b0-b13b6ae10450","9e416f7b-6048-4db4-ba83-4ad237c36867"],"C:\\Users\\Bryan\\Documents\\GitHub\\CG-Finance-Website\\utils\\UserUtil.js":["92df8da5-df6d-43f3-b6b0-b13b6ae10450","9e416f7b-6048-4db4-ba83-4ad237c36867"]},"externalIds":{}}
