@@ -22,7 +22,7 @@ describe("Testing addResource Function", () => {
       await fs.writeFile(resourcesFilePath, JSON.stringify(orgContent), "utf8");
   });
 
-  it("Should add a new resource successfully", async () => {
+  it("Should add a new expense successfully", async () => {
     const req = {
       body: {
         description: "Others",
@@ -54,7 +54,7 @@ describe("Testing addResource Function", () => {
     const req = {
       body: {
         description: "Groceries",
-        amount: "300",
+        amount: "500",
       },
       params: {
         id: orgContent[0].id,
@@ -74,7 +74,7 @@ describe("Testing addResource Function", () => {
     await editExpense(req, res);
   });
 
-  it("Should return an array when viewing resources", async () => {
+  it("Should return an array when viewing expense", async () => {
     const req = {};
     const res = {
       status: function (code) {
