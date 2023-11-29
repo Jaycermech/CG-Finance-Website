@@ -7,7 +7,7 @@ const {
   editBudget,
   deleteBudget,
 } = require("../utils/monthly-budgetUtils");
-describe("Testing budge related features", () => {
+describe("Testing budget related features", () => {
   const budgetFilePath = "utils/monthly-budget.json";
   var orgContent = "";
   beforeEach(async () => {
@@ -21,7 +21,7 @@ describe("Testing budge related features", () => {
     const req = {
       body: {
         ammenities: "Others",
-        budget: "$1000",
+        budget: "$200",
         owner: "Jordy312@gmail.com"
 
       },
