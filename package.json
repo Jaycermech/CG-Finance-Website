@@ -5,10 +5,12 @@
   "main": "index.js",
   "nyc": {
     "include": [
-      "utils/UserUtil.js"
+      "utils/UserUtil.js",
+      "utils/monthly-budgetUtils.js"
     ],
     "exclude": [],
     "reporter": [
+      "html",
       "text-summary"
     ],
     "all": true,
@@ -18,8 +20,10 @@
     "functions": 80,
     "statements": 80
   },
+  
   "scripts": {
-    "test": "nyc mocha tests/*.test.js"
+    "test": "nyc mocha tests/*.test.js",
+    "start": "node index.js"
   },
   "author": "",
   "license": "ISC",
