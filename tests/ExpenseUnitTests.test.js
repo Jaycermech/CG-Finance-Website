@@ -26,7 +26,7 @@ describe("Testing addResource Function", () => {
     const req = {
       body: {
         description: "Others",
-        amount: "3500",
+        amount: "300",
       },
     };
     const res = {
@@ -54,7 +54,7 @@ describe("Testing addResource Function", () => {
     const req = {
       body: {
         description: "Groceries",
-        amount: "142609",
+        amount: "300",
       },
       params: {
         id: orgContent[0].id,
