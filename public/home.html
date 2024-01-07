@@ -80,7 +80,7 @@
         <a href="#">Budget</a>
         <a href="#">Retirement</a>
         <a href="profile.html">Profile</a>
-
+        <a href="#" id="logoutBtn">Log Out</a>
     </nav>
 
     <section>
@@ -92,6 +92,15 @@
         </div>
         <!-- Your finance content goes here -->
     </section>
+
+    <script>
+        document.getElementById("logoutBtn").addEventListener("click", function () {
+            // Clear session storage
+            sessionStorage.clear();
+            // Redirect to index.html
+            window.location.href = "index.html";
+        });
+    </script>
 </body>
 
 </html>
