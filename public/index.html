@@ -50,6 +50,8 @@
         url: "/login", // Update the URL to the actual endpoint of your login API
         data: formData,
         success: function(response) {
+            
+            sessionStorage.setItem("Useremail", document.getElementById("email").value);
           // Handle successful login, e.g., redirect to home page
           window.location.href = "home.html";
         },
