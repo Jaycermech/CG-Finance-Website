@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>View Budgets</title>
+</head>
+<body onload="viewBudget()">
+  <h1>View Budgets</h1>
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Amenities</th>
+        <th>Budget</th>
+        <th>Owner</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody id="tableContent"></tbody>
+  </table>
+  <button onclick="openAddModal()">Add Budget</button>
+
+  <!-- Add Modal -->
+  <div id="addModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeAddModal()">&times;</span>
+      <h2>Add Budget</h2>
+      <form id="addForm" onsubmit="addBudget(); return false;">
+        <!-- Add form fields -->
+        <label for="ammenities">Amenities:</label>
+        <input type="text" id="ammenitiesAdd"><br><br>
+
+        <label for="budget">Budget:</label>
+        <input type="number" id="budgetAdd"><br><br>
+
+        <label for="owner">Owner:</label>
+        <input type="text" id="ownerAdd"><br><br>
+
+        <input type="submit" value="Add">
+      </form>
+    </div>
+  </div>
+
+  <!-- Edit Modal -->
+  <div id="editModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeEditModal()">&times;</span>
+      <h2>Edit Budget</h2>
+      <form id="editForm" onsubmit="updateBudget(); return false;">
+        <!-- Edit form fields -->
+        <input type="hidden" id="editId">
+        <label for="ammenities">Amenities:</label>
+        <input type="text" id="ammenitiesEdit"><br><br>
+
+        <label for="budget">Budget:</label>
+        <input type="number" id="budgetEdit"><br><br>
+
+        <label for="owner">Owner:</label>
+        <input type="text" id="ownerEdit"><br><br>
+
+        <input type="submit" value="Update">
+      </form>
+      <button onclick="deleteBudget()">Delete</button>
+    </div>
+  </div>
+
+  <script src="MonthlyBudget.js"></script>
+</body>
+</html>
