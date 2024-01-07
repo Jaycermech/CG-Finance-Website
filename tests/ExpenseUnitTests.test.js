@@ -22,11 +22,11 @@ describe("Testing addResource Function", () => {
       await fs.writeFile(resourcesFilePath, JSON.stringify(orgContent), "utf8");
   });
 
-  it("Should add a new resource successfully", async () => {
+  it("Should add a new expense successfully", async () => {
     const req = {
       body: {
         description: "Others",
-        amount: "3500",
+        amount: "300",
       },
     };
     const res = {
@@ -54,7 +54,7 @@ describe("Testing addResource Function", () => {
     const req = {
       body: {
         description: "Groceries",
-        amount: "142609",
+        amount: "500",
       },
       params: {
         id: orgContent[0].id,
@@ -74,7 +74,7 @@ describe("Testing addResource Function", () => {
     await editExpense(req, res);
   });
 
-  it("Should return an array when viewing resources", async () => {
+  it("Should return an array when viewing expense", async () => {
     const req = {};
     const res = {
       status: function (code) {
@@ -88,7 +88,7 @@ describe("Testing addResource Function", () => {
     await viewExpenses(req, res);
   });
 
-  it("Should not be able to edit resource due to invalid id", async () => {
+  it("Should not be able to edit expense due to invalid id", async () => {
     const req = {
       body: {
         description: "Groceries",
@@ -110,7 +110,7 @@ describe("Testing addResource Function", () => {
     await editExpense(req, res);
   });
 
-  it("Should delete a budget successfully", async () => {
+  it("Should delete a expense successfully", async () => {
     const req = {
       params: {
         id: orgContent[0].id,
