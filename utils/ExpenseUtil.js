@@ -80,27 +80,49 @@ async function editExpense(req, res) {
   }
 }
 
+// async function deleteExpense(req, res) {
+//   try {
+//     const id = req.params.id;
+//     const allExpense = await readJSON("utils/expenses.json");
+//     var index = -1;
+//     for (var i = 0; i < allExpense.length; i++) {
+//       var curcurrExpense = allExpense[i];
+//       if (curcurrExpense.id == id) index = i;
+//     }
+//     if (index != -1) {
+//       allExpense.splice(index, 1);
+//       await fs.writeFile(
+//         "utils/expenses.json",
+//         JSON.stringify(allExpense),
+//         "utf8"
+//       );
+//       return res.status(201).json(allExpense);
+//     } else {
+//       return res
+//         .status(500)
+//         .json({ message: "Error occurred, unable to delete!" });
+//     }
+//   } catch (error) {
+//     return res.status(500).json({ message: error.message });
+//   }
+// }
+
 async function deleteExpense(req, res) {
   try {
     const id = req.params.id;
     const allExpense = await readJSON("utils/expenses.json");
-    var index = -1;
-    for (var i = 0; i < allExpense.length; i++) {
-      var curcurrExpense = allExpense[i];
-      if (curcurrExpense.id == id) index = i;
-    }
-    if (index != -1) {
+    const index = allExpense.findIndex((expense) => expense.id == id);
+
+    if (index !== -1) {
       allExpense.splice(index, 1);
       await fs.writeFile(
         "utils/expenses.json",
         JSON.stringify(allExpense),
         "utf8"
       );
-      return res.status(201).json(allExpense);
+      return res.status(200).json(allExpense);
     } else {
-      return res
-        .status(500)
-        .json({ message: "Error occurred, unable to delete!" });
+      return res.status(404).json({ message: "Expense not found" });
     }
   } catch (error) {
     return res.status(500).json({ message: error.message });

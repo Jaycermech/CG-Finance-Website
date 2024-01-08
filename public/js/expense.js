@@ -49,6 +49,7 @@ function editCategory(category) {
   // Implement the logic to handle the edit action for the specified category
   console.log("Editing category: " + category);
   document.getElementById("categories").textContent = category;
+
   function viewResources2() {
     var response = "";
     var request = new XMLHttpRequest();
@@ -63,16 +64,17 @@ function editCategory(category) {
           console.log(response[i].description);
           var html = `
           <div class="text-center" style="width:100%;">
-            <div class="card">
-              <div class="card-body">
-                <h6 style="color: black;" class="card-text">${response[i].description}</h6>
-                <small style="color: black;">Amount: ${response[i].amount}</small>
-                <i class='far fa-edit fa-2x edit' description=${response[i].description} amount=${response[i].amount} id=${response[i].id} style="color: black; font-size: 18px; cursor: pointer;" data-toggle='modal' data-target='#editSpecificCategoryModal' data-dismiss='modal' item='${i}' onClick='displaySpecificCategory(this)'></i>
-
+              <div class="card">
+                  <div class="card-body">
+                      <h6 style="color: black;" class="card-text">${response[i].description}</h6>
+                      <small style="color: black;">Amount: ${response[i].amount}</small>
+                      <i class='far fa-edit fa-2x edit' description=${response[i].description} amount=${response[i].amount} id=${response[i].id} style="color: black; font-size: 18px; cursor: pointer;" data-toggle='modal' data-target='#editSpecificCategoryModal' data-dismiss='modal' item='${i}' onClick='displaySpecificCategory(this)'></i>
+                      <i class='fas fa-trash-alt fa-2x delete-btn' data-id='${response[i].id}' data-description='${response[i].description}' onclick='deleteExpenseItem(this)' style="color: red; font-size: 18px; cursor: pointer;"></i>
+                  </div>
               </div>
-            </div>
           </div>
-        `;
+      `;
+
           document
             .getElementById("categories")
             .insertAdjacentHTML("beforeend", html);
@@ -83,6 +85,28 @@ function editCategory(category) {
   }
   viewResources2();
 }
+
+function deleteExpenseItem(element) {
+  var id = element.getAttribute("data-id");
+  var description = element.getAttribute("data-description");
+
+  if (
+    confirm("Are you sure you want to delete the expense: " + description + "?")
+  ) {
+    var request = new XMLHttpRequest();
+    request.open("DELETE", "/delete-expense/" + id, true);
+    request.setRequestHeader("Content-Type", "application/json");
+    request.onload = function () {
+      var response = JSON.parse(request.responseText);
+      console.log(response);
+
+      // Handle the response as needed, e.g., refresh the view
+      location.reload();
+    };
+    request.send();
+  }
+}
+
 function displaySpecificCategory(element) {
   var description = element.getAttribute("description");
   var amount = element.getAttribute("amount");
