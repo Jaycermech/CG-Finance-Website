@@ -1,91 +1,146 @@
+
+let currentId = null; // Variable to store the current ID
+
 function viewBudget() {
     var request = new XMLHttpRequest();
-    request.open('GET', '/viewBudget', true);
+    request.open('GET', '/view-budget', true);
     request.setRequestHeader('Content-Type', 'application/json');
-    request.onload = function() {
-      var response = JSON.parse(request.responseText);
-  
-      var html = '';
-      for (var i = 0; i < response.length; i++) {
-        html +=
-          '<tr>' +
-          '<td>' +
-          (i + 1) +
-          '</td>' +
-          '<td>' +
-          response[i].ammenities +
-          '</td>' +
-          '<td>' +
-          response[i].budget +
-          '</td>' +
-          '<td>' +
-          response[i].owner +
-          '</td>' +
-          '<td>' +
-          '<button type="button" class="btn btn-warning" onclick="editBudget(\'' +
-          JSON.stringify(response[i]).replaceAll('"', '&quot;') +
-          '\')">Edit</button>' +
-          '<button type="button" class="btn btn-danger" onclick="deleteBudget(\'' +
-          response[i].id +
-          '\')">Delete</button>' +
-          '</td>' +
-          '</tr>';
-      }
-      document.getElementById('tableContent').innerHTML = html;
+    request.onload = function () {
+        var response = JSON.parse(request.responseText);
+
+        var html = '';
+        for (var i = 0; i < response.length; i++) {
+            html +=
+                '<tr>' +
+                '<td>' + (i + 1) + '</td>' +
+                '<td>' + response[i].ammenities + '</td>' +
+                '<td>' + "$" + response[i].budget + '</td>' +
+                '<td>' + response[i].owner + '</td>' +
+                '<td>' +
+                '<br>' + // Line break for space
+                '<button type="button" class="btn btn-warning openEditBtn" data-bs-toggle="modal" data-bs-target="#editModal" data-id="' + response[i].id + '">' +
+                '<i class="fas fa-edit"></i> Edit</button>' + // Edit icon
+                '</td>' +
+                '</tr>';
+            var responseData = response[i]
+            console.log(responseData);
+        }
+        document.getElementById('tableContent').innerHTML = html;
+        // Add event listener to log ID when the edit button is clicked
+        var editButtons = document.querySelectorAll('.openEditBtn');
+        editButtons.forEach(function (btn) {
+            btn.addEventListener('click', function (event) {
+                var id = event.target.getAttribute('data-id');
+                console.log('Clicked ID:', id);
+
+            });
+        });
+        document.addEventListener('DOMContentLoaded', function () {
+            document.getElementById('editModal').addEventListener('click', function (event) {
+                if (event.target && event.target.classList.contains('btn-danger')) {
+                    var data = // Retrieve the data you need to pass;
+                        viewBudgetid(data);
+                }
+            });
+        });
+
     };
     request.send();
-  }
-  
-  async function addBudget() {
+}
+
+async function addBudget() {
     var jsonData = {};
-    jsonData.ammenities = document.getElementById('ammenities').value;
-    jsonData.budget = document.getElementById('budget').value;
-    jsonData.owner = document.getElementById('owner').value;
-  
+    jsonData.ammenities = document.getElementById('ammenitiesAdd').value;
+    jsonData.budget = document.getElementById('budgetAdd').value;
+    jsonData.owner = document.getElementById('ownerAdd').value;
+
     // Validate fields here if needed
-  
+
     try {
-      const response = await fetch('/addBudget', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(jsonData),
-      });
-  
-      const data = await response.json();
-      console.log('New budget added:', data);
-  
-      // Handle UI changes or redirection here after successful addition
+        const response = await fetch('/add-budget', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(jsonData),
+        });
+
+        const data = await response.json();
+        console.log('New budget added:', data);
+        viewBudget()
+        // Handle UI changes or redirection here after successful addition
     } catch (error) {
-      console.error('Error adding budget:', error);
-      // Handle error scenario
-    }
-  }
-  
-  function editBudget(data) {
-    var selectedBudget = JSON.parse(data);
-  
-    // Fill form fields or open modal for editing
-    document.getElementById('ammenities').value = selectedBudget.ammenities;
-    document.getElementById('budget').value = selectedBudget.budget;
-    document.getElementById('owner').value = selectedBudget.owner;
-  
-    // Implement logic for updating the budget using the data in the form
-  }
-  
-  function deleteBudget(id) {
-    var request = new XMLHttpRequest();
-    request.open('DELETE', '/deleteBudget/' + id, true);
-    request.setRequestHeader('Content-Type', 'application/json');
-    request.onload = function() {
-      var response = JSON.parse(request.responseText);
-      if (response.message === 'Budget deleted successfully!') {
-        // Implement any UI changes or redirection after deletion
-      } else {
-        console.error('Unable to delete budget!');
+        console.error('Error adding budget:', error);
         // Handle error scenario
-      }
+    }
+}
+
+async function editBudget() {
+    console.log("wtf: ", currentId);
+    const jsonData = {};
+    jsonData.ammenities = document.getElementById('ammenitiesEdit').value;
+    jsonData.budget = document.getElementById('budgetEdit').value;
+    jsonData.owner = document.getElementById('ownerEdit').value;
+    console.log(jsonData);
+    try {
+        const response = await fetch('/edit-budget/' + currentId, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(jsonData),
+        });
+
+        const data = await response.json();
+        console.log('Budget updated:', data);
+        viewBudget();
+        // Handle UI changes or redirection after successful update
+    } catch (error) {
+        console.error('Error updating budget:', error);
+        // Handle error scenario
+    }
+}
+function viewBudgetid(id) {
+    var request = new XMLHttpRequest();
+    request.open("GET", "/view-budget/" + id, true);
+    request.setRequestHeader("Content-Type", "application/json");
+    request.onload = function () {
+        var response = JSON.parse(request.responseText);
+        console.log(response);
+        document.getElementById("ammenitiesEdit").value = response.ammenities;
+        document.getElementById("budgetEdit").value = response.budget;
+        document.getElementById("ownerEdit").value = response.owner;
+
+        console.log("budget: ", response.budget);
+        var id = response.id;
+        console.log("HI : ", id);
+        currentId = id;
     };
     request.send();
-  }
+}
+async function deleteBudget() {
+    console.log("cg: ", currentId);
+    try {
+        const response = await fetch('/delete-budget/' + currentId, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+        console.log(response.status);
+        if (response.status === 201) {
+            const data = await response.json();
+            console.log('Budget deleted:', data);
+            viewBudget();
+            // Implement UI changes or redirection after successful deletion
+        } else {
+            console.error('Unable to delete budget!');
+            // Handle error scenario
+        }
+    } catch (error) {
+        console.error('Error deleting budget:', error);
+        // Handle error scenario
+    }
+}
+
+
