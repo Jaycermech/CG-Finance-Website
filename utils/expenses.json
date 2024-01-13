@@ -1,26 +1,21 @@
 [
-  { "description": "Groceries", "amount": "31", "id": "1704723906147191" },
-  { "description": "Others", "amount": "42", "id": "1704723914673524" },
-  { "description": "Others", "amount": "300", "id": "1704724704057409" },
-  { "description": "Others", "amount": "300", "id": "1704726799733735" },
-  { "description": "Others", "amount": "300", "id": "1704727005255797" },
-  { "description": "Others", "amount": "100", "id": "1705154808531602" },
-  {
-    "description": "Others",
-    "amount": "100",
-    "user": "testinguser",
-    "id": "1705155296315789"
-  },
-  {
-    "description": "Food",
-    "amount": "75",
-    "user": "53",
-    "id": "1705156327077563"
-  },
   {
     "description": "Electronic",
     "amount": "53",
     "user": "john@gmail.com",
     "id": "1705156491373668"
-  }
+  },
+  {
+    "description": "Utilities",
+    "amount": "42",
+    "user": "john@gmail.com",
+    "id": "1705158544438266"
+  },
+  {
+    "description": "Electronic",
+    "amount": "42",
+    "user": "123@gmail.com",
+    "id": "1705158854926227"
+  },
+  { "description": "Others", "amount": "300", "id": "1705158914083404" }
 ]

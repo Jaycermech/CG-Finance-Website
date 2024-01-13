@@ -1,27 +1,46 @@
 const { resource } = require("selenium-webdriver/http");
+
 function viewExpenses() {
+  var userEmailInSession = sessionStorage.getItem("Useremail");
+
+  if (!userEmailInSession) {
+    console.log("User email not found in session storage");
+    return;
+  }
+
   var response = "";
   var request = new XMLHttpRequest();
   request.open("GET", "/view-expneses", true);
   request.setRequestHeader("Content-Type", "application/json");
   request.onload = function () {
     response = JSON.parse(request.responseText);
-    var html = "";
 
+    //-----------------------------------------------
+
+    console.log("All Expenses Data:", response);
+
+    // Filter expenses based on user email
+    var userExpenses = response.filter(function (expense) {
+      return expense.user === userEmailInSession;
+    });
+
+    console.log("User's Expenses:", userExpenses);
+
+    //--------------------------
+
+    console.log(response);
+    var html = "";
     var categories = new Map();
 
-    for (var b = 0; b < response.length; b++) {
-      if (!categories.has(response[b].description))
-        categories.set(response[b].description, 0);
+    for (var b = 0; b < userExpenses.length; b++) {
+      if (!categories.has(userExpenses[b].description))
+        categories.set(userExpenses[b].description, 0);
     }
 
-    console.log(categories);
-
     for (let [key, value] of categories) {
-      console.log(key + " = " + value);
-      for (var j = 0; j < response.length; j++) {
-        if (response[j].description === key) {
-          value += parseFloat(response[j].amount);
+      for (var j = 0; j < userExpenses.length; j++) {
+        if (userExpenses[j].description === key) {
+          value += parseFloat(userExpenses[j].amount);
           categories.set(key, parseFloat(value.toFixed(2)));
         }
       }
