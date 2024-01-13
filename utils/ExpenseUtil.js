@@ -30,7 +30,8 @@ async function addExpense(req, res) {
   try {
     const description = req.body.description;
     const amount = req.body.amount;
-    const newExpense = new Expense(description, amount);
+    const user = req.body.user;
+    const newExpense = new Expense(description, amount, user);
     const updatedExpenses = await writeJSON(newExpense, "utils/expenses.json");
     return res.status(201).json(updatedExpenses);
   } catch (error) {
@@ -80,49 +81,27 @@ async function editExpense(req, res) {
   }
 }
 
-// async function deleteExpense(req, res) {
-//   try {
-//     const id = req.params.id;
-//     const allExpense = await readJSON("utils/expenses.json");
-//     var index = -1;
-//     for (var i = 0; i < allExpense.length; i++) {
-//       var curcurrExpense = allExpense[i];
-//       if (curcurrExpense.id == id) index = i;
-//     }
-//     if (index != -1) {
-//       allExpense.splice(index, 1);
-//       await fs.writeFile(
-//         "utils/expenses.json",
-//         JSON.stringify(allExpense),
-//         "utf8"
-//       );
-//       return res.status(201).json(allExpense);
-//     } else {
-//       return res
-//         .status(500)
-//         .json({ message: "Error occurred, unable to delete!" });
-//     }
-//   } catch (error) {
-//     return res.status(500).json({ message: error.message });
-//   }
-// }
-
 async function deleteExpense(req, res) {
   try {
     const id = req.params.id;
     const allExpense = await readJSON("utils/expenses.json");
-    const index = allExpense.findIndex((expense) => expense.id == id);
-
-    if (index !== -1) {
+    var index = -1;
+    for (var i = 0; i < allExpense.length; i++) {
+      var curcurrExpense = allExpense[i];
+      if (curcurrExpense.id == id) index = i;
+    }
+    if (index != -1) {
       allExpense.splice(index, 1);
       await fs.writeFile(
         "utils/expenses.json",
         JSON.stringify(allExpense),
         "utf8"
       );
-      return res.status(200).json(allExpense);
+      return res.status(201).json(allExpense);
     } else {
-      return res.status(404).json({ message: "Expense not found" });
+      return res
+        .status(500)
+        .json({ message: "Error occurred, unable to delete!" });
     }
   } catch (error) {
     return res.status(500).json({ message: error.message });

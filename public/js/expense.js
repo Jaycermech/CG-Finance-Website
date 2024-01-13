@@ -22,7 +22,7 @@ function viewExpenses() {
       for (var j = 0; j < response.length; j++) {
         if (response[j].description === key) {
           value += parseFloat(response[j].amount);
-          categories.set(key, parseFloat(value.toFixed(2))); // Convert the value to a float with two decimal points
+          categories.set(key, parseFloat(value.toFixed(2)));
         }
       }
     }
@@ -214,6 +214,9 @@ function addExpense() {
   console.log(jsonData.description);
 
   jsonData.amount = document.getElementById("amount_input_modal").value;
+  console.log(jsonData.amount);
+
+  jsonData.user = document.getElementById("user_input_modal_email").value;
   console.log(jsonData.amount);
 
   // Validation: Check if the fields are empty

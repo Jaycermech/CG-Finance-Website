@@ -287,6 +287,32 @@
                 />
               </div>
 
+              <!-- Existing code ... -->
+
+              <div class="form-group">
+                <label for="user">User Email</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="user_input_modal_email"
+                  placeholder="Enter User Email"
+                  readonly
+                />
+              </div>
+
+              <!-- Existing code ... -->
+
+              <script>
+                // Retrieve user email from sessionStorage
+                var userEmail = sessionStorage.getItem("Useremail");
+
+                // Set the user email as the value of the input field
+                document.getElementById("user_input_modal_email").value =
+                  userEmail;
+
+                // Existing script code ...
+              </script>
+
               <p align="right" id="message" class=""></p>
             </form>
           </div>
