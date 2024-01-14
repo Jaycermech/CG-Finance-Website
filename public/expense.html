@@ -100,7 +100,19 @@
       <a href="#">Budget</a>
       <a href="#">Retirement</a>
       <a href="profile.html">Profile</a>
+      <a href="#" id="logoutBtn">Log Out</a>
     </nav>
+
+    <script>
+      document
+        .getElementById("logoutBtn")
+        .addEventListener("click", function () {
+          // Clear session storage
+          sessionStorage.clear();
+          // Redirect to index.html
+          window.location.href = "index.html";
+        });
+    </script>
 
     <div class="container">
       <div class="row">
