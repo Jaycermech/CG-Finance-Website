@@ -90,7 +90,7 @@ async function editBudget(req, res) {
       if (curcurrBudget.id == id) {
         allBudgets[i].ammenities = ammenities;
         allBudgets[i].budget = budget;
-        addBudgets[i].budget = owner;
+        allBudgets[i].owner = owner;
         modified = true;
       }
     }

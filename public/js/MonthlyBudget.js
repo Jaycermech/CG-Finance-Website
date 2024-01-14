@@ -1,52 +1,103 @@
 
 let currentId = null; // Variable to store the current ID
 
+// function viewBudget() {
+//     var request = new XMLHttpRequest();
+//     request.open('GET', '/view-budget', true);
+//     request.setRequestHeader('Content-Type', 'application/json');
+//     request.onload = function () {
+//         var response = JSON.parse(request.responseText);
+
+//         var html = '';
+        
+//         for (var i = 0; i < response.length; i++) {
+//             html +=
+//                 '<tr>' +
+//                 '<td>' + (i + 1) + '</td>' +
+//                 '<td>' + response[i].ammenities + '</td>' +
+//                 '<td>' + "$" + response[i].budget + '</td>' +
+//                 '<td>' + response[i].owner + '</td>' +
+//                 '<td>' +
+//                 '<br>' + // Line break for space
+//                 '<button type="button" class="btn btn-warning openEditBtn" data-bs-toggle="modal" data-bs-target="#editModal" data-id="' + response[i].id + '">' +
+//                 '<i class="fas fa-edit"></i> Edit</button>' + // Edit icon
+//                 '</td>' +
+//                 '</tr>';
+//             var responseData = response[i]
+//             console.log(responseData);
+//         }
+//         document.getElementById('tableContent').innerHTML = html;
+//         // Add event listener to log ID when the edit button is clicked
+//         var editButtons = document.querySelectorAll('.openEditBtn');
+//         editButtons.forEach(function (btn) {
+//             btn.addEventListener('click', function (event) {
+//                 var id = event.target.getAttribute('data-id');
+//                 console.log('Clicked ID:', id);
+
+//             });
+//         });
+//         document.addEventListener('DOMContentLoaded', function () {
+//             document.getElementById('editModal').addEventListener('click', function (event) {
+//                 if (event.target && event.target.classList.contains('btn-danger')) {
+//                     var data = // Retrieve the data you need to pass;
+//                         viewBudgetid(data);
+//                 }
+//             });
+//         });
+
+//     };
+//     request.send();
+// }
 function viewBudget() {
     var request = new XMLHttpRequest();
     request.open('GET', '/view-budget', true);
     request.setRequestHeader('Content-Type', 'application/json');
     request.onload = function () {
         var response = JSON.parse(request.responseText);
+        var userMail = sessionStorage.getItem('Useremail');
+        var filteredResponse = response.filter(item => item.owner === userMail);
 
         var html = '';
-        for (var i = 0; i < response.length; i++) {
+
+        for (var i = 0; i < filteredResponse.length; i++) {
             html +=
                 '<tr>' +
-                '<td>' + (i + 1) + '</td>' +
-                '<td>' + response[i].ammenities + '</td>' +
-                '<td>' + "$" + response[i].budget + '</td>' +
-                '<td>' + response[i].owner + '</td>' +
+                // '<td>' + (i + 1) + '</td>' +
+                '<td>' + filteredResponse[i].ammenities + '</td>' +
+                '<td>' + "$" + filteredResponse[i].budget + '</td>' +
+                '<td>' + filteredResponse[i].owner + '</td>' +
                 '<td>' +
                 '<br>' + // Line break for space
-                '<button type="button" class="btn btn-warning openEditBtn" data-bs-toggle="modal" data-bs-target="#editModal" data-id="' + response[i].id + '">' +
-                '<i class="fas fa-edit"></i> Edit</button>' + // Edit icon
+                '<button type="button" class="btn btn-warning openEditBtn" data-bs-toggle="modal" data-bs-target="#editModal" data-id="' + filteredResponse[i].id + '">' +
+                '<i class="fas fa-edit"></i></button>' + // Edit icon
                 '</td>' +
                 '</tr>';
-            var responseData = response[i]
+            var responseData = filteredResponse[i];
             console.log(responseData);
         }
         document.getElementById('tableContent').innerHTML = html;
+
         // Add event listener to log ID when the edit button is clicked
         var editButtons = document.querySelectorAll('.openEditBtn');
         editButtons.forEach(function (btn) {
             btn.addEventListener('click', function (event) {
                 var id = event.target.getAttribute('data-id');
                 console.log('Clicked ID:', id);
-
             });
         });
+
         document.addEventListener('DOMContentLoaded', function () {
             document.getElementById('editModal').addEventListener('click', function (event) {
                 if (event.target && event.target.classList.contains('btn-danger')) {
                     var data = // Retrieve the data you need to pass;
-                        viewBudgetid(data);
+                    viewBudgetid(data);
                 }
             });
         });
-
     };
     request.send();
 }
+
 
 async function addBudget() {
     var jsonData = {};
@@ -68,12 +119,17 @@ async function addBudget() {
         const data = await response.json();
         console.log('New budget added:', data);
         viewBudget()
+
+        
         // Handle UI changes or redirection here after successful addition
+
+        $('#addModal').modal('hide');
     } catch (error) {
         console.error('Error adding budget:', error);
         // Handle error scenario
     }
 }
+
 
 async function editBudget() {
     console.log("wtf: ", currentId);
@@ -90,11 +146,12 @@ async function editBudget() {
             },
             body: JSON.stringify(jsonData),
         });
-
+        viewBudget();
         const data = await response.json();
         console.log('Budget updated:', data);
-        viewBudget();
+        
         // Handle UI changes or redirection after successful update
+        $('#editModal').modal('hide');
     } catch (error) {
         console.error('Error updating budget:', error);
         // Handle error scenario
@@ -133,6 +190,7 @@ async function deleteBudget() {
             console.log('Budget deleted:', data);
             viewBudget();
             // Implement UI changes or redirection after successful deletion
+            $('#editModal').modal('hide');
         } else {
             console.error('Unable to delete budget!');
             // Handle error scenario
