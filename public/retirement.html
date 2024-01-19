@@ -84,10 +84,10 @@
       <h1>Finance Website</h1>
     </header>
 
-    <nav>
-      <a href="home.html">Home</a>
-      <a href="#">Expense</a>
-      <a href="#">Budget</a>
+    <nav style="margin-bottom: 20px">
+      <a href="/home">Home</a>
+      <a href="/expense">Expense</a>
+      <a href="MonthlyBudget.html">Budget</a>
       <a href="retirement.html">Retirement</a>
       <a href="profile.html">Profile</a>
       <a href="#" id="logoutBtn">Log Out</a>
@@ -177,7 +177,10 @@
 
         var html = "";
         for (var i = 0; i < response.length; i++) {
-          if (response[i].user.toString() == sessionStorage.getItem("Useremail").toString()) {
+          if (
+            response[i].user.toString() ==
+            sessionStorage.getItem("Useremail").toString()
+          ) {
             html +=
               "<tr>" +
               "<td>" +
