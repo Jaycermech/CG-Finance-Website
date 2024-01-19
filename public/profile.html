@@ -186,31 +186,14 @@
       const data = await response.json();
       const deleteUserMessage = document.getElementById("deleteUserMessage");
 
-      deleteUserMessage.style.color = response.ok ? "green" : "red";
-      deleteUserMessage.textContent = data.message;
-
-      // Optionally, you can redirect or perform additional actions after successful deletion
-      if (response.ok) {
-        // Add your redirection or other actions here
+        if (response.ok) {
+          deleteUserMessage.style.color = "green";
+          deleteUserMessage.textContent = data.message;
+        } else {
+          deleteUserMessage.style.color = "red";
+          deleteUserMessage.textContent = data.message;
+        }
       }
-    }
-
-    function displayErrorMessage(message) {
-      const deleteUserMessage = document.getElementById("deleteUserMessage");
-      deleteUserMessage.style.color = "red";
-      deleteUserMessage.textContent = message;
-    }
-  </script>
-  
-  <script>
-    document
-      .getElementById("logoutBtn")
-      .addEventListener("click", function () {
-        // Clear session storage
-        sessionStorage.clear();
-        // Redirect to index.html
-        window.location.href = "index.html";
-      });
-  </script>
-</body>
+    </script>
+  </body>
 </html>

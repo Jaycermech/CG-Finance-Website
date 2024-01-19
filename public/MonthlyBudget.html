@@ -19,7 +19,7 @@
     background-color: #f4f4f4;
     flex-direction: column;
     align-items: center;
-    text-align: center;
+    /* text-align: center; */
   }
 
   header {
@@ -83,6 +83,7 @@
     margin-top: 20px;
     border-collapse: collapse;
     width: 80%;
+    text-align: center;
   }
 
   th,
@@ -109,12 +110,12 @@
   </header>
 
   <nav style="margin-bottom: 20px;">
-    <a href="/home">Home</a>
+    <a href="home.html">Home</a>
     <a href="/expense">Expense</a>
     <a href="MonthlyBudget.html">Budget</a>
-    <a href="retirement.html">Retirement</a>
-    <a href="profile.html">Profile</a>
-    <a href="#" id="logoutBtn">Log Out</a>
+   <a href="retirement.html">Retirement</a>
+   <a href="profile.html">Profile</a>
+   <a href="#" id="logoutBtn">Log Out</a>
   </nav>
   <h1>Monthly Budgets</h1>
   <table style="margin-bottom: 30px;">
@@ -141,7 +142,7 @@
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="addModalLabel">Set A New Monthly Budget</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">X</button>
         </div>
         <div class="modal-body">
           <form id="addForm">
@@ -150,6 +151,8 @@
                   <option value="Utilities">Utilities</option>
                   <option value="Groceries">Groceries</option>
                   <option value="Appliances">Appliances</option>
+                  <option value="Food" id="Food">Food</option>
+                  <option value="Electronic">Electronics</option>
                   <option value="Others">Others</option>
               </select>
 
@@ -175,7 +178,7 @@
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="editModalLabel">Edit Monthly Budget</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">X</button>
         </div>
         <div class="modal-body">
           <form id="editForm">
@@ -186,6 +189,8 @@
                   <option value="Utilities">Utilities</option>
                   <option value="Groceries">Groceries</option>
                   <option value="Appliances">Appliances</option>
+                  <option value="Food" id="Food">Food</option>
+                  <option value="Electronic">Electronics</option>
                   <option value="Others">Others</option>
               </select>
             </div>
