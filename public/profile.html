@@ -1,105 +1,87 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>User Management</title>
-  </head>
-  <body>
-    <!-- Edit User Form -->
-    <h2>Edit User</h2>
-    <form id="editUserForm">
-      <label for="emailToEdit">Current Email:</label>
-      <input type="email" id="emailToEdit" name="emailToEdit" required />
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>User Management</title>
+</head>
+<body style="font-family: Arial, sans-serif; text-align: center; margin: 20px;">
 
-      <label for="newEmail">New Email:</label>
-      <input type="email" id="newEmail" name="newEmail" />
+  <!-- Edit User Form -->
+  <h2 style="color: #333;">Edit User</h2>
+  <form id="editUserForm" style="background-color: #fff; border-radius: 8px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); padding: 20px; width: 300px; margin: 0 auto;">
+    <label for="emailToEdit" style="display: block; margin-bottom: 8px; color: #333;">Current Email:</label>
+    <input type="email" id="emailToEdit" name="emailToEdit" required style="width: 100%; padding: 8px; margin-bottom: 16px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;" />
 
-      <label for="newPassword">New Password:</label>
-      <input type="password" id="newPassword" name="newPassword" />
+    <label for="newEmail" style="display: block; margin-bottom: 8px; color: #333;">New Email:</label>
+    <input type="email" id="newEmail" name="newEmail" style="width: 100%; padding: 8px; margin-bottom: 16px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;" />
 
-      <label for="confirmNewPassword">Confirm New Password:</label>
-      <input
-        type="password"
-        id="confirmNewPassword"
-        name="confirmNewPassword"
-      />
+    <label for="newPassword" style="display: block; margin-bottom: 8px; color: #333;">New Password:</label>
+    <input type="password" id="newPassword" name="newPassword" style="width: 100%; padding: 8px; margin-bottom: 16px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;" />
 
-      <button type="button" onclick="editUser()">Edit User</button>
-      <p id="editUserMessage" style="color: red"></p>
-    </form>
+    <label for="confirmNewPassword" style="display: block; margin-bottom: 8px; color: #333;">Confirm New Password:</label>
+    <input type="password" id="confirmNewPassword" name="confirmNewPassword" style="width: 100%; padding: 8px; margin-bottom: 16px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;" />
 
-    <!-- Delete User Form -->
-    <h2>Delete User</h2>
-    <form id="deleteUserForm">
-      <label for="emailToDelete">Email to Delete:</label>
-      <input type="email" id="emailToDelete" name="emailToDelete" required />
+    <button type="button" onclick="editUser()" style="background-color: #4caf50; color: #fff; padding: 10px 15px; border: none; border-radius: 4px; cursor: pointer;">Edit User</button>
+    <p id="editUserMessage" style="margin: 10px 0 0; font-size: 14px; color: red;"></p>
+  </form>
 
-      <button type="button" onclick="deleteUser()">Delete User</button>
-      <p id="deleteUserMessage" style="color: red"></p>
-    </form>
+  <!-- Delete User Form -->
+  <h2 style="color: #333;">Delete User</h2>
+  <form id="deleteUserForm" style="background-color: #fff; border-radius: 8px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); padding: 20px; width: 300px; margin: 20px auto;">
+    <label for="emailToDelete" style="display: block; margin-bottom: 8px; color: #333;">Email to Delete:</label>
+    <input type="email" id="emailToDelete" name="emailToDelete" required style="width: 100%; padding: 8px; margin-bottom: 16px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;" />
 
-    <script>
-      async function editUser() {
-        const emailToEdit = document.getElementById("emailToEdit").value;
-        const newEmail = document.getElementById("newEmail").value;
-        const newPassword = document.getElementById("newPassword").value;
-        const confirmNewPassword =
-          document.getElementById("confirmNewPassword").value;
+    <button type="button" onclick="deleteUser()" style="background-color: #4caf50; color: #fff; padding: 10px 15px; border: none; border-radius: 4px; cursor: pointer;">Delete User</button>
+    <p id="deleteUserMessage" style="margin: 10px 0 0; font-size: 14px; color: red;"></p>
+  </form>
 
-        // perform validation if needed
+  <script>
+    async function editUser() {
+      const emailToEdit = document.getElementById("emailToEdit").value;
+      const newEmail = document.getElementById("newEmail").value;
+      const newPassword = document.getElementById("newPassword").value;
+      const confirmNewPassword = document.getElementById("confirmNewPassword").value;
 
-        const response = await fetch("/edit-user", {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            emailToEdit,
-            newEmail,
-            newPassword,
-            confirmNewPassword,
-          }),
-        });
+      const response = await fetch("/edit-user", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          emailToEdit,
+          newEmail,
+          newPassword,
+          confirmNewPassword,
+        }),
+      });
 
-        const data = await response.json();
-        const editUserMessage = document.getElementById("editUserMessage");
+      const data = await response.json();
+      const editUserMessage = document.getElementById("editUserMessage");
 
-        if (response.ok) {
-          editUserMessage.style.color = "green";
-          editUserMessage.textContent = data.message;
-        } else {
-          editUserMessage.style.color = "red";
-          editUserMessage.textContent = data.message;
-        }
-      }
+      editUserMessage.style.color = response.ok ? "green" : "red";
+      editUserMessage.textContent = data.message;
+    }
 
-      async function deleteUser() {
-        const emailToDelete = document.getElementById("emailToDelete").value;
+    async function deleteUser() {
+      const emailToDelete = document.getElementById("emailToDelete").value;
 
-        // perform validation if needed
+      const response = await fetch("/delete-user", {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          emailToDelete,
+        }),
+      });
 
-        const response = await fetch("/delete-user", {
-          method: "DELETE",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            emailToDelete,
-          }),
-        });
+      const data = await response.json();
+      const deleteUserMessage = document.getElementById("deleteUserMessage");
 
-        const data = await response.json();
-        const deleteUserMessage = document.getElementById("deleteUserMessage");
-
-        if (response.ok) {
-          deleteUserMessage.style.color = "green";
-          deleteUserMessage.textContent = data.message;
-        } else {
-          deleteUserMessage.style.color = "red";
-          deleteUserMessage.textContent = data.message;
-        }
-      }
-    </script>
-  </body>
+      deleteUserMessage.style.color = response.ok ? "green" : "red";
+      deleteUserMessage.textContent = data.message;
+    }
+  </script>
+</body>
 </html>
