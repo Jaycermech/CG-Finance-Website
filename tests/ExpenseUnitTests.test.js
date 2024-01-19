@@ -28,6 +28,7 @@ describe("Testing addResource Function", () => {
         description: "Others",
         amount: "3500",
         user: "kovan"
+
       },
     };
     const res = {
