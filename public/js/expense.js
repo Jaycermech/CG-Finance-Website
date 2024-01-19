@@ -1,28 +1,47 @@
 const { resource } = require("selenium-webdriver/http");
+
 function viewExpenses() {
+  var userEmailInSession = sessionStorage.getItem("Useremail");
+
+  if (!userEmailInSession) {
+    console.log("User email not found in session storage");
+    return;
+  }
+
   var response = "";
   var request = new XMLHttpRequest();
   request.open("GET", "/view-expneses", true);
   request.setRequestHeader("Content-Type", "application/json");
   request.onload = function () {
     response = JSON.parse(request.responseText);
-    var html = "";
 
+    //-----------------------------------------------
+
+    console.log("All Expenses Data:", response);
+
+    // Filter expenses based on user email
+    var userExpenses = response.filter(function (expense) {
+      return expense.user === userEmailInSession;
+    });
+
+    console.log("User's Expenses:", userExpenses);
+
+    //--------------------------
+
+    console.log(response);
+    var html = "";
     var categories = new Map();
 
-    for (var b = 0; b < response.length; b++) {
-      if (!categories.has(response[b].description))
-        categories.set(response[b].description, 0);
+    for (var b = 0; b < userExpenses.length; b++) {
+      if (!categories.has(userExpenses[b].description))
+        categories.set(userExpenses[b].description, 0);
     }
 
-    console.log(categories);
-
     for (let [key, value] of categories) {
-      console.log(key + " = " + value);
-      for (var j = 0; j < response.length; j++) {
-        if (response[j].description === key) {
-          value += parseFloat(response[j].amount);
-          categories.set(key, parseFloat(value.toFixed(2))); // Convert the value to a float with two decimal points
+      for (var j = 0; j < userExpenses.length; j++) {
+        if (userExpenses[j].description === key) {
+          value += parseFloat(userExpenses[j].amount);
+          categories.set(key, parseFloat(value.toFixed(2)));
         }
       }
     }
@@ -45,10 +64,60 @@ function viewExpenses() {
   request.send();
 }
 
+// function editCategory(category) {
+//   // Implement the logic to handle the edit action for the specified category
+//   console.log("Editing category: " + category);
+//   document.getElementById("categories").textContent = category;
+
+//   function viewResources2() {
+//     var response = "";
+//     var request = new XMLHttpRequest();
+//     request.open("GET", "/view-expneses", true);
+//     request.setRequestHeader("Content-Type", "application/json");
+//     request.onload = function () {
+//       response = JSON.parse(request.responseText);
+//       console.log(response);
+
+//       for (let i = 0; i < response.length; i++) {
+//         if (response[i].description == category) {
+//           console.log(response[i].description);
+//           var html = `
+//           <div class="text-center" style="width:100%;">
+//               <div class="card">
+//                   <div class="card-body">
+//                       <h6 style="color: black;" class="card-text">${response[i].description}</h6>
+//                       <small style="color: black;">Amount: ${response[i].amount}</small>
+//                       <i class='far fa-edit fa-2x edit' description=${response[i].description} amount=${response[i].amount} id=${response[i].id} style="color: black; font-size: 18px; cursor: pointer;" data-toggle='modal' data-target='#editSpecificCategoryModal' data-dismiss='modal' item='${i}' onClick='displaySpecificCategory(this)'></i>
+//                       <i class='fas fa-trash-alt fa-2x delete-btn' data-id='${response[i].id}' data-description='${response[i].description}' onclick='deleteExpenseItem(this)' style="color: red; font-size: 18px; cursor: pointer;"></i>
+//                   </div>
+//               </div>
+//           </div>
+//       `;
+
+//           document
+//             .getElementById("categories")
+//             .insertAdjacentHTML("beforeend", html);
+//         }
+//       }
+//     };
+//     request.send();
+//   }
+//   viewResources2();
+// }
+
 function editCategory(category) {
   // Implement the logic to handle the edit action for the specified category
   console.log("Editing category: " + category);
+
+  // Check if the Useremail in session storage exists
+  var userEmailInSession = sessionStorage.getItem("Useremail");
+  if (!userEmailInSession) {
+    console.log("User email not found in session storage");
+    return;
+  }
+
   document.getElementById("categories").textContent = category;
+
   function viewResources2() {
     var response = "";
     var request = new XMLHttpRequest();
@@ -59,20 +128,25 @@ function editCategory(category) {
       console.log(response);
 
       for (let i = 0; i < response.length; i++) {
-        if (response[i].description == category) {
+        // Check if Useremail in session matches the user in the data
+        if (
+          response[i].description == category &&
+          response[i].user === userEmailInSession
+        ) {
           console.log(response[i].description);
           var html = `
           <div class="text-center" style="width:100%;">
-            <div class="card">
-              <div class="card-body">
-                <h6 style="color: black;" class="card-text">${response[i].description}</h6>
-                <small style="color: black;">Amount: ${response[i].amount}</small>
-                <i class='far fa-edit fa-2x edit' description=${response[i].description} amount=${response[i].amount} id=${response[i].id} style="color: black; font-size: 18px; cursor: pointer;" data-toggle='modal' data-target='#editSpecificCategoryModal' data-dismiss='modal' item='${i}' onClick='displaySpecificCategory(this)'></i>
-
+              <div class="card">
+                  <div class="card-body">
+                      <h6 style="color: black;" class="card-text">${response[i].description}</h6>
+                      <small style="color: black;">Amount: ${response[i].amount}</small>
+                      <i class='far fa-edit fa-2x edit' description=${response[i].description} amount=${response[i].amount} id=${response[i].id} style="color: black; font-size: 18px; cursor: pointer;" data-toggle='modal' data-target='#editSpecificCategoryModal' data-dismiss='modal' item='${i}' onClick='displaySpecificCategory(this)'></i>
+                      <i class='fas fa-trash-alt fa-2x delete-btn' data-id='${response[i].id}' data-description='${response[i].description}' onclick='deleteExpenseItem(this)' style="color: red; font-size: 18px; cursor: pointer;"></i>
+                  </div>
               </div>
-            </div>
           </div>
-        `;
+      `;
+
           document
             .getElementById("categories")
             .insertAdjacentHTML("beforeend", html);
@@ -83,6 +157,28 @@ function editCategory(category) {
   }
   viewResources2();
 }
+
+function deleteExpenseItem(element) {
+  var id = element.getAttribute("data-id");
+  var description = element.getAttribute("data-description");
+
+  if (
+    confirm("Are you sure you want to delete the expense: " + description + "?")
+  ) {
+    var request = new XMLHttpRequest();
+    request.open("DELETE", "/delete-expense/" + id, true);
+    request.setRequestHeader("Content-Type", "application/json");
+    request.onload = function () {
+      var response = JSON.parse(request.responseText);
+      console.log(response);
+
+      // Handle the response as needed, e.g., refresh the view
+      location.reload();
+    };
+    request.send();
+  }
+}
+
 function displaySpecificCategory(element) {
   var description = element.getAttribute("description");
   var amount = element.getAttribute("amount");
@@ -190,6 +286,9 @@ function addExpense() {
   console.log(jsonData.description);
 
   jsonData.amount = document.getElementById("amount_input_modal").value;
+  console.log(jsonData.amount);
+
+  jsonData.user = document.getElementById("user_input_modal_email").value;
   console.log(jsonData.amount);
 
   // Validation: Check if the fields are empty

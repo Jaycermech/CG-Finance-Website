@@ -24,7 +24,9 @@
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">89.47% </span>
+                <span class="strong">89.47% </span>
                 <span class="quiet">Statements</span>
+                <span class='fraction'>68/76</span>
                 <span class='fraction'>68/76</span>
             </div>
         
@@ -45,7 +47,9 @@
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">89.04% </span>
+                <span class="strong">89.04% </span>
                 <span class="quiet">Lines</span>
+                <span class='fraction'>65/73</span>
                 <span class='fraction'>65/73</span>
             </div>
         
@@ -241,6 +245,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -384,6 +389,7 @@ async function register(req, res) {
     }
   } catch (error) {
     return res.status(500).json({ message: error.message });
+    return res.status(500).json({ message: error.message });
   }
 }
 async function login(req, res) {
@@ -501,6 +507,7 @@ module.exports = {
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
                 at 2024-01-14T08:33:15.568Z
                 at 2024-01-11T16:56:23.155Z
+                at 2024-01-13T15:15:14.347Z
             </div>
         <script src="prettify.js"></script>
         <script>

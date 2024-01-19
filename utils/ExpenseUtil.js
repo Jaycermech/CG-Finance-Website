@@ -31,7 +31,7 @@ async function addExpense(req, res) {
     const description = req.body.description;
     const amount = req.body.amount;
     const user = req.body.user;
-    const newExpense = new Expense(description, amount);
+    const newExpense = new Expense(description, amount, user);
     const updatedExpenses = await writeJSON(newExpense, "utils/expenses.json");
     return res.status(201).json(updatedExpenses);
   } catch (error) {

@@ -100,8 +100,19 @@
       <a href="#">Budget</a>
       <a href="#">Retirement</a>
       <a href="profile.html">Profile</a>
-      
+      <a href="#" id="logoutBtn">Log Out</a>
     </nav>
+
+    <script>
+      document
+        .getElementById("logoutBtn")
+        .addEventListener("click", function () {
+          // Clear session storage
+          sessionStorage.clear();
+          // Redirect to index.html
+          window.location.href = "index.html";
+        });
+    </script>
 
     <div class="container">
       <div class="row">
@@ -150,7 +161,7 @@
       aria-labelledby="exampleModalLabel"
       aria-hidden="true"
     >
-      <div class="modal-dialog">
+      <div class="modal-dialog" id="edit1-phase">
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title" id="categories">{}</h5>
@@ -189,7 +200,7 @@
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header bg-info text-white">
-            <h5 class="modal-title" id="resourceModalLabel">Add New Expense</h5>
+            <h5 class="modal-title" id="resourceModalLabel">Edit Expense</h5>
 
             <button
               type="button"
@@ -287,6 +298,32 @@
                   placeholder="Enter Amount"
                 />
               </div>
+
+              <!-- Existing code ... -->
+
+              <div class="form-group">
+                <label for="user">User Email</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="user_input_modal_email"
+                  placeholder="Enter User Email"
+                  readonly
+                />
+              </div>
+
+              <!-- Existing code ... -->
+
+              <script>
+                // Retrieve user email from sessionStorage
+                var userEmail = sessionStorage.getItem("Useremail");
+
+                // Set the user email as the value of the input field
+                document.getElementById("user_input_modal_email").value =
+                  userEmail;
+
+                // Existing script code ...
+              </script>
 
               <p align="right" id="message" class=""></p>
             </form>
