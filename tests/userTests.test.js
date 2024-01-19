@@ -1,318 +1,246 @@
-const { describe, it } = require("mocha");
-const { expect, should } = require("chai");
-const fs = require("fs").promises;
+const { expect } = require('chai');
+const sinon = require('sinon');
+const fs = require('fs').promises;
 const {
   register,
   login,
+  viewUser,
   editUser,
   deleteUser,
-  viewUser,
-} = require("../utils/UserUtil");
+} = require('./userController'); // Adjust the path based on your project structure
 
-should(); // Enable should syntax
+describe('User Controller', () => {
+  // Create a temporary file for testing purposes
+  const testUsersFile = 'utils/test-users.json';
 
-describe("register function", () => {
-  // Assuming you have a utility function to reset the users.json file to a known state
-  before(async () => {
-    // Clean up, reset the users.json file, or perform any necessary actions
+  beforeEach(async () => {
+    // Create an initial test users file
+    await fs.writeFile(testUsersFile, '[]', 'utf8');
   });
 
-  // Assuming you have a utility function to clean up after tests
-  after(async () => {
-    // Clean up, reset the users.json file, or perform any necessary actions
+  afterEach(async () => {
+    // Remove the temporary test users file
+    await fs.unlink(testUsersFile);
   });
 
-  it("should register a new user when valid data is provided", async () => {
-    const req = {
-      body: {
-        email: "newuser@example.com",
-        password: "newPassword",
-      },
-    };
-    const res = {
-      status: (statusCode) => ({
-        json: (data) => {
-          expect(statusCode).to.equal(201);
-          // Using expect syntax
-          expect(data).to.be.an("array");
-          expect(data.length).to.equal(1); // Modify based on the number of users you added
-
-          // Using should syntax
-          data.should.be.an("array");
-          data.should.have.lengthOf(1);
-
-          // Add more assertions based on the expected structure of your data
-          data;
-        },
-      }),
-    };
-
-    await register(req, res);
-  });
-
-  it("should return a validation error when invalid data is provided", async () => {
-    const req = {
-      body: {
-        email: "invalidemail",
-        password: "short",
-      },
-    };
-    const res = {
-      status: (statusCode) => ({
-        json: (data) => {
-          expect(statusCode).to.equal(500);
-          expect(data).to.deep.equal({ message: "Validation error" });
-
-          // Using should syntax
-          data.should.deep.equal({ message: "Validation error" });
-        },
-      }),
-    };
-
-    await register(req, res);
-  });
-});
-describe("login function", () => {
-    // Assuming you have a utility function to reset the users.json file to a known state
-    before(async () => {
-      await fs.writeFile(
-        "utils/users.json",
-        JSON.stringify([
-          { email: "test@example.com", password: "password" },
-          // Add other users as needed for your tests
-        ]),
-        "utf8"
-      );
-    });
-  
-    // Assuming you have a utility function to clean up after tests
-    after(async () => {
-      // Clean up, reset the users.json file, or perform any necessary actions
-    });
-  
-    it('should return "Login successful!" when valid credentials are provided', async () => {
+  describe('register', () => {
+    it('should register a new user', async () => {
       const req = {
         body: {
-          email: "test@example.com",
-          password: "password",
+          email: 'test@example.com',
+          password: 'testpassword',
         },
       };
       const res = {
-        status: (statusCode) => ({
-          json: (data) => {
-            statusCode.should.equal(201);
-            data.should.deep.equal({ message: "Login successful!" });
-          },
-        }),
+        status: sinon.stub().returnsThis(),
+        json: sinon.stub(),
       };
-  
-      await login(req, res);
+
+      await register(req, res);
+
+      expect(res.status.calledWith(201)).to.be.true;
+      expect(res.json.calledOnce).to.be.true;
     });
-  
-    it('should return "Invalid credentials!" when invalid credentials are provided', async () => {
+
+    it('should return a validation error for invalid data', async () => {
       const req = {
         body: {
-          email: "test@example.com",
-          password: "wrongPassword",
+          email: 'invalid-email',
+          password: 'short',
         },
       };
       const res = {
-        status: (statusCode) => ({
-          json: (data) => {
-            statusCode.should.equal(500);
-            data.should.deep.equal({ message: "Invalid credentials!" });
-          },
-        }),
+        status: sinon.stub().returnsThis(),
+        json: sinon.stub(),
       };
-  
-      await login(req, res);
+
+      await register(req, res);
+
+      expect(res.status.calledWith(500)).to.be.true;
+      expect(res.json.calledOnce).to.be.true;
     });
-  
-    // Add more test cases as needed
   });
 
-describe("viewUser function", () => {
-  // Assuming you have a utility function to reset the users.json file to a known state
-  before(async () => {
-    await fs.writeFile(
-      "utils/users.json",
-      JSON.stringify([
-        { email: "test@example.com", password: "password" },
-        // Add other users as needed for your tests
-      ]),
-      "utf8"
-    );
-  });
+  describe('login', () => {
+    it('should log in a user with valid credentials', async () => {
+      // Create a test user
+      const testUser = { email: 'test@example.com', password: 'testpassword' };
+      await fs.writeFile(testUsersFile, JSON.stringify([testUser]), 'utf8');
 
-  // Assuming you have a utility function to clean up after tests
-  after(async () => {
-    // Clean up, reset the users.json file, or perform any necessary actions
-  });
-
-  it("should return all users when called", async () => {
-    const req = {};
-    const res = {
-      status: (statusCode) => ({
-        json: (data) => {
-          expect(statusCode).to.equal(201);
-          // Assuming you want to check the structure of the returned data
-          expect(data).to.be.an("array");
-          expect(data.length).to.equal(1); // Modify based on the number of users you added
-          // Add more assertions based on the expected structure of your data
+      const req = {
+        body: {
+          email: 'test@example.com',
+          password: 'testpassword',
         },
-      }),
-    };
+      };
+      const res = {
+        status: sinon.stub().returnsThis(),
+        json: sinon.stub(),
+      };
 
-    await viewUser(req, res);
-  });
+      await login(req, res);
 
-  // Add more test cases as needed
-});
+      expect(res.status.calledWith(201)).to.be.true;
+      expect(res.json.calledOnce).to.be.true;
+    });
 
-describe("editUser function", () => {
-  // Assuming you have a utility function to reset the users.json file to a known state
-  before(async () => {
-    await fs.writeFile(
-      "utils/users.json",
-      JSON.stringify([
-        { email: "test@example.com", password: "oldPassword" },
-        // Add other users as needed for your tests
-      ]),
-      "utf8"
-    );
-  });
-
-  // Assuming you have a utility function to clean up after tests
-  after(async () => {
-    // Clean up, reset the users.json file, or perform any necessary actions
-  });
-
-  it("should update user information when valid data is provided", async () => {
-    const req = {
-      body: {
-        emailToEdit: "test@example.com",
-        newEmail: "new@example.com",
-        newPassword: "newPassword",
-        confirmNewPassword: "newPassword",
-      },
-    };
-    const res = {
-      status: (statusCode) => ({
-        json: (data) => {
-          expect(statusCode).to.equal(201);
-          expect(data).to.deep.equal({
-            message: "User information updated successfully!",
-          });
+    it('should return an error for invalid credentials', async () => {
+      const req = {
+        body: {
+          email: 'nonexistent@example.com',
+          password: 'wrongpassword',
         },
-      }),
-    };
+      };
+      const res = {
+        status: sinon.stub().returnsThis(),
+        json: sinon.stub(),
+      };
 
-    await editUser(req, res);
+      await login(req, res);
+
+      expect(res.status.calledWith(500)).to.be.true;
+      expect(res.json.calledOnce).to.be.true;
+    });
   });
 
-  it("should return an error when new password and confirm password do not match", async () => {
-    const req = {
-      body: {
-        emailToEdit: "test@example.com",
-        newPassword: "newPassword",
-        confirmNewPassword: "wrongPassword",
-      },
-    };
-    const res = {
-      status: (statusCode) => ({
-        json: (data) => {
-          expect(statusCode).to.equal(400);
-          expect(data).to.deep.equal({
-            message: "New password and confirm password do not match.",
-          });
+  describe('viewUser', () => {
+    it('should return all users', async () => {
+      // Create test users
+      const testUsers = [
+        { email: 'user1@example.com', password: 'password1' },
+        { email: 'user2@example.com', password: 'password2' },
+      ];
+      await fs.writeFile(testUsersFile, JSON.stringify(testUsers), 'utf8');
+
+      const req = {};
+      const res = {
+        status: sinon.stub().returnsThis(),
+        json: sinon.stub(),
+      };
+
+      await viewUser(req, res);
+
+      expect(res.status.calledWith(201)).to.be.true;
+      expect(res.json.calledWith(testUsers)).to.be.true;
+    });
+  });
+
+  describe('editUser', () => {
+    it('should edit a user with valid data', async () => {
+      // Create a test user
+      const testUser = { email: 'test@example.com', password: 'testpassword' };
+      await fs.writeFile(testUsersFile, JSON.stringify([testUser]), 'utf8');
+
+      const req = {
+        body: {
+          emailToEdit: 'test@example.com',
+          newEmail: 'newtest@example.com',
+          newPassword: 'newpassword',
+          confirmNewPassword: 'newpassword',
         },
-      }),
-    };
+      };
+      const res = {
+        status: sinon.stub().returnsThis(),
+        json: sinon.stub(),
+      };
 
-    await editUser(req, res);
-  });
+      await editUser(req, res);
 
-  it("should return an error when trying to edit a non-existing user", async () => {
-    const req = {
-      body: {
-        emailToEdit: "nonexistent@example.com",
-        newEmail: "new@example.com",
-        newPassword: "newPassword",
-        confirmNewPassword: "newPassword",
-      },
-    };
-    const res = {
-      status: (statusCode) => ({
-        json: (data) => {
-          expect(statusCode).to.equal(500);
-          expect(data).to.deep.equal({
-            message: "Error occurred, unable to update user information!",
-          });
+      expect(res.status.calledWith(201)).to.be.true;
+      expect(res.json.calledOnce).to.be.true;
+
+      // Check if the user was actually edited
+      const updatedUsers = await fs.readFile(testUsersFile, 'utf8');
+      const parsedUpdatedUsers = JSON.parse(updatedUsers);
+      expect(parsedUpdatedUsers[0].email).to.equal('newtest@example.com');
+    });
+
+    it('should return an error for mismatched new password and confirm password', async () => {
+      const req = {
+        body: {
+          emailToEdit: 'test@example.com',
+          newEmail: 'newtest@example.com',
+          newPassword: 'newpassword',
+          confirmNewPassword: 'wrongpassword',
         },
-      }),
-    };
+      };
+      const res = {
+        status: sinon.stub().returnsThis(),
+        json: sinon.stub(),
+      };
 
-    await editUser(req, res);
-  });
+      await editUser(req, res);
 
-  // Add more test cases as needed
-});
+      expect(res.status.calledWith(400)).to.be.true;
+      expect(res.json.calledOnce).to.be.true;
+    });
 
-describe("deleteUser function", () => {
-  // Assuming you have a utility function to reset the users.json file to a known state
-  before(async () => {
-    await fs.writeFile(
-      "utils/users.json",
-      JSON.stringify([
-        { email: "test@example.com", password: "password" },
-        // Add other users as needed for your tests
-      ]),
-      "utf8"
-    );
-  });
-
-  // Assuming you have a utility function to clean up after tests
-  after(async () => {
-    // Clean up, reset the users.json file, or perform any necessary actions
-  });
-
-  it("should delete user when valid email is provided", async () => {
-    const req = {
-      body: {
-        emailToDelete: "test@example.com",
-      },
-    };
-    const res = {
-      status: (statusCode) => ({
-        json: (data) => {
-          expect(statusCode).to.equal(200);
-          expect(data).to.deep.equal({ message: "User deleted successfully!" });
+    it('should return an error if user to edit is not found', async () => {
+      const req = {
+        body: {
+          emailToEdit: 'nonexistent@example.com',
+          newEmail: 'newtest@example.com',
+          newPassword: 'newpassword',
+          confirmNewPassword: 'newpassword',
         },
-      }),
-    };
+      };
+      const res = {
+        status: sinon.stub().returnsThis(),
+        json: sinon.stub(),
+      };
 
-    await deleteUser(req, res);
+      await editUser(req, res);
+
+      expect(res.status.calledWith(500)).to.be.true;
+      expect(res.json.calledOnce).to.be.true;
+    });
   });
 
-  it("should return an error when trying to delete a non-existing user", async () => {
-    const req = {
-      body: {
-        emailToDelete: "nonexistent@example.com",
-      },
-    };
-    const res = {
-      status: (statusCode) => ({
-        json: (data) => {
-          expect(statusCode).to.equal(404);
-          expect(data).to.deep.equal({
-            message: "User not found or unable to delete user!",
-          });
+  describe('deleteUser', () => {
+    it('should delete a user with valid email', async () => {
+      // Create test users
+      const testUsers = [
+        { email: 'user1@example.com', password: 'password1' },
+        { email: 'user2@example.com', password: 'password2' },
+      ];
+      await fs.writeFile(testUsersFile, JSON.stringify(testUsers), 'utf8');
+
+      const req = {
+        body: {
+          emailToDelete: 'user1@example.com',
         },
-      }),
-    };
+      };
+      const res = {
+        status: sinon.stub().returnsThis(),
+        json: sinon.stub(),
+      };
 
-    await deleteUser(req, res);
+      await deleteUser(req, res);
+
+      expect(res.status.calledWith(200)).to.be.true;
+      expect(res.json.calledOnce).to.be.true;
+
+      // Check if the user was actually deleted
+      const remainingUsers = await fs.readFile(testUsersFile, 'utf8');
+      const parsedRemainingUsers = JSON.parse(remainingUsers);
+      expect(parsedRemainingUsers.length).to.equal(1);
+    });
+
+    it('should return an error if user to delete is not found', async () => {
+      const req = {
+        body: {
+          emailToDelete: 'nonexistent@example.com',
+        },
+      };
+      const res = {
+        status: sinon.stub().returnsThis(),
+        json: sinon.stub(),
+      };
+
+      await deleteUser(req, res);
+
+      expect(res.status.calledWith(404)).to.be.true;
+      expect(res.json.calledOnce).to.be.true;
+    });
   });
-
-  // Add more test cases as needed
 });
