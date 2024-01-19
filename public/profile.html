@@ -121,7 +121,9 @@
   </head>
   <body>
 
+
     <body onload="filluser()"></body>
+
 
     <header>
       <h1>Finance Website</h1>
@@ -135,6 +137,7 @@
       <a href="profile.html">Profile</a>
       <a href="#" id="logoutBtn">Log Out</a>
     </nav>
+
 
     <script>
       document
@@ -176,6 +179,7 @@
     </form>
 
     <script>
+
 
   async function editUser() {
     try {
@@ -230,6 +234,7 @@
           },
           body: JSON.stringify({
             emailToDelete: storedEmail,
+           
            
           }),
         });
