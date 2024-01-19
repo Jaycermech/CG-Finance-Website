@@ -24,7 +24,9 @@
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">68.75% </span>
+                <span class="strong">68.75% </span>
                 <span class="quiet">Statements</span>
+                <span class='fraction'>55/80</span>
                 <span class='fraction'>55/80</span>
             </div>
         
@@ -45,7 +47,9 @@
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">69.33% </span>
+                <span class="strong">69.33% </span>
                 <span class="quiet">Lines</span>
+                <span class='fraction'>52/75</span>
                 <span class='fraction'>52/75</span>
             </div>
         
@@ -306,17 +310,22 @@
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -327,6 +336,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -336,6 +346,8 @@
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -461,14 +473,19 @@ async function editBudget(req, res) {
         allBudgets[i].budget = budget;
         allBudgets[i].owner = owner;
         modified = true;
+        allBudgets[i].owner = owner;
+        modified = true;
       }
     }
+    if (modified) {
+      await fs.writeFile(
     if (modified) {
       await fs.writeFile(
         "utils/monthly-budget.json",
         JSON.stringify(allBudgets),
         "utf8"
       );
+      return res
       return res
         .status(201)
         .json(allBudgets);
@@ -478,6 +495,7 @@ async function editBudget(req, res) {
         .json({ message: "Error occurred, unable to modify!" });
     }
   } catch (error) {
+<span class="cstat-no" title="statement not covered" >    return res.status(500).json({ message: error.message });</span>
 <span class="cstat-no" title="statement not covered" >    return res.status(500).json({ message: error.message });</span>
   }
 }
@@ -489,6 +507,7 @@ async function deleteBudget(req, res) {
     var index = -1;
     for (var i = 0; i &lt; allBudgets.length; i++) {
       var curcurrBudget = allBudgets[i];
+      <span class="missing-if-branch" title="else path not taken" >E</span>if (curcurrBudget.id == id) index = i;
       <span class="missing-if-branch" title="else path not taken" >E</span>if (curcurrBudget.id == id) index = i;
     }
     if (index != -1) {
