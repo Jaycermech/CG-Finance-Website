@@ -120,6 +120,9 @@
     </style>
   </head>
   <body>
+
+    <body onload="filluser()"></body>
+
     <header>
       <h1>Finance Website</h1>
     </header>
@@ -147,7 +150,7 @@
     <h2>Edit User</h2>
     <form id="editUserForm">
       <label for="emailToEdit">Current Email:</label>
-      <input type="email" id="emailToEdit" name="emailToEdit" required />
+      <input type="email" id="emailToEdit" name="emailToEdit" readonly />
 
       <label for="newEmail">New Email:</label>
       <input type="email" id="newEmail" name="newEmail" />
@@ -168,22 +171,51 @@
 
     <h2>Delete User</h2>
     <form id="deleteUserForm">
-      <label for="passwordToDelete">Password to Confirm:</label>
-      <input
-        type="password"
-        id="passwordToDelete"
-        name="passwordToDelete"
-        required
-      />
-
       <button type="button" onclick="deleteUser()">Delete User</button>
       <p id="deleteUserMessage"></p>
     </form>
 
     <script>
+
+  async function editUser() {
+    try {
+      const emailToEdit = document.getElementById("emailToEdit").value;
+      const newEmail = document.getElementById("newEmail").value;
+      const newPassword = document.getElementById("newPassword").value;
+      const confirmNewPassword = document.getElementById("confirmNewPassword").value;
+
+      // Validate that the new password and confirm password match
+      if (newPassword !== confirmNewPassword) {
+        document.getElementById("editUserMessage").innerText = "New password and confirm password do not match.";
+        return;
+      }
+
+      const response = await fetch('/edit-user', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          emailToEdit,
+          newEmail,
+          newPassword,
+          confirmNewPassword,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        document.getElementById("editUserMessage").innerText = data.message;
+      } else {
+        document.getElementById("editUserMessage").innerText = data.message;
+      }
+    } catch (error) {
+      console.error(error);
+      document.getElementById("editUserMessage").innerText = "An error occurred while processing your request.";
+    }
+  }
       async function deleteUser() {
-        const passwordToDelete =
-          document.getElementById("passwordToDelete").value;
         const storedEmail = sessionStorage.getItem("Useremail"); // Assuming you stored the user email in session storage
 
         if (!storedEmail) {
@@ -198,7 +230,7 @@
           },
           body: JSON.stringify({
             emailToDelete: storedEmail,
-            passwordToDelete: passwordToDelete,
+           
           }),
         });
 
@@ -212,6 +244,24 @@
           deleteUserMessage.style.color = "red";
           deleteUserMessage.textContent = data.message;
         }
+
+
+        const data = await response.json();
+        const deleteUserMessage = document.getElementById("deleteUserMessage");
+
+        deleteUserMessage.style.color = response.ok ? "green" : "red";
+        deleteUserMessage.textContent = data.message;
+
+        sessionStorage.clear();
+        // Redirect to index.html
+        window.location.href = "index.html";
+      }
+    </script>
+    <script>
+      async function filluser() {
+        var userEmail = sessionStorage.getItem("Useremail");
+        // Set the value of emailToEdit input
+        document.getElementById("emailToEdit").value = userEmail;
       }
     </script>
   </body>
