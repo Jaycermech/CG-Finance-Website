@@ -1,7 +1,7 @@
 var express = require("express");
 var bodyParser = require("body-parser");
 var app = express();
- 
+
 const PORT = process.env.PORT || 5050;
 var startPage = "index.html";
 
@@ -25,12 +25,19 @@ app.put("/edit-retirement/:id", edit_retirement);
 const { delete_retirement } = require("./utils/RetirementUtil");
 app.delete("/delete-retirement/:id", delete_retirement);
 
-
-
 // Monthly-budget
-const { addBudget,viewBudget,editBudget,deleteBudget} = require("./utils/monthly-budgetUtils");
+const {
+  addBudget,
+  viewBudget,
+  editBudget,
+  deleteBudget,
+  viewBudgetid,
+  viewBudgetByOwner
+} = require("./utils/monthly-budgetUtils");
 app.post("/add-budget", addBudget);
 app.get("/view-budget", viewBudget);
+app.get("/get-budget-by-owner/:owner", viewBudgetByOwner);
+app.get("/view-budget/:id", viewBudgetid);
 app.put("/edit-budget/:id", editBudget);
 app.delete("/delete-budget/:id", deleteBudget);
 
@@ -40,11 +47,11 @@ const {
   login,
   viewUser,
   editUser,
-  deleteUser
+  deleteUser,
 } = require("./utils/UserUtil");
 app.post("/register", register);
 app.post("/login", login);
-app.get("/viewuser", viewUser); 
+app.get("/viewuser", viewUser);
 app.put("/edit-user", editUser);
 app.delete("/delete-user", deleteUser);
 
@@ -60,10 +67,18 @@ const {
 app.post("/add-expense", addExpense);
 app.get("/view-expneses", viewExpenses);
 app.put("/edit-expense/:id", editExpense);
-app.delete('/delete-expense/:id', deleteExpense);;
+app.delete("/delete-expense/:id", deleteExpense);
 
+// Define a route for /expense
+app.get("/expense", (req, res) => {
+  res.sendFile("expense.html", { root: "public" });
+});
 
-app.get("/", (req, res) => {
+app.get("/home", (req, res) => {
+  res.sendFile("home.html", { root: "public" });
+});
+
+app.get("/home", (req, res) => {
   res.sendFile(__dirname + "/public/" + startPage);
 });
 const server = app.listen(PORT, function () {
