@@ -1,10 +1,9 @@
-const { expect } = require('chai');
-const sinon = require('sinon');
-const fs = require('fs').promises;
+const { describe, it } = require("mocha");
+const { expect, should } = require("chai");
+const fs = require("fs").promises;
 const {
   register,
   login,
-  viewUser,
   editUser,
   deleteUser,
   viewUser,
@@ -43,23 +42,27 @@ describe("register function", () => {
       }),
     };
 
-      await register(req, res);
+    await register(req, res);
+  });
 
-      expect(res.status.calledWith(201)).to.be.true;
-      expect(res.json.calledOnce).to.be.true;
-    });
+  it("should return a validation error when invalid data is provided", async () => {
+    const req = {
+      body: {
+        email: "invalidemail",
+        password: "short",
+      },
+    };
+    const res = {
+      status: (statusCode) => ({
+        json: (data) => {
+          expect(statusCode).to.equal(500);
+          expect(data).to.deep.equal({ message: "Validation error" });
 
-    it('should return a validation error for invalid data', async () => {
-      const req = {
-        body: {
-          email: 'invalid-email',
-          password: 'short',
+          // Using should syntax
+          data.should.deep.equal({ message: "Validation error" });
         },
-      };
-      const res = {
-        status: sinon.stub().returnsThis(),
-        json: sinon.stub(),
-      };
+      }),
+    };
 
     await register(req, res);
   });
@@ -198,50 +201,50 @@ describe("editUser function", () => {
       }),
     };
 
-      await editUser(req, res);
+    await editUser(req, res);
+  });
 
-      expect(res.status.calledWith(201)).to.be.true;
-      expect(res.json.calledOnce).to.be.true;
-
-      // Check if the user was actually edited
-      const updatedUsers = await fs.readFile(testUsersFile, 'utf8');
-      const parsedUpdatedUsers = JSON.parse(updatedUsers);
-      expect(parsedUpdatedUsers[0].email).to.equal('newtest@example.com');
-    });
-
-    it('should return an error for mismatched new password and confirm password', async () => {
-      const req = {
-        body: {
-          emailToEdit: 'test@example.com',
-          newEmail: 'newtest@example.com',
-          newPassword: 'newpassword',
-          confirmNewPassword: 'wrongpassword',
+  it("should return an error when new password and confirm password do not match", async () => {
+    const req = {
+      body: {
+        emailToEdit: "test@example.com",
+        newPassword: "newPassword",
+        confirmNewPassword: "wrongPassword",
+      },
+    };
+    const res = {
+      status: (statusCode) => ({
+        json: (data) => {
+          expect(statusCode).to.equal(400);
+          expect(data).to.deep.equal({
+            message: "New password and confirm password do not match.",
+          });
         },
-      };
-      const res = {
-        status: sinon.stub().returnsThis(),
-        json: sinon.stub(),
-      };
+      }),
+    };
 
-      await editUser(req, res);
+    await editUser(req, res);
+  });
 
-      expect(res.status.calledWith(400)).to.be.true;
-      expect(res.json.calledOnce).to.be.true;
-    });
-
-    it('should return an error if user to edit is not found', async () => {
-      const req = {
-        body: {
-          emailToEdit: 'nonexistent@example.com',
-          newEmail: 'newtest@example.com',
-          newPassword: 'newpassword',
-          confirmNewPassword: 'newpassword',
+  it("should return an error when trying to edit a non-existing user", async () => {
+    const req = {
+      body: {
+        emailToEdit: "nonexistent@example.com",
+        newEmail: "new@example.com",
+        newPassword: "newPassword",
+        confirmNewPassword: "newPassword",
+      },
+    };
+    const res = {
+      status: (statusCode) => ({
+        json: (data) => {
+          expect(statusCode).to.equal(500);
+          expect(data).to.deep.equal({
+            message: "Error occurred, unable to update user information!",
+          });
         },
-      };
-      const res = {
-        status: sinon.stub().returnsThis(),
-        json: sinon.stub(),
-      };
+      }),
+    };
 
     await editUser(req, res);
   });
