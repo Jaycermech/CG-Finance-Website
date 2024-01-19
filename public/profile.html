@@ -4,67 +4,173 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>User Management</title>
+  <link
+    rel="stylesheet"
+    href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+  />
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f4;
+    }
+
+    header {
+      background-color: #333;
+      color: #fff;
+      padding: 10px;
+      text-align: center;
+    }
+
+    nav {
+      background-color: #444;
+      padding: 10px;
+    }
+
+    nav a {
+      color: #fff;
+      text-decoration: none;
+      padding: 10px;
+      margin: 0 10px;
+    }
+
+    nav a:hover {
+      background-color: #555;
+    }
+
+    section {
+      padding: 20px;
+    }
+
+    .search-container {
+      max-width: 600px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    input[type="text"] {
+      width: 70%;
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+      margin-right: 5px;
+    }
+
+    input[type="submit"] {
+      background-color: #4caf50;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    input[type="submit"]:hover {
+      background-color: #45a049;
+    }
+
+    /* User Management Styles */
+    h2 {
+      color: #333;
+    }
+
+    form {
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      width: 300px;
+      margin: 0 auto;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      color: #333;
+    }
+
+    input {
+      width: 100%;
+      padding: 8px;
+      margin-bottom: 16px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+    }
+
+    button {
+      background-color: #4caf50;
+      color: #fff;
+      padding: 10px 15px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+
+    p {
+      margin: 10px 0 0;
+      font-size: 14px;
+      color: red;
+    }
+  </style>
 </head>
-<body style="font-family: Arial, sans-serif; text-align: center; margin: 20px;">
+<body>
+  <header>
+    <h1>Finance Website</h1>
+  </header>
 
-  <!-- Edit User Form -->
-  <h2 style="color: #333;">Edit User</h2>
-  <form id="editUserForm" style="background-color: #fff; border-radius: 8px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); padding: 20px; width: 300px; margin: 0 auto;">
-    <label for="emailToEdit" style="display: block; margin-bottom: 8px; color: #333;">Current Email:</label>
-    <input type="email" id="emailToEdit" name="emailToEdit" required style="width: 100%; padding: 8px; margin-bottom: 16px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;" />
+  <nav style="margin-bottom: 20px">
+    <a href="/home">Home</a>
+    <a href="/expense.html">Expense</a>
+    <a href="MonthlyBudget.html">Budget</a>
+    <a href="retirement.html">Retirement</a>
+    <a href="profile.html">Profile</a>
+    <a href="#" id="logoutBtn">Log Out</a>
+  </nav>
 
-    <label for="newEmail" style="display: block; margin-bottom: 8px; color: #333;">New Email:</label>
-    <input type="email" id="newEmail" name="newEmail" style="width: 100%; padding: 8px; margin-bottom: 16px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;" />
+ 
 
-    <label for="newPassword" style="display: block; margin-bottom: 8px; color: #333;">New Password:</label>
-    <input type="password" id="newPassword" name="newPassword" style="width: 100%; padding: 8px; margin-bottom: 16px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;" />
+  <h2>Edit User</h2>
+  <form id="editUserForm">
+    <label for="emailToEdit">Current Email:</label>
+    <input type="email" id="emailToEdit" name="emailToEdit" required />
 
-    <label for="confirmNewPassword" style="display: block; margin-bottom: 8px; color: #333;">Confirm New Password:</label>
-    <input type="password" id="confirmNewPassword" name="confirmNewPassword" style="width: 100%; padding: 8px; margin-bottom: 16px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;" />
+    <label for="newEmail">New Email:</label>
+    <input type="email" id="newEmail" name="newEmail" />
 
-    <button type="button" onclick="editUser()" style="background-color: #4caf50; color: #fff; padding: 10px 15px; border: none; border-radius: 4px; cursor: pointer;">Edit User</button>
-    <p id="editUserMessage" style="margin: 10px 0 0; font-size: 14px; color: red;"></p>
+    <label for="newPassword">New Password:</label>
+    <input type="password" id="newPassword" name="newPassword" />
+
+    <label for="confirmNewPassword">Confirm New Password:</label>
+    <input type="password" id="confirmNewPassword" name="confirmNewPassword" />
+
+    <button type="button" onclick="editUser()">Edit User</button>
+    <p id="editUserMessage"></p>
   </form>
 
-  <!-- Delete User Form -->
-  <h2 style="color: #333;">Delete User</h2>
-  <form id="deleteUserForm" style="background-color: #fff; border-radius: 8px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); padding: 20px; width: 300px; margin: 20px auto;">
-    <label for="emailToDelete" style="display: block; margin-bottom: 8px; color: #333;">Email to Delete:</label>
-    <input type="email" id="emailToDelete" name="emailToDelete" required style="width: 100%; padding: 8px; margin-bottom: 16px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;" />
+  <h2>Delete User</h2>
+  <form id="deleteUserForm">
+    <label for="passwordToDelete">Password to Confirm:</label>
+    <input type="password" id="passwordToDelete" name="passwordToDelete" required />
 
-    <button type="button" onclick="deleteUser()" style="background-color: #4caf50; color: #fff; padding: 10px 15px; border: none; border-radius: 4px; cursor: pointer;">Delete User</button>
-    <p id="deleteUserMessage" style="margin: 10px 0 0; font-size: 14px; color: red;"></p>
+    <button type="button" onclick="deleteUser()">Delete User</button>
+    <p id="deleteUserMessage"></p>
   </form>
 
   <script>
-    async function editUser() {
-      const emailToEdit = document.getElementById("emailToEdit").value;
-      const newEmail = document.getElementById("newEmail").value;
-      const newPassword = document.getElementById("newPassword").value;
-      const confirmNewPassword = document.getElementById("confirmNewPassword").value;
-
-      const response = await fetch("/edit-user", {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          emailToEdit,
-          newEmail,
-          newPassword,
-          confirmNewPassword,
-        }),
-      });
-
-      const data = await response.json();
-      const editUserMessage = document.getElementById("editUserMessage");
-
-      editUserMessage.style.color = response.ok ? "green" : "red";
-      editUserMessage.textContent = data.message;
-    }
-
     async function deleteUser() {
-      const emailToDelete = document.getElementById("emailToDelete").value;
+      const passwordToDelete = document.getElementById("passwordToDelete").value;
+      const storedEmail = sessionStorage.getItem("Useremail"); // Assuming you stored the user email in session storage
+
+      if (!storedEmail) {
+        displayErrorMessage("User email not found in session storage.");
+        return;
+      }
 
       const response = await fetch("/delete-user", {
         method: "DELETE",
@@ -72,7 +178,8 @@
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          emailToDelete,
+          emailToDelete: storedEmail,
+          passwordToDelete: passwordToDelete,
         }),
       });
 
@@ -81,7 +188,29 @@
 
       deleteUserMessage.style.color = response.ok ? "green" : "red";
       deleteUserMessage.textContent = data.message;
+
+      // Optionally, you can redirect or perform additional actions after successful deletion
+      if (response.ok) {
+        // Add your redirection or other actions here
+      }
     }
+
+    function displayErrorMessage(message) {
+      const deleteUserMessage = document.getElementById("deleteUserMessage");
+      deleteUserMessage.style.color = "red";
+      deleteUserMessage.textContent = message;
+    }
+  </script>
+  
+  <script>
+    document
+      .getElementById("logoutBtn")
+      .addEventListener("click", function () {
+        // Clear session storage
+        sessionStorage.clear();
+        // Redirect to index.html
+        window.location.href = "index.html";
+      });
   </script>
 </body>
 </html>
