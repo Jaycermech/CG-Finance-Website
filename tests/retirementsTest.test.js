@@ -32,6 +32,7 @@ describe("Add retirement", () => {
         current_age: 40,
         retirement_age: 70,
         fund_goal: 400000,
+        annual_saving_goal: 3000,
         user: "jovan",
       },
     };
@@ -56,6 +57,7 @@ describe("Add retirement", () => {
         current_age: 40,
         retirement_age: 70,
         fund_goal: "hello",
+        annual_saving_goal: 3000,
         user: "jovan",
       },
     };
@@ -118,6 +120,7 @@ describe("Edit retirement: ", () => {
     const updatedCurrentAge = 50;
     const updatedRetirementAge = 75;
     const updatedFundGoal = 100000;
+    const updatedannual_saving_goal = 3000;
     const updatedUser = "john_doe";
 
     const req = {
@@ -126,6 +129,7 @@ describe("Edit retirement: ", () => {
         current_age: updatedCurrentAge,
         retirement_age: updatedRetirementAge,
         fund_goal: updatedFundGoal,
+        annual_saving_goal: updatedannual_saving_goal,
         user: updatedUser,
       },
       params: {
@@ -143,6 +147,7 @@ describe("Edit retirement: ", () => {
         assert.equal(data[0].current_age, updatedCurrentAge);
         assert.equal(data[0].retirement_age, updatedRetirementAge);
         assert.equal(data[0].fund_goal, updatedFundGoal);
+        assert.equal(data[0].annual_saving_goal, updatedannual_saving_goal);
         assert.equal(data[0].user, updatedUser);
 
         orgContent = data;
@@ -158,6 +163,7 @@ describe("Edit retirement: ", () => {
         current_age: 50, // Updated current_age
         retirement_age: 75, // Updated retirement_age
         fund_goal: 100000, // Updated fund_goal
+        annual_saving_goal: 3000, // Updated annual_saving_goal
         user: "john_doe", // Updated user
       },
       params: {

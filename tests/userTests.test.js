@@ -25,7 +25,7 @@ describe("register function", () => {
   it("should register a new user when valid data is provided", async () => {
     const req = {
       body: {
-        email: "newuser@example.com",
+        email: "test@example.com",
         password: "newPassword",
       },
     };
@@ -74,16 +74,16 @@ describe("register function", () => {
 });
 describe("login function", () => {
     // Assuming you have a utility function to reset the users.json file to a known state
-    before(async () => {
-      await fs.writeFile(
-        "utils/users.json",
-        JSON.stringify([
-          { email: "test@example.com", password: "password" },
-          // Add other users as needed for your tests
-        ]),
-        "utf8"
-      );
-    });
+    // before(async () => {
+    //   await fs.writeFile(
+    //     "utils/users.json",
+    //     JSON.stringify([
+    //       { email: "test@example.com", password: "password" },
+    //       // Add other users as needed for your tests
+    //     ]),
+    //     "utf8"
+    //   );
+    // });
   
     // Assuming you have a utility function to clean up after tests
     after(async () => {
@@ -133,16 +133,16 @@ describe("login function", () => {
 
 describe("viewUser function", () => {
   // Assuming you have a utility function to reset the users.json file to a known state
-  before(async () => {
-    await fs.writeFile(
-      "utils/users.json",
-      JSON.stringify([
-        { email: "test@example.com", password: "password" },
-        // Add other users as needed for your tests
-      ]),
-      "utf8"
-    );
-  });
+  // before(async () => {
+  //   await fs.writeFile(
+  //     "utils/users.json",
+  //     JSON.stringify([
+  //       { email: "test@example.com", password: "password" },
+  //       // Add other users as needed for your tests
+  //     ]),
+  //     "utf8"
+  //   );
+  // });
 
   // Assuming you have a utility function to clean up after tests
   after(async () => {
@@ -171,16 +171,16 @@ describe("viewUser function", () => {
 
 describe("editUser function", () => {
   // Assuming you have a utility function to reset the users.json file to a known state
-  before(async () => {
-    await fs.writeFile(
-      "utils/users.json",
-      JSON.stringify([
-        { email: "test@example.com", password: "oldPassword" },
-        // Add other users as needed for your tests
-      ]),
-      "utf8"
-    );
-  });
+  // before(async () => {
+  //   await fs.writeFile(
+  //     "utils/users.json",
+  //     JSON.stringify([
+  //       { email: "test@example.com", password: "oldPassword" },
+  //       // Add other users as needed for your tests
+  //     ]),
+  //     "utf8"
+  //   );
+  // });
 
   // Assuming you have a utility function to clean up after tests
   after(async () => {
@@ -260,16 +260,16 @@ describe("editUser function", () => {
 
 describe("deleteUser function", () => {
   // Assuming you have a utility function to reset the users.json file to a known state
-  before(async () => {
-    await fs.writeFile(
-      "utils/users.json",
-      JSON.stringify([
-        { email: "test@example.com", password: "password" },
-        // Add other users as needed for your tests
-      ]),
-      "utf8"
-    );
-  });
+  // before(async () => {
+  //   await fs.writeFile(
+  //     "utils/users.json",
+  //     JSON.stringify([
+  //       { email: "test@example.com", password: "password" },
+  //       // Add other users as needed for your tests
+  //     ]),
+  //     "utf8"
+  //   );
+  // });
 
   // Assuming you have a utility function to clean up after tests
   after(async () => {
@@ -279,7 +279,7 @@ describe("deleteUser function", () => {
   it("should delete user when valid email is provided", async () => {
     const req = {
       body: {
-        emailToDelete: "test@example.com",
+        emailToDelete: "new@example.com",
       },
     };
     const res = {
