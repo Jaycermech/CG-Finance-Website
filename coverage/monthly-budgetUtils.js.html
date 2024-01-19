@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">66.25% </span>
+                <span class="strong">68.75% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>53/80</span>
+                <span class='fraction'>55/80</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">66.66% </span>
+                <span class="strong">69.33% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>50/75</span>
+                <span class='fraction'>52/75</span>
             </div>
         
             
@@ -303,41 +303,41 @@
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">5x</span>
-<span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -459,17 +459,17 @@ async function editBudget(req, res) {
       if (curcurrBudget.id == id) {
         allBudgets[i].ammenities = ammenities;
         allBudgets[i].budget = budget;
-        addBudgets[i].budget = owner;
-<span class="cstat-no" title="statement not covered" >        modified = true;</span>
+        allBudgets[i].owner = owner;
+        modified = true;
       }
     }
-    <span class="missing-if-branch" title="if path not taken" >I</span>if (modified) {
-<span class="cstat-no" title="statement not covered" >      await fs.writeFile(</span>
+    if (modified) {
+      await fs.writeFile(
         "utils/monthly-budget.json",
         JSON.stringify(allBudgets),
         "utf8"
       );
-<span class="cstat-no" title="statement not covered" >      return res</span>
+      return res
         .status(201)
         .json(allBudgets);
     } else {
@@ -478,7 +478,7 @@ async function editBudget(req, res) {
         .json({ message: "Error occurred, unable to modify!" });
     }
   } catch (error) {
-    return res.status(500).json({ message: error.message });
+<span class="cstat-no" title="statement not covered" >    return res.status(500).json({ message: error.message });</span>
   }
 }
 &nbsp;
@@ -489,7 +489,7 @@ async function deleteBudget(req, res) {
     var index = -1;
     for (var i = 0; i &lt; allBudgets.length; i++) {
       var curcurrBudget = allBudgets[i];
-      if (curcurrBudget.id == id) index = i;
+      <span class="missing-if-branch" title="else path not taken" >E</span>if (curcurrBudget.id == id) index = i;
     }
     if (index != -1) {
       allBudgets.splice(index, 1);
@@ -526,9 +526,7 @@ module.exports = {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-01-14T08:33:15.568Z
-                at 2024-01-11T16:56:23.155Z
-                at 2024-01-13T15:15:14.347Z
+                at 2024-01-19T04:53:46.726Z
             </div>
         <script src="prettify.js"></script>
         <script>
