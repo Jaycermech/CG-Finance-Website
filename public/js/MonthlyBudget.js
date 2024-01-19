@@ -1,53 +1,6 @@
 
 let currentId = null; // Variable to store the current ID
 
-// function viewBudget() {
-//     var request = new XMLHttpRequest();
-//     request.open('GET', '/view-budget', true);
-//     request.setRequestHeader('Content-Type', 'application/json');
-//     request.onload = function () {
-//         var response = JSON.parse(request.responseText);
-
-//         var html = '';
-        
-//         for (var i = 0; i < response.length; i++) {
-//             html +=
-//                 '<tr>' +
-//                 '<td>' + (i + 1) + '</td>' +
-//                 '<td>' + response[i].ammenities + '</td>' +
-//                 '<td>' + "$" + response[i].budget + '</td>' +
-//                 '<td>' + response[i].owner + '</td>' +
-//                 '<td>' +
-//                 '<br>' + // Line break for space
-//                 '<button type="button" class="btn btn-warning openEditBtn" data-bs-toggle="modal" data-bs-target="#editModal" data-id="' + response[i].id + '">' +
-//                 '<i class="fas fa-edit"></i> Edit</button>' + // Edit icon
-//                 '</td>' +
-//                 '</tr>';
-//             var responseData = response[i]
-//             console.log(responseData);
-//         }
-//         document.getElementById('tableContent').innerHTML = html;
-//         // Add event listener to log ID when the edit button is clicked
-//         var editButtons = document.querySelectorAll('.openEditBtn');
-//         editButtons.forEach(function (btn) {
-//             btn.addEventListener('click', function (event) {
-//                 var id = event.target.getAttribute('data-id');
-//                 console.log('Clicked ID:', id);
-
-//             });
-//         });
-//         document.addEventListener('DOMContentLoaded', function () {
-//             document.getElementById('editModal').addEventListener('click', function (event) {
-//                 if (event.target && event.target.classList.contains('btn-danger')) {
-//                     var data = // Retrieve the data you need to pass;
-//                         viewBudgetid(data);
-//                 }
-//             });
-//         });
-
-//     };
-//     request.send();
-// }
 function viewBudget() {
     var request = new XMLHttpRequest();
     request.open('GET', '/view-budget', true);
@@ -90,7 +43,7 @@ function viewBudget() {
             document.getElementById('editModal').addEventListener('click', function (event) {
                 if (event.target && event.target.classList.contains('btn-danger')) {
                     var data = // Retrieve the data you need to pass;
-                    viewBudgetid(data);
+                        viewBudgetid(data);
                 }
             });
         });
@@ -106,6 +59,10 @@ async function addBudget() {
     jsonData.owner = document.getElementById('ownerAdd').value;
 
     // Validate fields here if needed
+    if (jsonData.budget.trim() === "") {
+        alert("Please enter Monthly Budget");
+        return;
+    }
 
     try {
         const response = await fetch('/add-budget', {
@@ -120,7 +77,7 @@ async function addBudget() {
         console.log('New budget added:', data);
         viewBudget()
 
-        
+
         // Handle UI changes or redirection here after successful addition
 
         $('#addModal').modal('hide');
@@ -138,6 +95,11 @@ async function editBudget() {
     jsonData.budget = document.getElementById('budgetEdit').value;
     jsonData.owner = document.getElementById('ownerEdit').value;
     console.log(jsonData);
+    if (jsonData.budget.trim() === "") {
+        alert("Please enter Monthly Budget");
+        return;
+    }
+
     try {
         const response = await fetch('/edit-budget/' + currentId, {
             method: 'PUT',
@@ -149,7 +111,7 @@ async function editBudget() {
         viewBudget();
         const data = await response.json();
         console.log('Budget updated:', data);
-        
+
         // Handle UI changes or redirection after successful update
         $('#editModal').modal('hide');
     } catch (error) {
