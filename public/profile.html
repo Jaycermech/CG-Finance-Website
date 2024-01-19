@@ -120,7 +120,9 @@
     </style>
   </head>
   <body>
+
     <body onload="filluser()"></body>
+
     <header>
       <h1>Finance Website</h1>
     </header>
@@ -133,6 +135,7 @@
       <a href="profile.html">Profile</a>
       <a href="#" id="logoutBtn">Log Out</a>
     </nav>
+
     <script>
       document
         .getElementById("logoutBtn")
@@ -173,6 +176,7 @@
     </form>
 
     <script>
+
   async function editUser() {
     try {
       const emailToEdit = document.getElementById("emailToEdit").value;
@@ -226,8 +230,21 @@
           },
           body: JSON.stringify({
             emailToDelete: storedEmail,
+           
           }),
         });
+
+        const data = await response.json();
+        const deleteUserMessage = document.getElementById("deleteUserMessage");
+
+        if (response.ok) {
+          deleteUserMessage.style.color = "green";
+          deleteUserMessage.textContent = data.message;
+        } else {
+          deleteUserMessage.style.color = "red";
+          deleteUserMessage.textContent = data.message;
+        }
+
 
         const data = await response.json();
         const deleteUserMessage = document.getElementById("deleteUserMessage");
