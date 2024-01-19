@@ -31,7 +31,9 @@
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">66.66% </span>
+                <span class="strong">66.66% </span>
                 <span class="quiet">Branches</span>
+                <span class='fraction'>8/12</span>
                 <span class='fraction'>8/12</span>
             </div>
         
@@ -305,6 +307,8 @@
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">6x</span>
 <span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -336,6 +340,8 @@
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -489,6 +495,7 @@ async function deleteBudget(req, res) {
     var index = -1;
     for (var i = 0; i &lt; allBudgets.length; i++) {
       var curcurrBudget = allBudgets[i];
+      if (curcurrBudget.id == id) index = i;
       if (curcurrBudget.id == id) index = i;
     }
     if (index != -1) {
