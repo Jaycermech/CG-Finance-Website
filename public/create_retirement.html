@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+    <title>Add Retirement</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f4f4f4;
+      }
+
+      header {
+        background-color: #333;
+        color: #fff;
+        padding: 10px;
+        text-align: center;
+      }
+
+      nav {
+        background-color: #444;
+        padding: 10px;
+      }
+
+      nav a {
+        color: #fff;
+        text-decoration: none;
+        padding: 10px;
+        margin: 0 10px;
+      }
+
+      nav a:hover {
+        background-color: #555;
+      }
+
+      section {
+        padding: 20px;
+      }
+
+      .search-container {
+        max-width: 600px;
+        margin: 0 auto;
+        text-align: center;
+      }
+
+      input[type="text"] {
+        width: 70%;
+        padding: 10px;
+        border: none;
+        border-radius: 5px;
+        margin-right: 5px;
+      }
+
+      input[type="submit"] {
+        background-color: #4caf50;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+
+      input[type="submit"]:hover {
+        background-color: #45a049;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>Finance Website</h1>
+    </header>
+
+    <nav>
+      <a href="home.html">Home</a>
+      <a href="#">Expense</a>
+      <a href="#">Budget</a>
+      <a href="retirement.html">Retirement</a>
+      <a href="profile.html">Profile</a>
+      <a href="#" id="logoutBtn">Log Out</a>
+    </nav>
+
+    <div class="container mt-5">
+      <h1 class="mb-4">Add Retirement</h1>
+
+      <div class="row">
+        <!-- Left Column (col-6) -->
+        <div class="col-md-6">
+          <form>
+            <div class="form-group">
+              <label for="title">Title</label>
+              <input
+                style="width: 100%"
+                type="text"
+                class="form-control"
+                id="create_title"
+                placeholder="Enter Title"
+              />
+            </div>
+            <div class="form-group">
+              <label for="currentAge">Current Age</label>
+              <input
+                type="number"
+                class="form-control"
+                id="create_currentAge"
+                placeholder="Enter Current Age"
+              />
+            </div>
+            <div class="form-group">
+              <label for="retirementAge">Retirement Age</label>
+              <input
+                type="number"
+                class="form-control"
+                id="create_retirementAge"
+                placeholder="Enter Retirement Age"
+              />
+            </div>
+            <div class="form-group">
+              <label for="fundGoals">Fund Goals</label>
+              <input
+                type="number"
+                class="form-control"
+                id="create_fundGoals"
+                placeholder="Enter Fund Goals"
+              />
+            </div>
+            <button onclick="calculate()" type="button" class="btn btn-primary">
+              Calculate
+            </button>
+          </form>
+        </div>
+
+        <!-- Right Column (col-6) -->
+        <div class="col-md-6 text-center justify-content-center">
+          <h2>Retirement Plan</h2>
+
+          <h3>Annual Saving Goal</h3>
+          <p id="annual_saving_goal_display">Calculating</p>
+
+          <h3>Years to Retirement</h3>
+          <p id="years_to_retirement_display">Calculating</p>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.7/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  </body>
+  <script>
+    function calculate() {
+      let title = document.getElementById("create_title").value;
+      let currentAge = document.getElementById("create_currentAge").value;
+      let retirementAge = document.getElementById("create_retirementAge").value;
+      let fundGoals = document.getElementById("create_fundGoals").value;
+
+      console.log(title);
+      console.log(currentAge);
+      console.log(retirementAge);
+      console.log(fundGoals);
+
+      //Calculating years to retirement
+      const years_to_retirement =
+        parseInt(retirementAge) - parseInt(currentAge);
+      console.log("Year to retirement: ", years_to_retirement);
+      document.getElementById("years_to_retirement_display").textContent =
+        years_to_retirement;
+
+      //Calculating annual saving goal
+      const annual_saving_goal =
+        parseFloat(fundGoals) / parseInt(years_to_retirement);
+      console.log("Annual Saving Goal: ", annual_saving_goal);
+      document.getElementById("annual_saving_goal_display").textContent =
+        annual_saving_goal;
+
+      var response = "";
+      var jsonData = new Object();
+      jsonData.title = document.getElementById("create_title").value;
+      jsonData.current_age = document.getElementById("create_currentAge").value;
+      jsonData.retirement_age = document.getElementById(
+        "create_retirementAge"
+      ).value;
+      jsonData.fund_goal = document.getElementById("create_fundGoals").value;
+      jsonData.annual_saving_goal = annual_saving_goal;
+      jsonData.user = sessionStorage.getItem("Useremail");
+
+      console.log("Annual saving goal is: ", jsonData.annual_saving_goal);
+      if (
+        jsonData.title == "" ||
+        jsonData.current_age == "" ||
+        jsonData.retirement_age == "" ||
+        jsonData.fund_goal == "" ||
+        jsonData.annual_saving_goal == "" ||
+        jsonData.user == ""
+      ) {
+        alert("All Fields required!");
+        return;
+      }
+      var request = new XMLHttpRequest();
+      request.open("POST", "/add-retirement", true);
+      request.setRequestHeader("Content-Type", "application/json");
+      request.onload = function () {
+        response = JSON.parse(request.responseText);
+        console.log(response);
+        if (response.message == undefined) {
+          alert("Retirement Added!");
+        } else {
+          alert("Unable to add retirement");
+        }
+      };
+      request.send(JSON.stringify(jsonData));
+    }
+  </script>
+</html>

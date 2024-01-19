@@ -1,102 +1,105 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>User Management</title>
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>User Management</title>
+  </head>
+  <body>
+    <!-- Edit User Form -->
+    <h2>Edit User</h2>
+    <form id="editUserForm">
+      <label for="emailToEdit">Current Email:</label>
+      <input type="email" id="emailToEdit" name="emailToEdit" required />
 
-  <!-- Edit User Form -->
-  <h2>Edit User</h2>
-  <form id="editUserForm">
-    <label for="emailToEdit">Current Email:</label>
-    <input type="email" id="emailToEdit" name="emailToEdit" required>
-    
-    <label for="newEmail">New Email:</label>
-    <input type="email" id="newEmail" name="newEmail">
+      <label for="newEmail">New Email:</label>
+      <input type="email" id="newEmail" name="newEmail" />
 
-    <label for="newPassword">New Password:</label>
-    <input type="password" id="newPassword" name="newPassword">
+      <label for="newPassword">New Password:</label>
+      <input type="password" id="newPassword" name="newPassword" />
 
-    <label for="confirmNewPassword">Confirm New Password:</label>
-    <input type="password" id="confirmNewPassword" name="confirmNewPassword">
+      <label for="confirmNewPassword">Confirm New Password:</label>
+      <input
+        type="password"
+        id="confirmNewPassword"
+        name="confirmNewPassword"
+      />
 
-    <button type="button" onclick="editUser()">Edit User</button>
-    <p id="editUserMessage" style="color: red;"></p>
-  </form>
+      <button type="button" onclick="editUser()">Edit User</button>
+      <p id="editUserMessage" style="color: red"></p>
+    </form>
 
-  <!-- Delete User Form -->
-  <h2>Delete User</h2>
-  <form id="deleteUserForm">
-    <label for="emailToDelete">Email to Delete:</label>
-    <input type="email" id="emailToDelete" name="emailToDelete" required>
+    <!-- Delete User Form -->
+    <h2>Delete User</h2>
+    <form id="deleteUserForm">
+      <label for="emailToDelete">Email to Delete:</label>
+      <input type="email" id="emailToDelete" name="emailToDelete" required />
 
-    <button type="button" onclick="deleteUser()">Delete User</button>
-    <p id="deleteUserMessage" style="color: red;"></p>
-  </form>
+      <button type="button" onclick="deleteUser()">Delete User</button>
+      <p id="deleteUserMessage" style="color: red"></p>
+    </form>
 
-  <script>
-    async function editUser() {
-      const emailToEdit = document.getElementById('emailToEdit').value;
-      const newEmail = document.getElementById('newEmail').value;
-      const newPassword = document.getElementById('newPassword').value;
-      const confirmNewPassword = document.getElementById('confirmNewPassword').value;
+    <script>
+      async function editUser() {
+        const emailToEdit = document.getElementById("emailToEdit").value;
+        const newEmail = document.getElementById("newEmail").value;
+        const newPassword = document.getElementById("newPassword").value;
+        const confirmNewPassword =
+          document.getElementById("confirmNewPassword").value;
 
-      // perform validation if needed
+        // perform validation if needed
 
-      const response = await fetch('/edit-user', {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          emailToEdit,
-          newEmail,
-          newPassword,
-          confirmNewPassword,
-        }),
-      });
+        const response = await fetch("/edit-user", {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            emailToEdit,
+            newEmail,
+            newPassword,
+            confirmNewPassword,
+          }),
+        });
 
-      const data = await response.json();
-      const editUserMessage = document.getElementById('editUserMessage');
+        const data = await response.json();
+        const editUserMessage = document.getElementById("editUserMessage");
 
-      if (response.ok) {
-        editUserMessage.style.color = 'green';
-        editUserMessage.textContent = data.message;
-      } else {
-        editUserMessage.style.color = 'red';
-        editUserMessage.textContent = data.message;
+        if (response.ok) {
+          editUserMessage.style.color = "green";
+          editUserMessage.textContent = data.message;
+        } else {
+          editUserMessage.style.color = "red";
+          editUserMessage.textContent = data.message;
+        }
       }
-    }
 
-    async function deleteUser() {
-      const emailToDelete = document.getElementById('emailToDelete').value;
+      async function deleteUser() {
+        const emailToDelete = document.getElementById("emailToDelete").value;
 
-      // perform validation if needed
+        // perform validation if needed
 
-      const response = await fetch('/delete-user', {
-        method: 'DELETE',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          emailToDelete,
-        }),
-      });
+        const response = await fetch("/delete-user", {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            emailToDelete,
+          }),
+        });
 
-      const data = await response.json();
-      const deleteUserMessage = document.getElementById('deleteUserMessage');
+        const data = await response.json();
+        const deleteUserMessage = document.getElementById("deleteUserMessage");
 
-      if (response.ok) {
-        deleteUserMessage.style.color = 'green';
-        deleteUserMessage.textContent = data.message;
-      } else {
-        deleteUserMessage.style.color = 'red';
-        deleteUserMessage.textContent = data.message;
+        if (response.ok) {
+          deleteUserMessage.style.color = "green";
+          deleteUserMessage.textContent = data.message;
+        } else {
+          deleteUserMessage.style.color = "red";
+          deleteUserMessage.textContent = data.message;
+        }
       }
-    }
-  </script>
-
-</body>
+    </script>
+  </body>
 </html>
