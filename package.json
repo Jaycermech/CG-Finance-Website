@@ -45,7 +45,7 @@
     "mocha": "^10.2.0",
     "nyc": "^15.1.0",
 
-    "styled-components": "^6.1.6"
+    "styled-components": "^6.1.6",
 
     "popper.js": "^1.16.1",
     "save": "^2.9.0",
