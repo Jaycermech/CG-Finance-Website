@@ -47,5 +47,17 @@
     "amount": "42",
     "user": "john@gmail.com",
     "id": "1705220658864289"
+  },
+  {
+    "description": "Electronic",
+    "amount": "14",
+    "user": "john@gmail.com",
+    "id": "1705471993988380"
+  },
+  {
+    "description": "Electronic",
+    "amount": "42",
+    "user": "john@gmail.com",
+    "id": "1705473736859141"
   }
 ]
