@@ -30,6 +30,7 @@ async function addExpense(req, res) {
   try {
     const description = req.body.description;
     const amount = req.body.amount;
+    const user = req.body.user;
     const newExpense = new Expense(description, amount);
     const updatedExpenses = await writeJSON(newExpense, "utils/expenses.json");
     return res.status(201).json(updatedExpenses);
@@ -52,6 +53,7 @@ async function editExpense(req, res) {
     const id = req.params.id;
     const description = req.body.description;
     const amount = req.body.amount;
+    const user = req.body.user;
     const allExpenses = await readJSON("utils/expenses.json");
     var modified = false;
     for (var i = 0; i < allExpenses.length; i++) {
