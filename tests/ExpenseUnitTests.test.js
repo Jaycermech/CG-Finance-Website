@@ -33,23 +33,23 @@ describe("Testing addResource Function", () => {
     };
     const res = {
       status: function (code) {
-        console.log("Status code:", code); // Debugging statement
+        // console.log("Status code:", code); // Debugging statement
         expect(code).to.equal(201);
         return this;
       },
       json: function (data) {
-        console.log("Response data:", data); // Debugging statement
+        // console.log("Response data:", data); // Debugging statement
         expect(data).to.have.lengthOf(orgContent.length + 1);
-        console.log(orgContent);
+        // console.log(orgContent);
         expect(data[orgContent.length].description).to.equal(
           req.body.description
         );
         orgContent = data;
       },
     };
-    console.log("Adding expense..."); // Debugging statement
+    // console.log("Adding expense..."); // Debugging statement
     await addExpense(req, res);
-    console.log("Expense added successfully!"); // Debugging statement
+    // console.log("Expense added successfully!"); // Debugging statement
   });
 
   it("Should edit a Expense successfully", async () => {
