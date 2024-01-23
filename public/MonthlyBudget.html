@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html>
-<meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>CG Monthly-Budget</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
@@ -34,7 +33,6 @@
     background-color: #444;
     padding: 10px;
     width: 100%;
-    box-sizing: border-box;
   }
 
   nav a {
@@ -95,7 +93,6 @@
   th {
     background-color: #f2f2f2;
   }
-</style>
 </style>
 <link rel="stylesheet" href="css/style.css" />
 
@@ -159,7 +156,7 @@
             </select>
 
             <label for="budget">Budget:</label>
-            <input type="number" id="budgetAdd" class="form-control mb-3">
+            <input type="number" id="budgetAdd" class="form-control mb-3" />
 
             <label for="owner">Owner:</label>
             <input type="text" readonly id="ownerAdd" class="form-control mb-3">
@@ -168,11 +165,23 @@
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
           <button type="button" class="btn btn-primary" id="addbtn" onclick="addBudget()">Add</button>
+          =======
+          <label for="owner">Owner:</label>
+          <input type="text" readonly id="ownerAdd" class="form-control mb-3" />
+          </form>
         </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+            Close
+          </button>
+          <button type="button" class="btn btn-primary" onclick="addBudget()">
+            Add
+          </button>
+        </div>
+        >>>>>>> ff2f07b59295c57f1810020938ab5f1a351033db
       </div>
     </div>
   </div>
-
 
   <!-- Edit Modal -->
   <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
@@ -188,12 +197,12 @@
             <div class="mb-3">
               <label for="ammenitiesEdit">Amenities:</label>
               <select id="ammenitiesEdit" class="form-control mb-3">
-                <option value="Utilities">Utilities</option>
-                <option value="Groceries">Groceries</option>
-                <option value="Appliances">Appliances</option>
-                <option value="Food" id="Food">Food</option>
-                <option value="Electronic">Electronics</option>
-                <option value="Others">Others</option>
+                <<<<<<< HEAD <option value="Utilities">Utilities</option>
+                  <option value="Groceries">Groceries</option>
+                  <option value="Appliances">Appliances</option>
+                  <option value="Food" id="Food">Food</option>
+                  <option value="Electronic">Electronics</option>
+                  <option value="Others">Others</option>
               </select>
             </div>
             <div class="mb-3">
@@ -210,17 +219,47 @@
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
           <button type="button" class="btn btn-danger deleteBtn" id="delbtn" onclick="deleteBudget()">Delete</button>
           <button type="button" class="btn btn-primary" id="editbtn" onclick="editBudget()">Confirm</button>
+          =======
+          <option value="Utilities">Utilities</option>
+          <option value="Groceries">Groceries</option>
+          <option value="Appliances">Appliances</option>
+          <option value="Food" id="Food">Food</option>
+          <option value="Electronic">Electronics</option>
+          <option value="Others">Others</option>
+          </select>
         </div>
+        <div class="mb-3">
+          <label for="budgetEdit" class="form-label">Budget:</label>
+          <input type="number" class="form-control" id="budgetEdit" />
+        </div>
+        <div class="mb-3">
+          <label for="ownerEdit" class="form-label">Owner:</label>
+          <input type="text" readonly class="form-control" id="ownerEdit" />
+        </div>
+        </form>
       </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Close
+        </button>
+        <button type="button" class="btn btn-danger deleteBtn" onclick="deleteBudget()">
+          Delete
+        </button>
+        <button type="button" class="btn btn-primary" onclick="editBudget()">
+          Confirm
+        </button>
+      </div>
+      >>>>>>> ff2f07b59295c57f1810020938ab5f1a351033db
     </div>
+  </div>
   </div>
 
   <script>
     // Bind the function to run when the edit modal is shown
-    $('#editModal').on('shown.bs.modal', function (event) {
+    $("#editModal").on("shown.bs.modal", function (event) {
       // Extract the ID from the element that triggered the modal
       var button = $(event.relatedTarget);
-      var id = button.data('id');
+      var id = button.data("id");
       console.log("id bud:", id);
       // Call viewBudgetid to populate modal with data related to the ID
       viewBudgetid(id);
@@ -235,16 +274,34 @@
       console.log("User mail is :", Useremail);
     }
 
+    // Fill ownerAdd input field in the Add Modal with usermail
+    document.getElementById("ownerAdd").value = Useremail;
+    console.log("User mail is :", Useremail);
+      
   </script>
 
-  <script>
+ <script>
     document.getElementById("logoutBtn").addEventListener("click", function () {
+    // Clear session storage
+    sessionStorage.clear();
+    // Redirect to index.html
+    window.location.href = "index.html";
+    });
+    </script>
+</body>
+
+</html>
+=======
+<script>
+  document
+    .getElementById("logoutBtn")
+    .addEventListener("click", function () {
       // Clear session storage
       sessionStorage.clear();
       // Redirect to index.html
       window.location.href = "index.html";
     });
-  </script>
+</script>
 </body>
 
 </html>
