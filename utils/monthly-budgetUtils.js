@@ -12,7 +12,13 @@ async function readJSON(filename) {
 }
 async function writeJSON(object, filename) {
   try {
-    const allObjects = await readJSON(filename);
+    let allObjects = await readJSON(filename);
+
+    // Ensure allObjects is an array, initialize as an empty array if not.
+    if (!Array.isArray(allObjects)) {
+      allObjects = [];
+    }
+
     allObjects.push(object);
     await fs.writeFile(filename, JSON.stringify(allObjects), "utf8");
     return allObjects;
@@ -21,6 +27,7 @@ async function writeJSON(object, filename) {
     throw err;
   }
 }
+
 
 const { Monthly_budget } = require("../models/monthly-budget");
 

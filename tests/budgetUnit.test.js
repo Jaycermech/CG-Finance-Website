@@ -10,10 +10,13 @@ const {
 describe("Testing budget related features", () => {
   const budgetFilePath = "utils/monthly-budget.json";
   var orgContent = "";
+  var addedBudgetId = null;
+
   beforeEach(async () => {
     orgContent = await fs.readFile(budgetFilePath, "utf8");
     orgContent = JSON.parse(orgContent);
   });
+
   afterEach(async () => {
     await fs.writeFile(budgetFilePath, JSON.stringify(orgContent), "utf8");
   });
@@ -21,9 +24,8 @@ describe("Testing budget related features", () => {
     const req = {
       body: {
         ammenities: "Others",
-        budget: "$200",
+        budget: "200",
         owner: "Jordy312@gmail.com"
-
       },
     };
     const res = {
@@ -34,10 +36,25 @@ describe("Testing budget related features", () => {
       json: function (data) {
         expect(data).to.have.lengthOf(orgContent.length + 1);
         expect(data[orgContent.length].ammenities).to.equal(req.body.ammenities);
+        addedBudgetId = data[orgContent.length].id; // Store the added ID
         orgContent = data;
+        console.log(addedBudgetId, "ids");
       },
+
     };
-    await addBudget(req, res);
+
+
+    // // If the file is initially empty, set orgContent to an empty array
+    // if (!orgContent || !Array.isArray(orgContent)) {
+    //   orgContent = [];
+    // }
+
+    try {
+      await addBudget(req, res);
+    } catch (error) {
+      console.error(error);
+      expect.fail("Unexpected error occurred");
+    }
   });
   it("Should not be able to add budget due to incomplete input", async () => {
     const req = {
@@ -55,8 +72,14 @@ describe("Testing budget related features", () => {
         expect(data.message).to.not.equal(undefined);
       },
     };
-    await addBudget(req, res);
+    try {
+      await addBudget(req, res);
+    } catch (error) {
+      console.error(error);
+      expect.fail("Unexpected error occurred");
+    }
   });
+
   it("Should return an array when viewing monthly budget", async () => {
     const req = {};
     const res = {
@@ -65,46 +88,57 @@ describe("Testing budget related features", () => {
         return this;
       },
       json: function (data) {
-        
+
         expect(Array.isArray(data)).to.be.true;
-        
-    
+
+
       },
     };
-    await viewBudget(req, res);
+    try {
+      await viewBudget(req, res);
+    } catch (error) {
+      console.error(error);
+      expect.fail("Unexpected error occurred");
+    }
   });
   it("Should edit a monthly budget successfully", async () => {
+    console.log(addedBudgetId, "ids ");
     const req = {
       body: {
         "ammenities": "Others",
-        "budget": "$80",
-        "owner": "mary@gmail.com"
+        "budget": "80",
+        "owner": "Jordy312@gmail.com"
       },
       params: {
-        id: orgContent[0].id,
+        id: addedBudgetId,
       },
     };
-    
+
     const res = {
       status: function (code) {
         expect(code).to.equal(201);
         return this;
       },
       json: function (data) {
-    
+
         orgContent = data;
-      
+
       },
     };
-  
-    await editBudget
-      (req, res);
+
+    try {
+      await editBudget(req, res);
+    } catch (error) {
+      console.error(error);
+      expect.fail("Unexpected error occurred");
+    }
   });
+
   it("Should not be able to edit budget due to invalid id", async () => {
     const req = {
       body: {
         ammenities: "Others",
-        budget: "$100",
+        budget: "100",
       },
       params: {
         id: "ABCDEFG",
@@ -119,27 +153,52 @@ describe("Testing budget related features", () => {
         expect(data.message).to.equal("Error occurred, unable to modify!");
       },
     };
-    await editBudget
-      (req, res);
+    try {
+      await editBudget(req, res);
+    } catch (error) {
+      console.error(error);
+      expect.fail("Unexpected error occurred");
+    }
   });
+
   it("Should delete a budget successfully", async () => {
+    console.log("Deleting Budget with ID:", addedBudgetId);
+  
     const req = {
       params: {
-        id: orgContent[0].id,
+        id: addedBudgetId,
       },
     };
+  
     const res = {
       status: function (code) {
+        console.log("Received status code:", code);
         expect(code).to.equal(201);
         return this;
       },
+      end: function () {
+        // This function will be called if .end() is chained
+      },
       json: function (data) {
         orgContent = data;
+        console.log("Deleted Budget Data:", data);
       },
     };
-    await deleteBudget
-      (req, res);
+  
+    try {
+      await deleteBudget(req, res);
+      console.log("Budget Deleted Successfully");
+  
+      // Check if the deleted budget is no longer present in the updated orgContent
+      const isBudgetDeleted = orgContent.some((budget) => budget.id === addedBudgetId);
+      expect(isBudgetDeleted).to.be.false;
+    } catch (error) {
+      console.error("Error during deletion:", error);
+      expect.fail("Unexpected error occurred");
+    }
   });
+  
+
   it("Should not be able to delete budget due to invalid id", async () => {
     const req = {
       params: {
@@ -155,7 +214,11 @@ describe("Testing budget related features", () => {
         expect(data.message).to.equal("Error occurred, unable to delete!");
       },
     };
-    await deleteBudget
-      (req, res);
+    try {
+      await deleteBudget(req, res);
+    } catch (error) {
+      console.error(error);
+      expect.fail("Unexpected error occurred");
+    }
   });
 });
