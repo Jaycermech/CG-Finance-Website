@@ -1,5 +1,3 @@
-const { resource } = require("selenium-webdriver/http");
-
 function viewExpenses() {
   var userEmailInSession = sessionStorage.getItem("Useremail");
 
@@ -17,18 +15,18 @@ function viewExpenses() {
 
     //-----------------------------------------------
 
-    console.log("All Expenses Data:", response);
+    // console.log("All Expenses Data:", response);
 
     // Filter expenses based on user email
     var userExpenses = response.filter(function (expense) {
       return expense.user === userEmailInSession;
     });
 
-    console.log("User's Expenses:", userExpenses);
+    // console.log("User's Expenses:", userExpenses);
 
     //--------------------------
 
-    console.log(response);
+    // console.log(response);
     var html = "";
     var categories = new Map();
 
@@ -52,7 +50,7 @@ function viewExpenses() {
         key +
         "</td><td>$" +
         value +
-        "</td><td><button data-toggle='modal' data-target='#editModal' onclick='editCategory(\"" +
+        "</td><td><button data-toggle='modal' id='openeditmodal' data-target='#editModal' onclick='editCategory(\"" +
         key +
         "\")'>Edit</button></td></tr>";
     }
@@ -63,47 +61,6 @@ function viewExpenses() {
   };
   request.send();
 }
-
-// function editCategory(category) {
-//   // Implement the logic to handle the edit action for the specified category
-//   console.log("Editing category: " + category);
-//   document.getElementById("categories").textContent = category;
-
-//   function viewResources2() {
-//     var response = "";
-//     var request = new XMLHttpRequest();
-//     request.open("GET", "/view-expneses", true);
-//     request.setRequestHeader("Content-Type", "application/json");
-//     request.onload = function () {
-//       response = JSON.parse(request.responseText);
-//       console.log(response);
-
-//       for (let i = 0; i < response.length; i++) {
-//         if (response[i].description == category) {
-//           console.log(response[i].description);
-//           var html = `
-//           <div class="text-center" style="width:100%;">
-//               <div class="card">
-//                   <div class="card-body">
-//                       <h6 style="color: black;" class="card-text">${response[i].description}</h6>
-//                       <small style="color: black;">Amount: ${response[i].amount}</small>
-//                       <i class='far fa-edit fa-2x edit' description=${response[i].description} amount=${response[i].amount} id=${response[i].id} style="color: black; font-size: 18px; cursor: pointer;" data-toggle='modal' data-target='#editSpecificCategoryModal' data-dismiss='modal' item='${i}' onClick='displaySpecificCategory(this)'></i>
-//                       <i class='fas fa-trash-alt fa-2x delete-btn' data-id='${response[i].id}' data-description='${response[i].description}' onclick='deleteExpenseItem(this)' style="color: red; font-size: 18px; cursor: pointer;"></i>
-//                   </div>
-//               </div>
-//           </div>
-//       `;
-
-//           document
-//             .getElementById("categories")
-//             .insertAdjacentHTML("beforeend", html);
-//         }
-//       }
-//     };
-//     request.send();
-//   }
-//   viewResources2();
-// }
 
 function editCategory(category) {
   // Implement the logic to handle the edit action for the specified category
@@ -140,8 +97,8 @@ function editCategory(category) {
                   <div class="card-body">
                       <h6 style="color: black;" class="card-text">${response[i].description}</h6>
                       <small style="color: black;">Amount: ${response[i].amount}</small>
-                      <i class='far fa-edit fa-2x edit' description=${response[i].description} amount=${response[i].amount} id=${response[i].id} style="color: black; font-size: 18px; cursor: pointer;" data-toggle='modal' data-target='#editSpecificCategoryModal' data-dismiss='modal' item='${i}' onClick='displaySpecificCategory(this)'></i>
-                      <i class='fas fa-trash-alt fa-2x delete-btn' data-id='${response[i].id}' data-description='${response[i].description}' onclick='deleteExpenseItem(this)' style="color: red; font-size: 18px; cursor: pointer;"></i>
+                      <i class='far fa-edit fa-2x edit' description=${response[i].description} amount=${response[i].amount} id=${response[i].id} data-test-id='editButton' style="color: black; font-size: 18px; cursor: pointer;"  data-toggle='modal' data-target='#editSpecificCategoryModal' data-dismiss='modal' item='${i}' onClick='displaySpecificCategory(this)'></i>
+                      <i class='fas fa-trash-alt fa-2x delete-btn' data-id='${response[i].id}' data-description='${response[i].description}' onclick='deleteExpenseItem(this)' data-test-id='deletebtn' style="color: red; font-size: 18px; cursor: pointer;"></i>
                   </div>
               </div>
           </div>
@@ -207,43 +164,6 @@ function displayPie(data) {
 
   const ctx = document.getElementById("expensesChart").getContext("2d");
   const expensesChart = new Chart(ctx, {
-    type: "pie",
-    data: {
-      labels: categories,
-      datasets: [
-        {
-          data: amounts,
-          backgroundColor: [
-            "rgba(255, 99, 132, 0.7)", // Color for Utilities
-            "rgba(54, 162, 235, 0.7)", // Color for Groceries
-            "rgba(54, 162, 135, 0.7)",
-            // Add more colors for other categories if needed
-          ],
-          // Include labels for each section
-          labels: categories,
-        },
-      ],
-    },
-    options: {
-      legend: {
-        display: true,
-        position: "right", // Adjust the position as needed
-      },
-    },
-  });
-}
-
-function displayPie(data) {
-  const expensesData = Array.from(data, ([category, amount]) => ({
-    category,
-    amount,
-  }));
-
-  const categories = expensesData.map((expense) => expense.category);
-  const amounts = expensesData.map((expense) => expense.amount);
-
-  const ctx = document.getElementById("expensesChart").getContext("2d");
-  const expensesChart = new Chart(ctx, {
     type: "doughnut",
     data: {
       labels: categories,
@@ -264,9 +184,6 @@ function displayPie(data) {
     options: {
       plugins: {
         datalabels: {
-          // color: "#fff", // Label text color
-          // anchor: "end", // Label position, 'end' will display the label outside the segment
-          // align: "start", // Label alignment
           formatter: (amounts) => {
             console.log(amounts);
             return amounts + "%"; // Display category as label
@@ -289,7 +206,7 @@ function addExpense() {
   console.log(jsonData.amount);
 
   jsonData.user = document.getElementById("user_input_modal_email").value;
-  console.log(jsonData.amount);
+  console.log(jsonData.user);
 
   // Validation: Check if the fields are empty
   if (
@@ -326,6 +243,7 @@ function addExpense() {
   request.send(JSON.stringify(jsonData));
   //console.log(JSON.stringify(jsonData));
 }
+
 function editExpense() {
   var response = "";
   var jsonData = new Object();
