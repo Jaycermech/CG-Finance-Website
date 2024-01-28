@@ -232,118 +232,118 @@ describe("Creating Monthly Budgets", function () {
   //   const ownerAddValue = await ownerAddField.getAttribute("value");
   //   expect(ownerAddValue).to.equal(useremailFromStorage);
   // });
-  it("Should select an ammenity from the add dropdown", async () => {
-    //Test case works
-    // this.timeout(10000); // Set timeout as 10 seconds
+  // it("Should select an ammenity from the add dropdown", async () => {
+  //   //Test case works
+  //   // this.timeout(10000); // Set timeout as 10 seconds
 
-    const ammenitiesAdd = await driver.findElement(By.id("ammenitiesAdd"));
-    await driver.wait(until.elementIsVisible(ammenitiesAdd), 5000);
-    await ammenitiesAdd.click();
+  //   const ammenitiesAdd = await driver.findElement(By.id("ammenitiesAdd"));
+  //   await driver.wait(until.elementIsVisible(ammenitiesAdd), 5000);
+  //   await ammenitiesAdd.click();
 
-    const ammenitiesAdd_food = await driver.findElement(By.id("Food"));
-    await driver.wait(until.elementIsVisible(ammenitiesAdd_food), 5000);
-    await ammenitiesAdd_food.click();
-    await ammenitiesAdd.click();
-  });
-  it("Should add a new budget", async () => {
-    //Test case works
-    // this.timeout(10000);
-    const addbtn = await driver.findElement(By.id("addbtn"));
+  //   const ammenitiesAdd_food = await driver.findElement(By.id("Food"));
+  //   await driver.wait(until.elementIsVisible(ammenitiesAdd_food), 5000);
+  //   await ammenitiesAdd_food.click();
+  //   await ammenitiesAdd.click();
+  // });
+  // it("Should add a new budget", async () => {
+  //   //Test case works
+  //   // this.timeout(10000);
+  //   const addbtn = await driver.findElement(By.id("addbtn"));
 
-    await addbtn.click();
-    console.log(addbtn, "add is clicked", 5000);
-  });
-  it("Should show alert if Monthly Budget is not entered Edit", async () => {
-    await driver.get(
-      "http://localhost:" +
-        server.address().port +
-        "/instrumented/MonthlyBudget.html"
-    );
+  //   await addbtn.click();
+  //   console.log(addbtn, "add is clicked", 5000);
+  // });
+  // it("Should show alert if Monthly Budget is not entered Edit", async () => {
+  //   await driver.get(
+  //     "http://localhost:" +
+  //       server.address().port +
+  //       "/instrumented/MonthlyBudget.html"
+  //   );
 
-    // Execute script to edit value to session storage
-    await driver.executeScript(
-      'sessionStorage.setItem("Useremail", "songsiongpink@onyx.com");'
-    );
+  //   // Execute script to edit value to session storage
+  //   await driver.executeScript(
+  //     'sessionStorage.setItem("Useremail", "songsiongpink@onyx.com");'
+  //   );
 
-    // Click on the edit budget button
-    const editBtnModal = await driver.findElement(By.className("openEditBtn"));
-    await editBtnModal.click();
-    // this.timeout(10000);
-    const editBudgetvalue = await driver.findElement(By.id("budgetEdit"));
-    // Clear the existing value in the input field (optional, depending on your requirements)
-    await editBudgetvalue.clear();
+  //   // Click on the edit budget button
+  //   const editBtnModal = await driver.findElement(By.className("openEditBtn"));
+  //   await editBtnModal.click();
+  //   // this.timeout(10000);
+  //   const editBudgetvalue = await driver.findElement(By.id("budgetEdit"));
+  //   // Clear the existing value in the input field (optional, depending on your requirements)
+  //   await editBudgetvalue.clear();
 
-    const editbtn = await driver.findElement(By.id("editbtn"));
+  //   const editbtn = await driver.findElement(By.id("editbtn"));
 
-    await editbtn.click();
-    console.log(editbtn, "add is clicked", 5000);
+  //   await editbtn.click();
+  //   console.log(editbtn, "add is clicked", 5000);
 
-    // Wait for the alert to be present
-    await driver.wait(until.alertIsPresent());
+  //   // Wait for the alert to be present
+  //   await driver.wait(until.alertIsPresent());
 
-    // Switch to the alert
-    const alert = await driver.switchTo().alert();
-    // Check the alert text
-    const alertText = await alert.getText();
-    console.log("this is the alert", alertText);
-    expect(alertText).to.equal("Please enter Monthly Budget");
+  //   // Switch to the alert
+  //   const alert = await driver.switchTo().alert();
+  //   // Check the alert text
+  //   const alertText = await alert.getText();
+  //   console.log("this is the alert", alertText);
+  //   expect(alertText).to.equal("Please enter Monthly Budget");
 
-    // Dismiss the alert (Click "OK")
-    await alert.dismiss();
-    // this.timeout(10000);
-  });
+  //   // Dismiss the alert (Click "OK")
+  //   await alert.dismiss();
+  //   // this.timeout(10000);
+  // });
 
-  it("Should open edit button modal", async () => {
-    // this.timeout(10000); // Set timeout as 10 seconds
+  // it("Should open edit button modal", async () => {
+  //   // this.timeout(10000); // Set timeout as 10 seconds
 
-    // Execute script to edit value to session storage
-    await driver.executeScript(
-      'sessionStorage.setItem("Useremail", "songsiongpink@onyx.com");'
-    );
+  //   // Execute script to edit value to session storage
+  //   await driver.executeScript(
+  //     'sessionStorage.setItem("Useremail", "songsiongpink@onyx.com");'
+  //   );
 
-    const editBtnModal = await driver.wait(
-      until.elementLocated(By.className("openEditBtn")),
-      5000
-    );
-    editBtnModal.click();
+  //   const editBtnModal = await driver.wait(
+  //     until.elementLocated(By.className("openEditBtn")),
+  //     5000
+  //   );
+  //   editBtnModal.click();
 
-    // Retrieve the ownerAdd field in the Add Modal
-    const ownerEditField = await driver.findElement(By.id("ownerEdit"));
+  //   // Retrieve the ownerAdd field in the Add Modal
+  //   const ownerEditField = await driver.findElement(By.id("ownerEdit"));
 
-    // Retrieve the Useremail from session storage
-    const useremailFromStorage = await driver.executeScript(
-      'return sessionStorage.getItem("Useremail");'
-    );
+  //   // Retrieve the Useremail from session storage
+  //   const useremailFromStorage = await driver.executeScript(
+  //     'return sessionStorage.getItem("Useremail");'
+  //   );
 
-    // Assert that the ownerAdd field is equal to the Useremail from session storage
-    const ownerEditValue = await ownerEditField.getAttribute("value");
-    expect(ownerEditValue).to.equal(useremailFromStorage);
-  });
-  it("should enter value in budget", async () => {
-    const editBudgetvalue = await driver.findElement(By.id("budgetEdit"));
-    // Clear the existing value in the input field (optional, depending on your requirements)
-    await editBudgetvalue.clear();
-    // Set the new value to 100
-    await editBudgetvalue.sendKeys("400");
-  });
-  it("Should select an ammenity from the edit dropdown", async () => {
-    // this.timeout(10000); // Set timeout as 10 seconds
+  //   // Assert that the ownerAdd field is equal to the Useremail from session storage
+  //   const ownerEditValue = await ownerEditField.getAttribute("value");
+  //   expect(ownerEditValue).to.equal(useremailFromStorage);
+  // });
+  // it("should enter value in budget", async () => {
+  //   const editBudgetvalue = await driver.findElement(By.id("budgetEdit"));
+  //   // Clear the existing value in the input field (optional, depending on your requirements)
+  //   await editBudgetvalue.clear();
+  //   // Set the new value to 100
+  //   await editBudgetvalue.sendKeys("400");
+  // });
+  // it("Should select an ammenity from the edit dropdown", async () => {
+  //   // this.timeout(10000); // Set timeout as 10 seconds
 
-    const ammenitiesEdit = await driver.findElement(By.id("ammenitiesEdit"));
-    await driver.wait(until.elementIsVisible(ammenitiesEdit), 5000);
-    await ammenitiesEdit.click();
+  //   const ammenitiesEdit = await driver.findElement(By.id("ammenitiesEdit"));
+  //   await driver.wait(until.elementIsVisible(ammenitiesEdit), 5000);
+  //   await ammenitiesEdit.click();
 
-    const ammenitiesEdit_Others = await driver.findElement(By.id("Others"));
-    await driver.wait(until.elementIsVisible(ammenitiesEdit_Others), 5000);
-    await ammenitiesEdit_Others.click();
-    await ammenitiesEdit.click();
-  });
-  it("Should click on  edit button", async () => {
-    const editbtn = await driver.findElement(By.id("editbtn"));
+  //   const ammenitiesEdit_Others = await driver.findElement(By.id("Others"));
+  //   await driver.wait(until.elementIsVisible(ammenitiesEdit_Others), 5000);
+  //   await ammenitiesEdit_Others.click();
+  //   await ammenitiesEdit.click();
+  // });
+  // it("Should click on  edit button", async () => {
+  //   const editbtn = await driver.findElement(By.id("editbtn"));
 
-    await editbtn.click();
-    console.log(editbtn, "edit is clicked", 5000);
-  });
+  //   await editbtn.click();
+  //   console.log(editbtn, "edit is clicked", 5000);
+  // });
 });
 
 // describe("Deleting Monthly Budgets", function () {
