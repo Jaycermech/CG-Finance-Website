@@ -1,0 +1,37 @@
+
+
+button {
+	border: none;
+	outline: none;
+	padding: 10px 20px;
+	border-radius: 50px;
+	color: #333;
+	background: #fff;
+	margin-bottom: 50px;
+	box-shadow: 0 3px 20px 0 #0000003b;
+}
+button:hover{
+	cursor: pointer;
+}
+
+.longer-button {
+    margin-left: 16px;
+  }
+  
+
+  .modal-header {
+	background: linear-gradient(to right, #d795eb, #f1ada9); /* Replace these colors with your desired gradient colors */
+	color: white; /* Text color */
+  }
+  
+
+  .btn {
+	padding: 10px 20px;
+	border: none;
+	border-radius: 5px;
+	color: #fff; /* Text color */
+	background-image: linear-gradient(to right, #d795eb, #f1ada9); /* Change these colors as needed */
+  }
+  
+  
+  
