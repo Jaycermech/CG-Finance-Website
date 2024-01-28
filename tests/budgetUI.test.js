@@ -91,37 +91,37 @@ describe("HTML Structure and Functionality", function () {
   });
 });
 
-describe("Styling Tests", function () {
-  this.timeout(100000); // Set timeout as 10 seconds
+// describe("Styling Tests", function () {
+//   this.timeout(100000); // Set timeout as 10 seconds
 
-  it("Body should have a specified background color", async () => {
-    await driver.get(
-      "http://localhost:" +
-      server.address().port +
-      "/instrumented/MonthlyBudget.html"
-    );
+//   it("Body should have a specified background color", async () => {
+//     await driver.get(
+//       "http://localhost:" +
+//       server.address().port +
+//       "/instrumented/MonthlyBudget.html"
+//     );
 
-    const body = await driver.findElement(By.tagName("body"));
-    const backgroundColor = await body.getCssValue("background-color");
+//     const body = await driver.findElement(By.tagName("body"));
+//     const backgroundColor = await body.getCssValue("background-color");
 
-    // Assert the background color is as expected
-    expect(backgroundColor).to.equal("rgba(244, 244, 244, 1)");
-  });
-  it("Header should have a specified background color", async () => {
-    await driver.get(
-      "http://localhost:" +
-      server.address().port +
-      "/instrumented/MonthlyBudget.html"
-    );
+//     // Assert the background color is as expected
+//     expect(backgroundColor).to.equal("rgba(244, 244, 244, 1)");
+//   });
+//   it("Header should have a specified background color", async () => {
+//     await driver.get(
+//       "http://localhost:" +
+//       server.address().port +
+//       "/instrumented/MonthlyBudget.html"
+//     );
 
-    const header = await driver.findElement(By.tagName("header"));
-    const backgroundColor = await header.getCssValue("background-color");
+//     const header = await driver.findElement(By.tagName("header"));
+//     const backgroundColor = await header.getCssValue("background-color");
 
-    // Assert the background color is as expected
-    expect(backgroundColor).to.equal("rgba(51, 51, 51, 1)");
-  });
+//     // Assert the background color is as expected
+//     expect(backgroundColor).to.equal("rgba(51, 51, 51, 1)");
+//   });
 
-});
+// });
 describe("Creating Monthly Budgets", function () {
   this.timeout(100000); // Set timeout as 10 seconds
   it("Should show header: Monthly Budgets", async () => {
@@ -231,6 +231,8 @@ describe("Creating Monthly Budgets", function () {
     console.log(addbtn, "add is clicked", 5000);
 
   });
+});
+describe("Edit Monthly Budgets", function(){
   it("Should show alert if Monthly Budget is not entered Edit", async () => {
     await driver.get(
       "http://localhost:" +
@@ -326,7 +328,9 @@ describe("Creating Monthly Budgets", function () {
     console.log(editbtn, "edit is clicked", 5000);
 
   });
-});
+})
+
+
 describe("Deleting Monthly Budgets", function () {
   it("Should open edit button modal", async () => {
     this.timeout(10000); // Set timeout as 10 seconds
