@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line medium'></div>
+    <div class='status-line low'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -264,7 +264,7 @@
 <span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -335,7 +335,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -364,7 +364,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -384,10 +384,10 @@
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">&nbsp;
 const fs = require("fs").promises;
 &nbsp;
-async function readJSON(filename) {
-  try {
-    const data = await fs.readFile(filename, "utf8");
-    return JSON.parse(data);
+async function <span class="fstat-no" title="function not covered" >readJSON(</span>filename) {
+<span class="cstat-no" title="statement not covered" >  try {</span>
+    const data = <span class="cstat-no" title="statement not covered" >await fs.readFile(filename, "utf8");</span>
+<span class="cstat-no" title="statement not covered" >    return JSON.parse(data);</span>
   } catch (err) {
 <span class="cstat-no" title="statement not covered" >    console.error(err);</span>
 <span class="cstat-no" title="statement not covered" >    throw err;</span>
@@ -414,14 +414,14 @@ async function writeJSON(object, filename) {
 &nbsp;
 const { Monthly_budget } = require("../models/monthly-budget");
 &nbsp;
-async function addBudget(req, res) {
-  try {
-    const ammenities = req.body.ammenities;
-    const budget = req.body.budget;
-    const owner = req.body.owner;
-    const newBudget = new Monthly_budget(ammenities, budget, owner);
-    const updatedBudgets = await writeJSON(newBudget, "utils/monthly-budget.json");
-    return res.status(201).json(updatedBudgets);
+async function <span class="fstat-no" title="function not covered" >addBudget(</span>req, res) {
+<span class="cstat-no" title="statement not covered" >  try {</span>
+    const ammenities = <span class="cstat-no" title="statement not covered" >req.body.ammenities;</span>
+    const budget = <span class="cstat-no" title="statement not covered" >req.body.budget;</span>
+    const owner = <span class="cstat-no" title="statement not covered" >req.body.owner;</span>
+    const newBudget = <span class="cstat-no" title="statement not covered" >new Monthly_budget(ammenities, budget, owner);</span>
+    const updatedBudgets = <span class="cstat-no" title="statement not covered" >await writeJSON(newBudget, "utils/monthly-budget.json");</span>
+<span class="cstat-no" title="statement not covered" >    return res.status(201).json(updatedBudgets);</span>
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }
@@ -467,34 +467,34 @@ async function <span class="fstat-no" title="function not covered" >viewBudgetBy
 &nbsp;
 &nbsp;
 &nbsp;
-async function editBudget(req, res) {
-  try {
-    const id = req.params.id;
-    const ammenities = req.body.ammenities;
-    const budget = req.body.budget;
-    const owner = req.body.owner;
-    const allBudgets = await readJSON("utils/monthly-budget.json");
-    var modified = false;
-    for (var i = 0; i &lt; allBudgets.length; i++) {
-      var curcurrBudget = allBudgets[i];
-      if (curcurrBudget.id == id) {
-        allBudgets[i].ammenities = ammenities;
-        allBudgets[i].budget = budget;
-        allBudgets[i].owner = owner;
-        modified = true;
+async function <span class="fstat-no" title="function not covered" >editBudget(</span>req, res) {
+<span class="cstat-no" title="statement not covered" >  try {</span>
+    const id = <span class="cstat-no" title="statement not covered" >req.params.id;</span>
+    const ammenities = <span class="cstat-no" title="statement not covered" >req.body.ammenities;</span>
+    const budget = <span class="cstat-no" title="statement not covered" >req.body.budget;</span>
+    const owner = <span class="cstat-no" title="statement not covered" >req.body.owner;</span>
+    const allBudgets = <span class="cstat-no" title="statement not covered" >await readJSON("utils/monthly-budget.json");</span>
+    var modified = <span class="cstat-no" title="statement not covered" >false;</span>
+<span class="cstat-no" title="statement not covered" >    for (var i = <span class="cstat-no" title="statement not covered" >0;</span> i &lt; allBudgets.length; i++) {</span>
+      var curcurrBudget = <span class="cstat-no" title="statement not covered" >allBudgets[i];</span>
+<span class="cstat-no" title="statement not covered" >      if (curcurrBudget.id == id) {</span>
+<span class="cstat-no" title="statement not covered" >        allBudgets[i].ammenities = ammenities;</span>
+<span class="cstat-no" title="statement not covered" >        allBudgets[i].budget = budget;</span>
+<span class="cstat-no" title="statement not covered" >        allBudgets[i].owner = owner;</span>
+<span class="cstat-no" title="statement not covered" >        modified = true;</span>
       }
     }
-    if (modified) {
-      await fs.writeFile(
+<span class="cstat-no" title="statement not covered" >    if (modified) {</span>
+<span class="cstat-no" title="statement not covered" >      await fs.writeFile(</span>
         "utils/monthly-budget.json",
         JSON.stringify(allBudgets),
         "utf8"
       );
-      return res
+<span class="cstat-no" title="statement not covered" >      return res</span>
         .status(201)
         .json(allBudgets);
     } else {
-      return res
+<span class="cstat-no" title="statement not covered" >      return res</span>
         .status(500)
         .json({ message: "Error occurred, unable to modify!" });
     }
@@ -512,18 +512,18 @@ async function deleteBudget(req, res) {
       var curcurrBudget = allBudgets[i];
       <span class="missing-if-branch" title="else path not taken" >E</span>if (curcurrBudget.id == id) index = i;
     }
-    if (index != -1) {
-      allBudgets.splice(index, 1);
-      await fs.writeFile(
+<span class="cstat-no" title="statement not covered" >    if (index != -1) {</span>
+<span class="cstat-no" title="statement not covered" >      allBudgets.splice(index, 1);</span>
+<span class="cstat-no" title="statement not covered" >      await fs.writeFile(</span>
         "utils/monthly-budget.json",
         JSON.stringify(allBudgets),
         "utf8"
       );
-      return res
+<span class="cstat-no" title="statement not covered" >      return res</span>
         .status(201)
         .json(allBudgets);
     } else {
-      return res
+<span class="cstat-no" title="statement not covered" >      return res</span>
         .status(500)
         .json({ message: "Error occurred, unable to delete!" });
     }

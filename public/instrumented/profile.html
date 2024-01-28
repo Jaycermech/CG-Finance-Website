@@ -120,10 +120,7 @@
     </style>
   </head>
   <body>
-
-
     <body onload="filluser()"></body>
-
 
     <header>
       <h1>Finance Website</h1>
@@ -137,7 +134,6 @@
       <a href="profile.html">Profile</a>
       <a href="#" id="logoutBtn">Log Out</a>
     </nav>
-
 
     <script>
       document
@@ -179,46 +175,47 @@
     </form>
 
     <script>
+      async function editUser() {
+        try {
+          const emailToEdit = document.getElementById("emailToEdit").value;
+          const newEmail = document.getElementById("newEmail").value;
+          const newPassword = document.getElementById("newPassword").value;
+          const confirmNewPassword =
+            document.getElementById("confirmNewPassword").value;
 
+          // Validate that the new password and confirm password match
+          if (newPassword !== confirmNewPassword) {
+            document.getElementById("editUserMessage").innerText =
+              "New password and confirm password do not match.";
+            return;
+          }
 
-  async function editUser() {
-    try {
-      const emailToEdit = document.getElementById("emailToEdit").value;
-      const newEmail = document.getElementById("newEmail").value;
-      const newPassword = document.getElementById("newPassword").value;
-      const confirmNewPassword = document.getElementById("confirmNewPassword").value;
+          const response = await fetch("/edit-user", {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              emailToEdit,
+              newEmail,
+              newPassword,
+              confirmNewPassword,
+            }),
+          });
 
-      // Validate that the new password and confirm password match
-      if (newPassword !== confirmNewPassword) {
-        document.getElementById("editUserMessage").innerText = "New password and confirm password do not match.";
-        return;
+          const data = await response.json();
+
+          if (response.ok) {
+            document.getElementById("editUserMessage").innerText = data.message;
+          } else {
+            document.getElementById("editUserMessage").innerText = data.message;
+          }
+        } catch (error) {
+          console.error(error);
+          document.getElementById("editUserMessage").innerText =
+            "An error occurred while processing your request.";
+        }
       }
-
-      const response = await fetch('/edit-user', {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          emailToEdit,
-          newEmail,
-          newPassword,
-          confirmNewPassword,
-        }),
-      });
-
-      const data = await response.json();
-
-      if (response.ok) {
-        document.getElementById("editUserMessage").innerText = data.message;
-      } else {
-        document.getElementById("editUserMessage").innerText = data.message;
-      }
-    } catch (error) {
-      console.error(error);
-      document.getElementById("editUserMessage").innerText = "An error occurred while processing your request.";
-    }
-  }
       async function deleteUser() {
         const storedEmail = sessionStorage.getItem("Useremail"); // Assuming you stored the user email in session storage
 
@@ -234,8 +231,6 @@
           },
           body: JSON.stringify({
             emailToDelete: storedEmail,
-           
-           
           }),
         });
 
@@ -249,9 +244,6 @@
           deleteUserMessage.style.color = "red";
           deleteUserMessage.textContent = data.message;
         }
-
-
-       
 
         deleteUserMessage.style.color = response.ok ? "green" : "red";
         deleteUserMessage.textContent = data.message;
