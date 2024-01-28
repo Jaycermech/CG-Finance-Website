@@ -106,7 +106,7 @@ describe("Creating retirement plans", function () {
     await driver.wait(until.alertIsPresent());
 
     // Switch to the alert
-    const alert = await driver.switchTo().alert();
+    const alert = await driver.switchTo().alert(); 
 
     // Get the text of the alert
     const alertText = await alert.getText();

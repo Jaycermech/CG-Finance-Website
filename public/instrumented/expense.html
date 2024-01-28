@@ -205,6 +205,7 @@
             <button
               type="button"
               class="close"
+              id="specific-close-modal-btn"
               data-dismiss="modal"
               aria-label="Close"
             >
@@ -246,7 +247,7 @@
               id="updateExpense"
               onclick="editExpense()"
               data-dismiss="modal"
-            >
+            > 
               Update Expense
             </button>
           </div>
@@ -302,8 +303,6 @@
                 />
               </div>
 
-              <!-- Existing code ... -->
-
               <div class="form-group">
                 <label for="user">User Email</label>
                 <input
@@ -314,8 +313,6 @@
                 />
               </div>
 
-              <!-- Existing code ... -->
-
               <script>
                 // Retrieve user email from sessionStorage
                 var userEmail = sessionStorage.getItem("Useremail");
@@ -323,8 +320,6 @@
                 // Set the user email as the value of the input field
                 document.getElementById("user_input_modal_email").value =
                   userEmail;
-
-                // Existing script code ...
               </script>
 
               <p align="right" id="message" class=""></p>

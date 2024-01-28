@@ -47,7 +47,7 @@ describe("Testing Open Webpage UI", function () {
       'sessionStorage.setItem("Useremail", "songsiongpink@onyx.com");'
     );
 
-    // console.log("am i being tun");
+    // console.log("am i being ran");
 
     const title = await driver.getTitle(); // Get the title of the web page
     expect(title).to.equal("CG Finance Website"); // Assert that title matches "Swag Labs"
@@ -90,6 +90,13 @@ describe("Testing Open Webpage UI", function () {
     // console.log(document.getElementById("amount_input_modal"));
     await amount_input_modal.click();
     await amount_input_modal.sendKeys(100);
+
+    const userEmailInput = await driver.findElement(
+      By.id("user_input_modal_email")
+    );
+
+    const userEmailValue = await userEmailInput.getAttribute("value");
+    expect(userEmailValue).to.equal("songsiongpink@onyx.com");
 
     const addExpensebtn2 = await driver.findElement(By.id("addExpensebtn2"));
     await addExpensebtn2.click();
@@ -151,7 +158,7 @@ describe("Testing Edit Modal", function () {
 
 describe("Testing Edit Modal Delete function", function () {
   this.timeout(100000); // Set timeout as 10 seconds
-  it("Should be able to edit an expense", async () => {
+  it("Should be able to delete an expense", async () => {
     this.timeout(100000); // Set timeout as 100 seconds
     await driver.get(
       "http://localhost:" + server.address().port + "/instrumented/expense.html"
@@ -193,25 +200,76 @@ describe("Testing Edit Modal Delete function", function () {
     await alert.accept();
   });
 
-  it("Should be able to navigate to the add expense page and not add expense", async () => {
-    await driver.get(
-      "http://localhost:" + server.address().port + "/instrumented/expense.html"
-    );
+  //-------------------------------------------------------New code-------------------------------------
 
-    // Locate and click on the addExpensebtn1 button
-    const addExpensebtn1 = await driver.findElement(By.id("addExpensebtn1"));
-    await addExpensebtn1.click();
+  describe("Testing editSpecificCategoryModal", function () {
+    this.timeout(100000); // Set timeout as 10 seconds
 
-    // Locate and click on the Add Expense button in the modal
-    const addExpensebtn2 = await driver.findElement(By.id("addExpensebtn2"));
-    await addExpensebtn2.click();
+    it("Should check if editSpecificCategoryModal is present", async () => {
+      this.timeout(100000); // Set timeout as 100 seconds
+      await driver.get(
+        "http://localhost:" +
+          server.address().port +
+          "/instrumented/expense.html"
+      );
 
-    // Locate and click on the Add Expense button in the modal
-    const AddExModalclsbtn = await driver.findElement(
-      By.id("AddExModalclsbtn")
-    );
-    await AddExModalclsbtn.click();
+      // Execute script to add value to session storage
+      await driver.executeScript(
+        'sessionStorage.setItem("Useremail", "songsiongpink@onyx.com");'
+      );
+
+      // Locate and click on the "Edit" text in the table header
+      const openeditmodal = await driver.findElement(By.id("openeditmodal"));
+      await driver.wait(until.elementIsVisible(openeditmodal), 5000);
+      await openeditmodal.click();
+
+      // Fix the XPath for locating the edit button
+      const editbutton = await driver.findElement(
+        By.xpath("//i[@data-test-id='editButton']")
+      );
+      await driver.wait(until.elementIsVisible(editbutton), 5000);
+      await editbutton.click();
+
+      // Check if the modal is present by looking for its ID
+      const modalElement = await driver.findElement(
+        By.id("editSpecificCategoryModal")
+      );
+
+      // Assert that the modal is present
+      expect(modalElement).to.exist;
+
+      // Locate and click on the close button inside the modal
+      const closeBtn = await driver.findElement(
+        By.id("specific-close-modal-btn")
+      );
+      await driver.wait(until.elementIsVisible(closeBtn), 5000);
+      await closeBtn.click();
+    });
   });
+
+  //-------------------------------------------------------New code 2-------------------------------------
+
+  //-------------------------------------------------------New code END-------------------------------------
+
+  // it("Should be able to navigate to the add expense page and not add expense", async () => {
+  //   await driver.get(
+  //     "http://localhost:" + server.address().port + "/instrumented/expense.html"
+  //   );
+
+  //   // Locate and click on the addExpensebtn1 button
+  //   const addExpensebtn1 = await driver.findElement(By.id("addExpensebtn1"));
+  //   await addExpensebtn1.click();
+
+  //   // Locate and click on the Add Expense button in the modal
+  //   const addExpensebtn2 = await driver.findElement(By.id("addExpensebtn2"));
+  //   await addExpensebtn2.click();
+
+  //   // // Locate and click on the Add Expense button in the modal
+  //   // const AddExModalclsbtn = await driver.findElement(
+  //   //   By.id("AddExModalclsbtn")
+  //   // );
+  //   // await AddExModalclsbtn.click();s
+  // });
 });
 
 afterEach(async function () {

@@ -64,7 +64,7 @@ function viewExpenses() {
 
 function editCategory(category) {
   // Implement the logic to handle the edit action for the specified category
-  console.log("Editing category: " + category);
+  // console.log("Editing category: " + category);
 
   // Check if the Useremail in session storage exists
   var userEmailInSession = sessionStorage.getItem("Useremail");
@@ -215,8 +215,8 @@ function addExpense() {
     jsonData.amount <= 0 ||
     isNaN(jsonData.amount)
   ) {
-    document.getElementById("message").innerHTML = "All fields are required!";
-    document.getElementById("message").setAttribute("class", "text-danger");
+    // document.getElementById("message").innerHTML = "All fields are required!";
+    // document.getElementById("message").setAttribute("class", "text-danger");
     return;
   }
 
@@ -236,8 +236,8 @@ function addExpense() {
       location.reload();
       // Consider whether 'location.reload()' is necessary here
     } else {
-      document.getElementById("message").innerHTML = "Unable to add resource!";
-      document.getElementById("message").setAttribute("class", "text-danger");
+      // document.getElementById("message").innerHTML = "Unable to add resource!";
+      // document.getElementById("message").setAttribute("class", "text-danger");
     }
   };
   request.send(JSON.stringify(jsonData));
@@ -267,8 +267,8 @@ function editExpense() {
     jsonData.amount <= 0 ||
     isNaN(jsonData.amount)
   ) {
-    document.getElementById("message").innerHTML = "All fields are required!";
-    document.getElementById("message").setAttribute("class", "text-danger");
+    // document.getElementById("message").innerHTML = "All fields are required!";
+    // document.getElementById("message").setAttribute("class", "text-danger");
     return;
   }
 
@@ -280,12 +280,15 @@ function editExpense() {
     console.log("Server response:", response);
 
     if (response.success) {
+      // document.getElementById("message").innerHTML =
+      //   "Edited Resource: " + jsonData.description + "!";
+    } else {
+      // document.getElementById("message").innerHTML = "Unable to edit resource!";
+      // document.getElementById("message").setAttribute("class", "text-danger");
+      // Refresh the page after editing
+
       document.getElementById("message").innerHTML =
         "Edited Resource: " + jsonData.description + "!";
-    } else {
-      document.getElementById("message").innerHTML = "Unable to edit resource!";
-      document.getElementById("message").setAttribute("class", "text-danger");
-      // Refresh the page after editing
       location.reload();
     }
   };

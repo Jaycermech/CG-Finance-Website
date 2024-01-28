@@ -25,7 +25,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>0/133</span>
+                <span class='fraction'>0/124</span>
             </div>
         
             
@@ -46,7 +46,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>0/127</span>
+                <span class='fraction'>0/118</span>
             </div>
         
             
@@ -356,7 +356,10 @@
 <a name='L291'></a><a href='#L291'>291</a>
 <a name='L292'></a><a href='#L292'>292</a>
 <a name='L293'></a><a href='#L293'>293</a>
-<a name='L294'></a><a href='#L294'>294</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L294'></a><a href='#L294'>294</a>
+<a name='L295'></a><a href='#L295'>295</a>
+<a name='L296'></a><a href='#L296'>296</a>
+<a name='L297'></a><a href='#L297'>297</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -422,7 +425,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -573,8 +576,8 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -594,8 +597,8 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -625,8 +628,8 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -637,11 +640,14 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -715,7 +721,7 @@
 &nbsp;
 function <span class="fstat-no" title="function not covered" >editCategory(</span>category) {
   // Implement the logic to handle the edit action for the specified category
-<span class="cstat-no" title="statement not covered" >  console.log("Editing category: " + category);</span>
+  // console.log("Editing category: " + category);
 &nbsp;
   // Check if the Useremail in session storage exists
   var userEmailInSession = <span class="cstat-no" title="statement not covered" >sessionStorage.getItem("Useremail");</span>
@@ -866,8 +872,8 @@ function <span class="fstat-no" title="function not covered" >addExpense(</span>
     jsonData.amount &lt;= 0 ||
     isNaN(jsonData.amount)
   ) {
-<span class="cstat-no" title="statement not covered" >    document.getElementById("message").innerHTML = "All fields are required!";</span>
-<span class="cstat-no" title="statement not covered" >    document.getElementById("message").setAttribute("class", "text-danger");</span>
+    // document.getElementById("message").innerHTML = "All fields are required!";
+    // document.getElementById("message").setAttribute("class", "text-danger");
 <span class="cstat-no" title="statement not covered" >    return;</span>
   }
 &nbsp;
@@ -887,8 +893,8 @@ function <span class="fstat-no" title="function not covered" >addExpense(</span>
 <span class="cstat-no" title="statement not covered" >      location.reload();</span>
       // Consider whether 'location.reload()' is necessary here
     } else {
-<span class="cstat-no" title="statement not covered" >      document.getElementById("message").innerHTML = "Unable to add resource!";</span>
-<span class="cstat-no" title="statement not covered" >      document.getElementById("message").setAttribute("class", "text-danger");</span>
+      // document.getElementById("message").innerHTML = "Unable to add resource!";
+      // document.getElementById("message").setAttribute("class", "text-danger");
     }
   };
 <span class="cstat-no" title="statement not covered" >  request.send(JSON.stringify(jsonData));</span>
@@ -918,8 +924,8 @@ function <span class="fstat-no" title="function not covered" >editExpense(</span
     jsonData.amount &lt;= 0 ||
     isNaN(jsonData.amount)
   ) {
-<span class="cstat-no" title="statement not covered" >    document.getElementById("message").innerHTML = "All fields are required!";</span>
-<span class="cstat-no" title="statement not covered" >    document.getElementById("message").setAttribute("class", "text-danger");</span>
+    // document.getElementById("message").innerHTML = "All fields are required!";
+    // document.getElementById("message").setAttribute("class", "text-danger");
 <span class="cstat-no" title="statement not covered" >    return;</span>
   }
 &nbsp;
@@ -931,12 +937,15 @@ function <span class="fstat-no" title="function not covered" >editExpense(</span
 <span class="cstat-no" title="statement not covered" >    console.log("Server response:", response);</span>
 &nbsp;
 <span class="cstat-no" title="statement not covered" >    if (response.success) {</span>
+      // document.getElementById("message").innerHTML =
+      //   "Edited Resource: " + jsonData.description + "!";
+    } else {
+      // document.getElementById("message").innerHTML = "Unable to edit resource!";
+      // document.getElementById("message").setAttribute("class", "text-danger");
+      // Refresh the page after editing
+&nbsp;
 <span class="cstat-no" title="statement not covered" >      document.getElementById("message").innerHTML =</span>
         "Edited Resource: " + jsonData.description + "!";
-    } else {
-<span class="cstat-no" title="statement not covered" >      document.getElementById("message").innerHTML = "Unable to edit resource!";</span>
-<span class="cstat-no" title="statement not covered" >      document.getElementById("message").setAttribute("class", "text-danger");</span>
-      // Refresh the page after editing
 <span class="cstat-no" title="statement not covered" >      location.reload();</span>
     }
   };
@@ -949,7 +958,7 @@ function <span class="fstat-no" title="function not covered" >editExpense(</span
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-01-23T08:44:17.309Z
+                at 2024-01-28T08:53:21.839Z
             </div>
         <script src="../../prettify.js"></script>
         <script>
