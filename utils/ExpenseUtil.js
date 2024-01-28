@@ -50,7 +50,7 @@ async function viewExpenses(req, res) {
     return res.status(500).json({ message: error.message });
   }
 }
-
+ 
 async function editExpense(req, res) {
   try {
     const id = req.params.id;
