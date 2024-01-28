@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>DVOPS - Resource Management Web App</title>
+    <title>CG Finance Website</title>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
@@ -91,7 +91,7 @@
 
   <body onload="viewExpenses()">
     <header>
-      <h1>Finance Website</h1>
+      <h1>CG Finance Website</h1>
     </header>
 
     <nav>
@@ -205,6 +205,7 @@
             <button
               type="button"
               class="close"
+              id="specific-close-modal-btn"
               data-dismiss="modal"
               aria-label="Close"
             >
@@ -246,7 +247,7 @@
               id="updateExpense"
               onclick="editExpense()"
               data-dismiss="modal"
-            >
+            > 
               Update Expense
             </button>
           </div>
@@ -263,13 +264,14 @@
       aria-hidden="true"
     >
       <div class="modal-dialog" role="document">
-        <div class="modal-content">
+        <div class="modal-content" id="AddExModal">
           <div class="modal-header bg-info text-white">
             <h5 class="modal-title" id="resourceModalLabel">Add New Expense</h5>
 
             <button
               type="button"
               class="close"
+              id="AddExModalclsbtn"
               data-dismiss="modal"
               aria-label="Close"
             >
@@ -281,9 +283,11 @@
               <label for="Category">Choose Ammenity Type</label>
               <div class="input-group mb-3">
                 <select class="custom-select" id="ammenity_dropdown">
-                  <option value="Utilities">Utilities</option>
+                  <option value="Utilities" id="ammenity_dropdown_Util">
+                    Utilities
+                  </option>
                   <option value="Groceries">Groceries</option>
-                  <option value="Food" id="Food">Food</option>
+                  <option value="Food" id="ammenity_dropdown_food">Food</option>
                   <option value="Electronic">Electronics</option>
                   <option value="Others">Others</option>
                 </select>
@@ -299,8 +303,6 @@
                 />
               </div>
 
-              <!-- Existing code ... -->
-
               <div class="form-group">
                 <label for="user">User Email</label>
                 <input
@@ -308,11 +310,8 @@
                   class="form-control"
                   id="user_input_modal_email"
                   placeholder="Enter User Email"
-                  readonly
                 />
               </div>
-
-              <!-- Existing code ... -->
 
               <script>
                 // Retrieve user email from sessionStorage
@@ -321,8 +320,6 @@
                 // Set the user email as the value of the input field
                 document.getElementById("user_input_modal_email").value =
                   userEmail;
-
-                // Existing script code ...
               </script>
 
               <p align="right" id="message" class=""></p>

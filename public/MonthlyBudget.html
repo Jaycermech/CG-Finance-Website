@@ -2,7 +2,7 @@
 <html>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>DVOPS - Resource Management Web App</title>
+  <title>CG Monthly-Budget</title>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
@@ -136,7 +136,7 @@
     <tbody id="tableContent"></tbody>
   </table>
   <!-- Button to open Add Modal -->
-  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addModal" onclick="fillOwnerAdd()">
+  <button type="button" class="btn btn-primary" data-bs-toggle="modal" id="addBudgetbtn" data-bs-target="#addModal" onclick="fillOwnerAdd()">
     Set Monthly Budget
   </button>
 
@@ -181,7 +181,7 @@
             >
               Close
             </button>
-            <button type="button" class="btn btn-primary" onclick="addBudget()">
+            <button type="button" class="btn btn-primary"  id="addbtn" onclick="addBudget()">
               Add
             </button>
           </div>
@@ -208,7 +208,7 @@
                   <option value="Appliances">Appliances</option>
                   <option value="Food" id="Food">Food</option>
                   <option value="Electronic">Electronics</option>
-                  <option value="Others">Others</option>
+                  <option value="Others" id="Others">Others</option>
                 </select>
               </div>
               <div class="mb-3">
@@ -244,6 +244,7 @@
             <button
               type="button"
               class="btn btn-primary"
+              id="editbtn"
               onclick="editBudget()"
             >
               Confirm
