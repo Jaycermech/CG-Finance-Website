@@ -1,7 +1,8 @@
 const { app } = require("../index");
 const { Builder, By, Key, until } = require("selenium-webdriver");
-const { describe, it } = require("mocha");
-const { expect, util } = require("chai");
+const { describe, it, after } = require("mocha");
+const { expect } = require("chai");
+const fs = require("fs").promises;
 
 const chrome = require("selenium-webdriver/chrome");
 const chromeOptions = new chrome.Options();
@@ -11,18 +12,8 @@ const driver = new Builder()
   .setChromeOptions(chromeOptions)
   .build();
 
-// const driver = new Builder().forBrowser("chrome").build();
-
-// const driver = new Builder().forBrowser("firefox").build();
-
-// const edge = require('selenium-webdriver/edge');
-
-// const driver = new Builder()
-//     .forBrowser('MicrosoftEdge')
-//     .setEdgeOptions(new edge.Options()) // Optional: You can set specific options for Edge
-//     .build();
-
-// var server;
+var counter = 0;
+let server;
 
 before(async function () {
   server = await new Promise((resolve) => {
@@ -32,43 +23,193 @@ before(async function () {
   });
 });
 
-describe("Testing Open Webpage UI for Monthly Budget", function () {
-  this.timeout(10000); // Set timeout as 10 seconds
-  it("Should show title:CG Finance Website", async () => {
-    await driver.get("http://localhost:" + server.address().port + "/MonthlyBudget.html");
+
+describe("Monthly Budget Page", function () {
+  this.timeout(100000); // Set timeout as 10 seconds
+
+  it("Should display Monthly Budgets table", async () => {
+    await driver.get(
+      "http://localhost:" + server.address().port + "/instrumented/MonthlyBudget.html"
+    );
 
     // Execute script to add value to session storage
     await driver.executeScript(
       'sessionStorage.setItem("Useremail", "songsiongpink@onyx.com");'
     );
 
-    // console.log("run?: ");
-
     const title = await driver.getTitle(); // Get the title of the web page
-    expect(title).to.equal("CG Monthly-Budget"); // Assert that title matches "Swag Labs"
+    expect(title).to.equal("CG Monthly-Budget"); // Adjust to match the actual title of MonthlyBudget.html
 
+    const table = await driver.findElement(By.tagName("table"));
+    const rows = await table.findElements(By.tagName("tr"));
+    expect(rows.length).to.be.greaterThan(0); // Ensure that the table has rows
   });
-  it("Should open add budget button", async () => {
+});
+describe("HTML Structure and Functionality", function () {
+  this.timeout(100000); // Set timeout as 10 seconds
+
+  it("Should have an H1 element with text 'CG Finance Website'", async () => {
+    await driver.get(
+      "http://localhost:" +
+      server.address().port +
+      "/instrumented/MonthlyBudget.html"
+    );
+
+    const h1Element = await driver.findElement(By.tagName("h1"));
+    const text = await h1Element.getText();
+
+    expect(text).to.equal("CG Finance Website");
+  });
+
+  it("Should have a table with the specified columns", async () => {
+    await driver.get(
+      "http://localhost:" +
+      server.address().port +
+      "/instrumented/MonthlyBudget.html"
+    );
+
+    const tableElement = await driver.findElement(By.tagName("table"));
+    const columns = await tableElement.findElements(By.tagName("th"));
+
+    expect(columns.length).to.equal(4);
+
+    const columnNames = await Promise.all(columns.map((column) => column.getText()));
+    expect(columnNames).to.deep.equal(["Amenities", "Budget", "Owner", "Edit"]);
+  });
+
+  it("Should have an empty tbody with id 'tableContent'", async () => {
+    await driver.get(
+      "http://localhost:" +
+      server.address().port +
+      "/instrumented/MonthlyBudget.html"
+    );
+
+    const tbodyElement = await driver.findElement(By.id("tableContent"));
+    const innerHtml = await tbodyElement.getAttribute("innerHTML");
+
+    expect(innerHtml).to.equal("");
+  });
+});
+
+describe("Styling Tests", function () {
+  this.timeout(100000); // Set timeout as 10 seconds
+
+  it("Body should have a specified background color", async () => {
+    await driver.get(
+      "http://localhost:" +
+      server.address().port +
+      "/instrumented/MonthlyBudget.html"
+    );
+
+    const body = await driver.findElement(By.tagName("body"));
+    const backgroundColor = await body.getCssValue("background-color");
+
+    // Assert the background color is as expected
+    expect(backgroundColor).to.equal("rgba(244, 244, 244, 1)");
+  });
+  it("Header should have a specified background color", async () => {
+    await driver.get(
+      "http://localhost:" +
+      server.address().port +
+      "/instrumented/MonthlyBudget.html"
+    );
+
+    const header = await driver.findElement(By.tagName("header"));
+    const backgroundColor = await header.getCssValue("background-color");
+
+    // Assert the background color is as expected
+    expect(backgroundColor).to.equal("rgba(51, 51, 51, 1)");
+  });
+
+});
+describe("Creating Monthly Budgets", function () {
+  this.timeout(100000); // Set timeout as 10 seconds
+  it("Should show header: Monthly Budgets", async () => {
+    await driver.get(
+      "http://localhost:" +
+      server.address().port +
+      "/instrumented/MonthlyBudget.html"
+    );
+    // Execute script to add value to session storage
+    await driver.executeScript(
+      'sessionStorage.setItem("Useremail", "songsiongpink@onyx.com");'
+    );
+    const title = await driver.getTitle(); // Get the title of the web page
+    console.log(title);
+    expect(title).to.equal("CG Monthly-Budget"); // Assert that title matches "Swag Labs"
+  });
+  it("Should show alert if Monthly Budget is not entered", async () => {
+    await driver.get(
+      "http://localhost:" +
+      server.address().port +
+      "/instrumented/MonthlyBudget.html"
+    );
+
+    // Execute script to add value to session storage
+    await driver.executeScript(
+      'sessionStorage.setItem("Useremail", "songsiongpink@onyx.com");'
+    );
+
+    // Click on the add budget button
     const addBudgetbtn = await driver.findElement(By.id("addBudgetbtn"));
-    const buttonId = await addBudgetbtn.getAttribute("id");
-    console.log("Button ID:", buttonId);
+    await addBudgetbtn.click();
+    this.timeout(10000);
+
+    const addbtn = await driver.findElement(By.id("addbtn"));
+
+    await addbtn.click();
+    console.log(addbtn, "add is clicked", 5000);
+
+    // Wait for the alert to be present
+    await driver.wait(until.alertIsPresent());
+
+    // Switch to the alert
+    const alert = await driver.switchTo().alert();
+    // Check the alert text
+    const alertText = await alert.getText();
+    console.log("this is the alert", alertText);
+    expect(alertText).to.equal("Please enter Monthly Budget");
+
+    // Dismiss the alert (Click "OK")
+    await alert.dismiss();
+    this.timeout(10000);
+  });
+  it("Should open add budget button and check if Owner matches to Useremail in sessionStorage", async () => {
+    this.timeout(10000); // Set timeout as 10 seconds
+    await driver.get(
+      "http://localhost:" +
+      server.address().port +
+      "/instrumented/MonthlyBudget.html"
+
+    );
+    await driver.executeScript(
+      'sessionStorage.setItem("Useremail", "songsiongpink@onyx.com");'
+    );
+    const addBudgetbtn = await driver.findElement(By.id("addBudgetbtn"));
     await addBudgetbtn.click();
     console.log(addBudgetbtn, "add is clicked");
-  });
-  it("Should enter budget value", async () => {
     const addBudgetvalue = await driver.findElement(By.id("budgetAdd"));
     // Clear the existing value in the input field (optional, depending on your requirements)
     await addBudgetvalue.clear();
-
     // Set the new value to 100
     await addBudgetvalue.sendKeys("200");
 
-    console.log("Budget value set to 200");
+    // Retrieve the ownerAdd field in the Add Modal
+    const ownerAddField = await driver.findElement(By.id("ownerAdd"));
+
+    // Retrieve the Useremail from session storage
+    const useremailFromStorage = await driver.executeScript(
+      'return sessionStorage.getItem("Useremail");'
+    );
+
+    // Assert that the ownerAdd field is equal to the Useremail from session storage
+    const ownerAddValue = await ownerAddField.getAttribute("value");
+    expect(ownerAddValue).to.equal(useremailFromStorage);
+
   });
-
-
-
   it("Should select an ammenity from the add dropdown", async () => {
+    this.timeout(10000); // Set timeout as 10 seconds
+
     const ammenitiesAdd = await driver.findElement(
       By.id("ammenitiesAdd")
     );
@@ -82,109 +223,151 @@ describe("Testing Open Webpage UI for Monthly Budget", function () {
     await ammenitiesAdd_food.click();
     await ammenitiesAdd.click();
   });
-
-  it("Should click on  add button", async () => {
+  it("Should add a new budget", async () => {
+    this.timeout(10000);
     const addbtn = await driver.findElement(By.id("addbtn"));
 
     await addbtn.click();
     console.log(addbtn, "add is clicked", 5000);
 
   });
+  it("Should show alert if Monthly Budget is not entered Edit", async () => {
+    await driver.get(
+      "http://localhost:" +
+      server.address().port +
+      "/instrumented/MonthlyBudget.html"
+    );
 
-});
-describe("Edit Monthly Budget Features", function () {
-  it("Should open edit button modal", async () => {
-    const editBtnModal = await driver.wait(until.elementLocated(By.className("openEditBtn")), 5000);
-    const buttonId1 = await editBtnModal.getAttribute("data-id");
-    console.log("Button ID:", buttonId1);
+    // Execute script to edit value to session storage
+    await driver.executeScript(
+      'sessionStorage.setItem("Useremail", "songsiongpink@onyx.com");'
+    );
 
-    // Re-locate the element to avoid StaleElementReferenceError
-    const reLocatedEditBtnModal = await driver.findElement(By.className("openEditBtn"));
-    await reLocatedEditBtnModal.click();
-    console.log(reLocatedEditBtnModal, "edit is clicked");
-  });
-  this.timeout(15000);
-  // it("Should select an amenity from the edit dropdown", async (done) => {
-
-  //   try {
-  //     const ammenitiesEdit = await driver.findElement(By.id("ammenitiesEdit"));
-  //     await driver.wait(until.elementIsVisible(ammenitiesEdit), 15000);
-
-  //     await ammenitiesEdit.click();
-
-  //     const ammenitiesEdit_food = await driver.findElement(By.id("Food"));
-  //     await driver.wait(until.elementIsVisible(ammenitiesEdit_food), 15000);
-
-  //     await ammenitiesEdit_food.click();
-
-  //     await ammenitiesEdit.click();
-  //     console.log("Editing budget successful");
-  //     done();
-
-  //   } catch (error) {
-  //     // Pass any caught error to 'done()' to indicate test failure
-  //     console.error("Error during editing:", error);
-     
-  //   }
-  // });
-  it("Should enter edit budget value", async () => {
+    // Click on the edit budget button
+    const editBtnModal = await driver.findElement(By.className("openEditBtn"));
+    await editBtnModal.click();
+    this.timeout(10000);
     const editBudgetvalue = await driver.findElement(By.id("budgetEdit"));
     // Clear the existing value in the input field (optional, depending on your requirements)
     await editBudgetvalue.clear();
 
-    // Use JavaScript to set the value to avoid ElementNotInteractableError
-    await driver.executeScript('arguments[0].value = "400";', editBudgetvalue);
-
-    console.log("Budget value set to 400");
-  });
-
-  it("Should click on edit button", async () => {
     const editbtn = await driver.findElement(By.id("editbtn"));
 
-    // Use JavaScript to click on the element to avoid ElementNotInteractableError
-    await driver.executeScript('arguments[0].click();', editbtn);
+    await editbtn.click();
+    console.log(editbtn, "add is clicked", 5000);
 
-    console.log(editbtn, "edit is clicked", 10000);
+    // Wait for the alert to be present
+    await driver.wait(until.alertIsPresent());
+
+    // Switch to the alert
+    const alert = await driver.switchTo().alert();
+    // Check the alert text
+    const alertText = await alert.getText();
+    console.log("this is the alert", alertText);
+    expect(alertText).to.equal("Please enter Monthly Budget");
+
+    // Dismiss the alert (Click "OK")
+    await alert.dismiss();
+    this.timeout(10000);
   });
-
-
-});
-describe("Delete Monthly Budget Features", function () {
 
   it("Should open edit button modal", async () => {
-    try {
-      await driver.sleep(1000); // Adjust the duration as needed
-      const editBtnModal = await driver.wait(until.elementLocated(By.className("openEditBtn")), 5000);
-      const buttonId1 = await editBtnModal.getAttribute("data-id");
+    this.timeout(10000); // Set timeout as 10 seconds
+
+    // Execute script to edit value to session storage
+    await driver.executeScript(
+      'sessionStorage.setItem("Useremail", "songsiongpink@onyx.com");'
+    );
 
 
-      // Re-locate the element to avoid StaleElementReferenceError
-      const reLocatedEditBtnModal = await driver.findElement(By.className("openEditBtn"));
-      await reLocatedEditBtnModal.click();
-      console.log(reLocatedEditBtnModal, "edit is clicked");
+    const editBtnModal = await driver.wait(until.elementLocated(By.className("openEditBtn")), 5000);
+    editBtnModal.click();
 
-    } catch (error) {
-      throw error; // Pass any caught error to 'done()' to indicate test failure
-    }
+    // Retrieve the ownerAdd field in the Add Modal
+    const ownerEditField = await driver.findElement(By.id("ownerEdit"));
+
+    // Retrieve the Useremail from session storage
+    const useremailFromStorage = await driver.executeScript(
+      'return sessionStorage.getItem("Useremail");'
+    );
+
+    // Assert that the ownerAdd field is equal to the Useremail from session storage
+    const ownerEditValue = await ownerEditField.getAttribute("value");
+    expect(ownerEditValue).to.equal(useremailFromStorage);
   });
+  it("should enter value in budget", async () => {
+    const editBudgetvalue = await driver.findElement(By.id("budgetEdit"));
+    // Clear the existing value in the input field (optional, depending on your requirements)
+    await editBudgetvalue.clear();
+    // Set the new value to 100
+    await editBudgetvalue.sendKeys("400");
 
-  it("Should click on delete button", async () => {
-    try {
-      await driver.sleep(1000);
-      const deleteBtn = await driver.findElement(By.id("delbtn"));
-
-      // Use JavaScript to click on the element to avoid ElementNotInteractableError
-      await deleteBtn.click();
-    } catch (error) {
-      done(error); // Pass any caught error to 'done()' to indicate test failure
-    }
-    
   });
+  it("Should select an ammenity from the edit dropdown", async () => {
+    this.timeout(10000); // Set timeout as 10 seconds
 
+    const ammenitiesEdit = await driver.findElement(
+      By.id("ammenitiesEdit")
+    );
+    await driver.wait(until.elementIsVisible(ammenitiesEdit), 5000);
+    await ammenitiesEdit.click();
+
+    const ammenitiesEdit_Others = await driver.findElement(
+      By.id("Others")
+    );
+    await driver.wait(until.elementIsVisible(ammenitiesEdit_Others), 5000);
+    await ammenitiesEdit_Others.click();
+    await ammenitiesEdit.click();
+  });
+  it("Should click on  edit button", async () => {
+    const editbtn = await driver.findElement(By.id("editbtn"));
+
+    await editbtn.click();
+    console.log(editbtn, "edit is clicked", 5000);
+
+  });
+});
+describe("Deleting Monthly Budgets", function () {
+  it("Should open edit button modal", async () => {
+    this.timeout(10000); // Set timeout as 10 seconds
+    const editBtnModal = await driver.wait(until.elementLocated(By.className("openEditBtn")), 5000);
+    editBtnModal.click();
+
+  });
+  it("Should click on  delete button", async () => {
+    const deleteBtn = await driver.findElement(By.className("deleteBtn"));
+
+    await deleteBtn.click();
+    console.log(deleteBtn, "delete is clicked", 5000);
+
+  });
+  
 
 });
+
+afterEach(async function () {
+  await driver
+    .executeScript("return window.__coverage__;")
+    .then(async (coverageData) => {
+      if (coverageData) {
+        // Save coverage data to a file
+        await fs.writeFile(
+          "coverage-frontend/coverage" + counter++ + ".json",
+          JSON.stringify(coverageData),
+          (err) => {
+            if (err) {
+              console.error("Error writing coverage data:", err);
+            } else {
+              console.log("Coverage data written to coverage.json");
+            }
+          }
+        );
+      }
+    });
+});
+
 
 after(async function () {
   await driver.quit();
-  process.exit(0); // Exit with success code
+  process.exit(0); // Exit with success code
 });

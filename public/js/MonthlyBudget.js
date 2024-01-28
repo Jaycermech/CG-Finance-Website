@@ -24,7 +24,7 @@ function viewBudget() {
                         '<td>' + filteredResponse[i].owner + '</td>' +
                         '<td>' +
                         '<br>' + // Line break for space
-                        '<button type="button" class="btn btn-warning openEditBtn" data-bs-toggle="modal" data-bs-target="#editModal" data-id="' + filteredResponse[i].id + '">' +
+                        '<button type="button" class="btn btn-warning openEditBtn" id="editbtn1" data-bs-toggle="modal" data-bs-target="#editModal" data-id="' + filteredResponse[i].id + '">' +
                         '<i class="fas fa-edit"></i></button>' + // Edit icon
                         '</td>' +
                         '</tr>';
@@ -165,9 +165,7 @@ async function deleteBudget() {
             viewBudget();
             // Implement UI changes or redirection after successful deletion
             $('#editModal').modal('hide');
-        } else {
-            console.error('Unable to delete budget!');
-            // Handle error scenario
+            location.reload();
         }
     } catch (error) {
         console.error('Error deleting budget:', error);
