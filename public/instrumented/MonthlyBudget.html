@@ -1,311 +1,304 @@
 <!DOCTYPE html>
 <html>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>DVOPS - Resource Management Web App</title>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
-  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-  <link
-    href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
-    rel="stylesheet"
-  />
-  <script
-    src="https://kit.fontawesome.com/4cf25895bf.js"
-    crossorigin="anonymous"
-  ></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>CG Monthly-Budget</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet" />
+<script src="https://kit.fontawesome.com/4cf25895bf.js" crossorigin="anonymous"></script>
 
-  <style>
+<style>
     body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      display: flex;
-      background-color: #f4f4f4;
-      flex-direction: column;
-      align-items: center;
-      /* text-align: center; */
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        background-color: #f4f4f4;
+        flex-direction: column;
+        align-items: center;
+        /* text-align: center; */
     }
 
     header {
-      background-color: #333;
-      color: #fff;
-      padding: 10px;
-      text-align: center;
-      width: 100%;
+        background-color: #333;
+        color: #fff;
+        padding: 10px;
+        text-align: center;
+        width: 100%;
     }
 
     nav {
-      background-color: #444;
-      padding: 10px;
-      width: 100%;
+        background-color: #444;
+        padding: 10px;
+        width: 100%;
     }
 
     nav a {
-      color: #fff;
-      text-decoration: none;
-      padding: 10px;
-      margin: 0 10px;
+        color: #fff;
+        text-decoration: none;
+        padding: 10px;
+        margin: 0 10px;
     }
 
     nav a:hover {
-      background-color: #555;
+        background-color: #555;
     }
 
     section {
-      padding: 20px;
+        padding: 20px;
     }
 
     .search-container {
-      max-width: 600px;
-      margin: 0 auto;
-      text-align: center;
+        max-width: 600px;
+        margin: 0 auto;
+        text-align: center;
     }
 
     input[type="text"] {
-      width: 70%;
-      padding: 10px;
-      border: none;
-      border-radius: 5px;
-      margin-right: 5px;
+        width: 70%;
+        padding: 10px;
+        border: none;
+        border-radius: 5px;
+        margin-right: 5px;
     }
 
     input[type="submit"] {
-      background-color: #4caf50;
-      color: #fff;
-      border: none;
-      padding: 10px 20px;
-      border-radius: 5px;
-      cursor: pointer;
+        background-color: #4caf50;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
     }
 
     input[type="submit"]:hover {
-      background-color: #45a049;
+        background-color: #45a049;
     }
 
     table {
-      margin-top: 20px;
-      border-collapse: collapse;
-      width: 80%;
+        margin-top: 20px;
+        border-collapse: collapse;
+        width: 80%;
+        text-align: center;
     }
 
     th,
     td {
-      border: 1px solid #ddd;
-      padding: 8px;
+        border: 1px solid #ddd;
+        padding: 8px;
     }
 
     th {
-      background-color: #f2f2f2;
+        background-color: #f2f2f2;
     }
-  </style>
-  <link rel="stylesheet" href="css/style.css" />
+</style>
+<link rel="stylesheet" href="css/style.css" />
 
-  <head>
+<head>
     <script src="js/MonthlyBudget.js"></script>
     <title>View Budgets</title>
-  </head>
+</head>
 
-  <body onload="viewBudget()">
+<body onload="viewBudget()">
     <header>
-      <h1>CG Finance Website</h1>
+        <h1>CG Finance Website</h1>
     </header>
 
-    <nav style="margin-bottom: 20px">
-      <a href="/home">Home</a>
-      <a href="/expense">Expense</a>
-      <a href="MonthlyBudget.html">Budget</a>
-      <a href="retirement.html">Retirement</a>
-      <a href="profile.html">Profile</a>
-      <a href="#" id="logoutBtn">Log Out</a>
+    <nav style="margin-bottom: 20px;">
+        <a href="home.html">Home</a>
+        <a href="/expense">Expense</a>
+        <a href="MonthlyBudget.html">Budget</a>
+        <a href="retirement.html">Retirement</a>
+        <a href="profile.html">Profile</a>
+        <a href="#" id="logoutBtn">Log Out</a>
     </nav>
+
     <h1>Monthly Budgets</h1>
-    <table style="margin-bottom: 30px; text-align: center">
-      <thead>
-        <tr>
-          <!-- <th>ID</th> -->
-          <th>Amenities</th>
-          <th>Budget</th>
-          <th>Owner</th>
-          <th>Edit</th>
-        </tr>
-      </thead>
-      <tbody id="tableContent"></tbody>
+    <table style="margin-bottom: 30px;">
+        <thead>
+            <tr>
+                <!-- <th>ID</th> -->
+                <th>Amenities</th>
+                <th>Budget</th>
+                <th>Owner</th>
+                <th>Edit</th>
+            </tr>
+        </thead>
+        <tbody id="tableContent"></tbody>
     </table>
     <!-- Button to open Add Modal -->
-    <button
-      type="button"
-      class="btn btn-primary"
-      data-bs-toggle="modal"
-      data-bs-target="#addModal"
-      onclick="fillOwnerAdd()"
-    >
-      Set Monthly Budget
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addModal" id="addBudgetbtn"
+        onclick="fillOwnerAdd()">
+        Set Monthly Budget
     </button>
 
+
     <!-- Add Modal -->
-    <div
-      class="modal fade"
-      id="addModal"
-      tabindex="-1"
-      aria-labelledby="addModalLabel"
-      aria-hidden="true"
-    >
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="addModalLabel">
-              Set A New Monthly Budget
-            </h5>
-            <button
-              type="button"
-              class="btn-close"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-            ></button>
-          </div>
-          <div class="modal-body">
-            <form id="addForm">
-              <label for="ammenitiesAdd">Amenities:</label>
-              <select id="ammenitiesAdd" class="form-control mb-3">
-                <option value="Utilities">Utilities</option>
-                <option value="Groceries">Groceries</option>
-                <option value="Appliances">Appliances</option>
-                <option value="Others">Others</option>
-              </select>
+    <div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addModalLabel">Set A New Monthly Budget</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">X</button>
+                </div>
+                <div class="modal-body">
+                    <form id="addForm">
+                        <label for="ammenitiesAdd">Amenities:</label>
+                        <select id="ammenitiesAdd" class="form-control mb-3">
+                            <option value="Utilities">Utilities</option>
+                            <option value="Groceries">Groceries</option>
+                            <option value="Appliances">Appliances</option>
+                            <option value="Food" id="Food">Food</option>
+                            <option value="Electronic">Electronics</option>
+                            <option value="Others">Others</option>
+                        </select>
 
-              <label for="budget">Budget:</label>
-              <input type="number" id="budgetAdd" class="form-control mb-3" />
+                        <label for="budget">Budget:</label>
+                        <input type="number" id="budgetAdd" class="form-control mb-3" />
 
-              <label for="owner">Owner:</label>
-              <input
-                type="text"
-                readonly
-                id="ownerAdd"
-                class="form-control mb-3"
-              />
-            </form>
-          </div>
-          <div class="modal-footer">
-            <button
-              type="button"
-              class="btn btn-secondary"
-              data-bs-dismiss="modal"
-            >
-              Close
-            </button>
-            <button type="button" class="btn btn-primary" onclick="addBudget()">
-              Add
-            </button>
-          </div>
+                        <label for="owner">Owner:</label>
+                        <input type="text" readonly id="ownerAdd" class="form-control mb-3">
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="addbtn" onclick="addBudget()">Add</button>
+                    <label for="owner">Owner:</label>
+                    <input type="text" readonly id="ownerAdd" class="form-control mb-3" />
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        Close
+                    </button>
+                    <button type="button" class="btn btn-primary" onclick="addBudget()">
+                        Add
+                    </button>
+                </div>
+
+            </div>
         </div>
-      </div>
     </div>
 
     <!-- Edit Modal -->
-    <div
-      class="modal fade"
-      id="editModal"
-      tabindex="-1"
-      aria-labelledby="editModalLabel"
-      aria-hidden="true"
-    >
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="editModalLabel">Edit Monthly Budget</h5>
-            <button
-              type="button"
-              class="btn-close"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-            ></button>
-          </div>
-          <div class="modal-body">
-            <form id="editForm">
-              <input type="hidden" id="editId" />
-              <div class="mb-3">
-                <label for="ammenitiesEdit">Amenities:</label>
-                <select id="ammenitiesEdit" class="form-control mb-3">
-                  <option value="Utilities">Utilities</option>
-                  <option value="Groceries">Groceries</option>
-                  <option value="Appliances">Appliances</option>
-                  <option value="Others">Others</option>
-                </select>
-              </div>
-              <div class="mb-3">
-                <label for="budgetEdit" class="form-label">Budget:</label>
-                <input type="number" class="form-control" id="budgetEdit" />
-              </div>
-              <div class="mb-3">
-                <label for="ownerEdit" class="form-label">Owner:</label>
-                <input
-                  type="text"
-                  readonly
-                  class="form-control"
-                  id="ownerEdit"
-                />
-              </div>
-            </form>
-          </div>
-          <div class="modal-footer">
-            <button
-              type="button"
-              class="btn btn-secondary"
-              data-bs-dismiss="modal"
-            >
-              Close
-            </button>
-            <button
-              type="button"
-              class="btn btn-danger deleteBtn"
-              onclick="deleteBudget()"
-            >
-              Delete
-            </button>
-            <button
-              type="button"
-              class="btn btn-primary"
-              onclick="editBudget()"
-            >
-              Confirm
-            </button>
-          </div>
+    <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editModalLabel">Edit Monthly Budget</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">X</button>
+                </div>
+                <div class="modal-body">
+                    <form id="editForm">
+                        <input type="hidden" id="editId">
+                        <div class="mb-3">
+                            <label for="ammenitiesEdit">Amenities:</label>
+                            <select id="ammenitiesEdit" class="form-control mb-3">
+                                <option value="Utilities">Utilities</option>
+                                <option value="Groceries">Groceries</option>
+                                <option value="Appliances">Appliances</option>
+                                <option value="Food" id="Food">Food</option>
+                                <option value="Electronic">Electronics</option>
+                                <option value="Others">Others</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="budgetEdit" class="form-label">Budget:</label>
+                            <input type="number" class="form-control" id="budgetEdit">
+                        </div>
+                        <div class="mb-3">
+                            <label for="ownerEdit" class="form-label">Owner:</label>
+                            <input type="text" readonly class="form-control" id="ownerEdit">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-danger deleteBtn" id="delbtn"
+                        onclick="deleteBudget()">Delete</button>
+                    <button type="button" class="btn btn-primary" id="editbtn" onclick="editBudget()">Confirm</button>
+                    <option value="Utilities">Utilities</option>
+                    <option value="Groceries">Groceries</option>
+                    <option value="Appliances">Appliances</option>
+                    <option value="Food" id="Food">Food</option>
+                    <option value="Electronic">Electronics</option>
+                    <option value="Others">Others</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="budgetEdit" class="form-label">Budget:</label>
+                    <input type="number" class="form-control" id="budgetEdit" />
+                </div>
+                <div class="mb-3">
+                    <label for="ownerEdit" class="form-label">Owner:</label>
+                    <input type="text" readonly class="form-control" id="ownerEdit" />
+                </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    Close
+                </button>
+                <button type="button" class="btn btn-danger deleteBtn" onclick="deleteBudget()">
+                    Delete
+                </button>
+                <button type="button" class="btn btn-primary" onclick="editBudget()">
+                    Confirm
+                </button>
+            </div>
         </div>
-      </div>
+    </div>
     </div>
 
     <script>
-      // Bind the function to run when the edit modal is shown
-      $("#editModal").on("shown.bs.modal", function (event) {
-        // Extract the ID from the element that triggered the modal
-        var button = $(event.relatedTarget);
-        var id = button.data("id");
-        console.log("id bud:", id);
-        // Call viewBudgetid to populate modal with data related to the ID
-        viewBudgetid(id);
-      });
+        // Bind the function to run when the edit modal is shown
+        $("#editModal").on("shown.bs.modal", function (event) {
+            // Extract the ID from the element that triggered the modal
+            var button = $(event.relatedTarget);
+            var id = button.data("id");
+            console.log("id bud:", id);
+            // Call viewBudgetid to populate modal with data related to the ID
+            viewBudgetid(id);
+        });
 
-      function fillOwnerAdd() {
-        // Retrieve usermail from session storage
-        var Useremail = sessionStorage.getItem("Useremail");
+        function fillOwnerAdd() {
+            // Retrieve usermail from session storage
+            var Useremail = sessionStorage.getItem('Useremail');
+
+            // Fill ownerAdd input field in the Add Modal with usermail
+            document.getElementById('ownerAdd').value = Useremail;
+            console.log("User mail is :", Useremail);
+        }
 
         // Fill ownerAdd input field in the Add Modal with usermail
         document.getElementById("ownerAdd").value = Useremail;
         console.log("User mail is :", Useremail);
-      }
+
     </script>
 
     <script>
-      document
-        .getElementById("logoutBtn")
-        .addEventListener("click", function () {
-          // Clear session storage
-          sessionStorage.clear();
-          // Redirect to index.html
-          window.location.href = "index.html";
+        document.getElementById("logoutBtn").addEventListener("click", function () {
+            // Clear session storage
+            sessionStorage.clear();
+            // Redirect to index.html
+            window.location.href = "index.html";
         });
     </script>
-  </body>
-</html>
+</body>
+
+</html>   
+ <script>
+        document
+            .getElementById("logoutBtn")
+            .addEventListener("click", function () {
+                // Clear session storage
+                sessionStorage.clear();
+                // Redirect to index.html
+                window.location.href = "index.html";
+            });
+    </script>
+    </body>
+
+    </html>
