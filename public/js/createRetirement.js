@@ -7,7 +7,7 @@ function calculate() {
     if (currentAge < 0 || retirementAge < 0 || fundGoals < 0) {
       alert("No negative numbers allowed in fields!");
       return;
-    }
+    }  
 
     console.log(title);
     console.log(currentAge);

@@ -4,13 +4,152 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>User Management</title>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f4f4f4;
+      }
+
+      header {
+        background-color: #333;
+        color: #fff;
+        padding: 10px;
+        text-align: center;
+      }
+
+      nav {
+        background-color: #444;
+        padding: 10px;
+      }
+
+      nav a {
+        color: #fff;
+        text-decoration: none;
+        padding: 10px;
+        margin: 0 10px;
+      }
+
+      nav a:hover {
+        background-color: #555;
+      }
+
+      section {
+        padding: 20px;
+      }
+
+      .search-container {
+        max-width: 600px;
+        margin: 0 auto;
+        text-align: center;
+      }
+
+      input[type="text"] {
+        width: 70%;
+        padding: 10px;
+        border: none;
+        border-radius: 5px;
+        margin-right: 5px;
+      }
+
+      input[type="submit"] {
+        background-color: #4caf50;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+
+      input[type="submit"]:hover {
+        background-color: #45a049;
+      }
+
+      /* User Management Styles */
+      h2 {
+        color: #333;
+      }
+
+      form {
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        width: 300px;
+        margin: 0 auto;
+      }
+
+      label {
+        display: block;
+        margin-bottom: 8px;
+        color: #333;
+      }
+
+      input {
+        width: 100%;
+        padding: 8px;
+        margin-bottom: 16px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+      }
+
+      button {
+        background-color: #4caf50;
+        color: #fff;
+        padding: 10px 15px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+
+      button:hover {
+        background-color: #45a049;
+      }
+
+      p {
+        margin: 10px 0 0;
+        font-size: 14px;
+        color: red;
+      }
+    </style>
   </head>
   <body>
-    <!-- Edit User Form -->
+    <body onload="filluser()"></body>
+
+    <header>
+      <h1>Finance Website</h1>
+    </header>
+
+    <nav style="margin-bottom: 20px">
+      <a href="/home">Home</a>
+      <a href="/expense.html">Expense</a>
+      <a href="MonthlyBudget.html">Budget</a>
+      <a href="retirement.html">Retirement</a>
+      <a href="profile.html">Profile</a>
+      <a href="#" id="logoutBtn">Log Out</a>
+    </nav>
+
+    <script>
+      document
+        .getElementById("logoutBtn")
+        .addEventListener("click", function () {
+          // Clear session storage
+          sessionStorage.clear();
+          // Redirect to index.html
+          window.location.href = "index.html";
+        });
+    </script>
+
     <h2>Edit User</h2>
     <form id="editUserForm">
       <label for="emailToEdit">Current Email:</label>
-      <input type="email" id="emailToEdit" name="emailToEdit" required />
+      <input type="email" id="emailToEdit" name="emailToEdit" readonly />
 
       <label for="newEmail">New Email:</label>
       <input type="email" id="newEmail" name="newEmail" />
@@ -26,58 +165,64 @@
       />
 
       <button type="button" onclick="editUser()">Edit User</button>
-      <p id="editUserMessage" style="color: red"></p>
+      <p id="editUserMessage"></p>
     </form>
 
-    <!-- Delete User Form -->
     <h2>Delete User</h2>
     <form id="deleteUserForm">
-      <label for="emailToDelete">Email to Delete:</label>
-      <input type="email" id="emailToDelete" name="emailToDelete" required />
-
       <button type="button" onclick="deleteUser()">Delete User</button>
-      <p id="deleteUserMessage" style="color: red"></p>
+      <p id="deleteUserMessage"></p>
     </form>
 
     <script>
       async function editUser() {
-        const emailToEdit = document.getElementById("emailToEdit").value;
-        const newEmail = document.getElementById("newEmail").value;
-        const newPassword = document.getElementById("newPassword").value;
-        const confirmNewPassword =
-          document.getElementById("confirmNewPassword").value;
+        try {
+          const emailToEdit = document.getElementById("emailToEdit").value;
+          const newEmail = document.getElementById("newEmail").value;
+          const newPassword = document.getElementById("newPassword").value;
+          const confirmNewPassword =
+            document.getElementById("confirmNewPassword").value;
 
-        // perform validation if needed
+          // Validate that the new password and confirm password match
+          if (newPassword !== confirmNewPassword) {
+            document.getElementById("editUserMessage").innerText =
+              "New password and confirm password do not match.";
+            return;
+          }
 
-        const response = await fetch("/edit-user", {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            emailToEdit,
-            newEmail,
-            newPassword,
-            confirmNewPassword,
-          }),
-        });
+          const response = await fetch("/edit-user", {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              emailToEdit,
+              newEmail,
+              newPassword,
+              confirmNewPassword,
+            }),
+          });
 
-        const data = await response.json();
-        const editUserMessage = document.getElementById("editUserMessage");
+          const data = await response.json();
 
-        if (response.ok) {
-          editUserMessage.style.color = "green";
-          editUserMessage.textContent = data.message;
-        } else {
-          editUserMessage.style.color = "red";
-          editUserMessage.textContent = data.message;
+          if (response.ok) {
+            document.getElementById("editUserMessage").innerText = data.message;
+          } else {
+            document.getElementById("editUserMessage").innerText = data.message;
+          }
+        } catch (error) {
+          console.error(error);
+          document.getElementById("editUserMessage").innerText =
+            "An error occurred while processing your request.";
         }
       }
-
       async function deleteUser() {
-        const emailToDelete = document.getElementById("emailToDelete").value;
+        const storedEmail = sessionStorage.getItem("Useremail"); // Assuming you stored the user email in session storage
 
-        // perform validation if needed
+        if (!storedEmail) {
+          displayErrorMessage("User email not found in session storage.");
+          return;
+        }
 
         const response = await fetch("/delete-user", {
           method: "DELETE",
@@ -85,7 +230,7 @@
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            emailToDelete,
+            emailToDelete: storedEmail,
           }),
         });
 
@@ -99,6 +244,20 @@
           deleteUserMessage.style.color = "red";
           deleteUserMessage.textContent = data.message;
         }
+
+        deleteUserMessage.style.color = response.ok ? "green" : "red";
+        deleteUserMessage.textContent = data.message;
+
+        sessionStorage.clear();
+        // Redirect to index.html
+        window.location.href = "index.html";
+      }
+    </script>
+    <script>
+      async function filluser() {
+        var userEmail = sessionStorage.getItem("Useremail");
+        // Set the value of emailToEdit input
+        document.getElementById("emailToEdit").value = userEmail;
       }
     </script>
   </body>

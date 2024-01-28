@@ -6,7 +6,7 @@ const fs = require("fs").promises;
 
 const chrome = require("selenium-webdriver/chrome");
 const chromeOptions = new chrome.Options();
-// chromeOptions.addArguments("--headless");
+chromeOptions.addArguments("--headless");
 const driver = new Builder()
   .forBrowser("chrome")
   .setChromeOptions(chromeOptions)
@@ -106,7 +106,7 @@ describe("Creating retirement plans", function () {
     await driver.wait(until.alertIsPresent());
 
     // Switch to the alert
-    const alert = await driver.switchTo().alert();
+    const alert = await driver.switchTo().alert(); 
 
     // Get the text of the alert
     const alertText = await alert.getText();
