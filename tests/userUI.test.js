@@ -33,19 +33,19 @@ describe("Testing Register UI", function () {
     expect(title).to.equal("Login Page");
   });
 
-  // it("Should navigate to the Registration Page", async function () {
-  //   // this.timeout(200000);
+  it("Should navigate to the Registration Page", async function () {
+    // this.timeout(200000);
 
-  //   // Click the "New user? Register here" link
-  //   const registrationLink = await driver.findElement(
-  //     By.linkText("New user? Register here")
-  //   );
-  //   await registrationLink.click();
+    // Click the "New user? Register here" link
+    const registrationLink = await driver.findElement(
+      By.linkText("New user? Register here")
+    );
+    await registrationLink.click();
 
-  //   // Verify that the page navigated to the Registration Page
-  //   const title = await driver.getTitle();
-  //   expect(title).to.equal("Registration Page");
-  // });
+    // Verify that the page navigated to the Registration Page
+    const title = await driver.getTitle();
+    expect(title).to.equal("Registration Page");
+  });
 
   it("Should register", async function () {
     // this.timeout(10000); // Increased overall timeout

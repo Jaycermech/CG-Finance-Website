@@ -6,7 +6,7 @@ const fs = require("fs").promises;
 
 const chrome = require("selenium-webdriver/chrome");
 const chromeOptions = new chrome.Options();
-// chromeOptions.addArguments("--headless");
+chromeOptions.addArguments("--headless");
 const driver = new Builder()
   .forBrowser("chrome")
   .setChromeOptions(chromeOptions)
@@ -260,10 +260,10 @@ describe("Creating Monthly Budgets", function () {
         "/instrumented/MonthlyBudget.html"
     );
 
-  //   // Execute script to edit value to session storage
-  //   await driver.executeScript(
-  //     'sessionStorage.setItem("Useremail", "songsiongpink@onyx.com");'
-  //   );
+    // Execute script to edit value to session storage
+    await driver.executeScript(
+      'sessionStorage.setItem("Useremail", "songsiongpink@onyx.com");'
+    );
 
     // Click on the edit budget button
     const editBtnModal = await driver.findElement(By.className("openEditBtn"));
@@ -273,20 +273,20 @@ describe("Creating Monthly Budgets", function () {
     // Clear the existing value in the input field (optional, depending on your requirements)
     await editBudgetvalue.clear();
 
-  //   const editbtn = await driver.findElement(By.id("editbtn"));
+    const editbtn = await driver.findElement(By.id("editbtn"));
 
-  //   await editbtn.click();
-  //   console.log(editbtn, "add is clicked", 5000);
+    await editbtn.click();
+    console.log(editbtn, "add is clicked", 5000);
 
-  //   // Wait for the alert to be present
-  //   await driver.wait(until.alertIsPresent());
+    // Wait for the alert to be present
+    await driver.wait(until.alertIsPresent());
 
-  //   // Switch to the alert
-  //   const alert = await driver.switchTo().alert();
-  //   // Check the alert text
-  //   const alertText = await alert.getText();
-  //   console.log("this is the alert", alertText);
-  //   expect(alertText).to.equal("Please enter Monthly Budget");
+    // Switch to the alert
+    const alert = await driver.switchTo().alert();
+    // Check the alert text
+    const alertText = await alert.getText();
+    console.log("this is the alert", alertText);
+    expect(alertText).to.equal("Please enter Monthly Budget");
 
     // Dismiss the alert (Click "OK")
     await alert.dismiss();
@@ -307,13 +307,13 @@ describe("Creating Monthly Budgets", function () {
     );
     editBtnModal.click();
 
-  //   // Retrieve the ownerAdd field in the Add Modal
-  //   const ownerEditField = await driver.findElement(By.id("ownerEdit"));
+    // Retrieve the ownerAdd field in the Add Modal
+    const ownerEditField = await driver.findElement(By.id("ownerEdit"));
 
-  //   // Retrieve the Useremail from session storage
-  //   const useremailFromStorage = await driver.executeScript(
-  //     'return sessionStorage.getItem("Useremail");'
-  //   );
+    // Retrieve the Useremail from session storage
+    const useremailFromStorage = await driver.executeScript(
+      'return sessionStorage.getItem("Useremail");'
+    );
 
     // Assert that the ownerAdd field is equal to the Useremail from session storage
     const ownerEditValue = await ownerEditField.getAttribute("value");
