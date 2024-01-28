@@ -6,7 +6,7 @@ const fs = require("fs").promises;
 
 const chrome = require("selenium-webdriver/chrome");
 const chromeOptions = new chrome.Options();
-// chromeOptions.addArguments("--headless");
+chromeOptions.addArguments("--headless");
 const driver = new Builder()
   .forBrowser("chrome")
   .setChromeOptions(chromeOptions)
@@ -106,7 +106,7 @@ describe("Testing Open Webpage UI", function () {
 describe("Testing Edit Modal", function () {
   this.timeout(100000); // Set timeout as 10 seconds
   it("Should be able to edit an expense", async () => {
-    this.timeout(100000); // Set timeout as 100 seconds
+    // this.timeout(100000); // Set timeout as 100 seconds
     await driver.get(
       "http://localhost:" + server.address().port + "/instrumented/expense.html"
     );
@@ -159,7 +159,7 @@ describe("Testing Edit Modal", function () {
 describe("Testing Edit Modal Delete function", function () {
   this.timeout(100000); // Set timeout as 10 seconds
   it("Should be able to delete an expense", async () => {
-    this.timeout(100000); // Set timeout as 100 seconds
+    // this.timeout(100000); // Set timeout as 100 seconds
     await driver.get(
       "http://localhost:" + server.address().port + "/instrumented/expense.html"
     );
@@ -206,7 +206,7 @@ describe("Testing Edit Modal Delete function", function () {
     this.timeout(100000); // Set timeout as 10 seconds
 
     it("Should check if editSpecificCategoryModal is present", async () => {
-      this.timeout(100000); // Set timeout as 100 seconds
+      // this.timeout(100000); // Set timeout as 100 seconds
       await driver.get(
         "http://localhost:" +
           server.address().port +
