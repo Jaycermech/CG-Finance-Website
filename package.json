@@ -47,7 +47,7 @@
     "mocha": "^10.2.0",
     "popper.js": "^1.16.1",
     "save": "^2.9.0",
-    "selenium-webdriver": "^4.16.0",
+    "selenium-webdriver": "^4.17.0",
     "styled-components": "^6.1.6"
   },
   "devDependencies": {
