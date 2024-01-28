@@ -7,15 +7,15 @@ const chaiHttp = require("chai-http");
 chai.use(chaiHttp);
 describe("Testing API Routes", () => {
   const retirementFilePath = "utils/retirements.json";
-  var orgContent = "";
+  var orgRetirements = "";
   beforeEach(async () => {
-    orgContent = await fs.readFile("utils/retirements.json", "utf8");
-    orgContent = JSON.parse(orgContent);
+    orgRetirements = await fs.readFile(retirementFilePath, "utf8");
+    orgRetirements = JSON.parse(orgRetirements);
   });
   afterEach(async () => {
     await fs.writeFile(
-      "utils/retirements.json",
-      JSON.stringify(orgContent),
+      retirementFilePath,
+      JSON.stringify(orgRetirements),
       "utf8"
     );
   });
@@ -30,7 +30,7 @@ describe("Testing API Routes", () => {
         retirement_age: 70,
         fund_goal: 400000,
         annual_saving_goal: 3000,
-        user: "jovan",
+        user: "kovantang@gmail.com",
       })
       .end((err, res) => {
         expect(err).to.be.null;
@@ -40,4 +40,47 @@ describe("Testing API Routes", () => {
       });
   });
 
+  it("Should retrieve retirements successfully", (done) => {
+    chai
+      .request(app)
+      .get("/view-retirement")
+      .send()
+      .end((err, res) => {
+        expect(err).to.be.null;
+        expect(res).to.have.status(201);
+        done();
+        server.close();
+      });
+  });
+  it("Should edit retirement successfully", (done) => {
+    chai
+      .request(app)
+      .put("/edit-retirement/" + orgRetirements[0].id)
+      .send({
+        title: "Plan 3",
+        current_age: 10,
+        retirement_age: 60,
+        fund_goal: 5336000,
+        annual_saving_goal: 9000,
+        user: "kovantang@gmail.com",
+      })
+      .end((err, res) => {
+        expect(err).to.be.null;
+        expect(res).to.have.status(201);
+        done();
+        server.close();
+      });
+  });
+  it("Should delete retirement successfully", (done) => {
+    chai
+      .request(app)
+      .delete("/delete-retirement/" + orgRetirements[0].id)
+      .send({ user: orgRetirements[0].user })
+      .end((err, res) => {
+        expect(err).to.be.null;
+        expect(res).to.have.status(200);
+        done();
+        server.close();
+      });
+  });
 });
