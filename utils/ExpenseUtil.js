@@ -23,14 +23,17 @@ async function writeJSON(object, filename) {
     throw err;
   }
 }
-
 async function addExpense(req, res) {
-  console.log(req);
-  console.log(res);
   try {
     const description = req.body.description;
     const amount = req.body.amount;
     const user = req.body.user;
+
+    // Debugging: Print the values to console
+    console.log("Description:", description);
+    console.log("Amount:", amount);
+    console.log("User:", user);
+
     const newExpense = new Expense(description, amount, user);
     const updatedExpenses = await writeJSON(newExpense, "utils/expenses.json");
     return res.status(201).json(updatedExpenses);
