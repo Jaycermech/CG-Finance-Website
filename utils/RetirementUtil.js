@@ -65,8 +65,6 @@ async function add_retirement(req, res) {
       user
     );
 
-    console.log("the retirement should be: ", newRetirement);
-
     const updatedRetirement = await writeJSONRetirement(
       newRetirement,
       "utils/retirements.json"
@@ -118,8 +116,6 @@ async function edit_retirement(req, res) {
 }
 
 async function delete_retirement(req, res) {
-  console.log("retrieving the id", req.params.id)
-  console.log("retrieving the user", req.body.user)
   try {
     const id = req.params.id;
     const user = req.body.user; // Assuming user is sent in the request body
