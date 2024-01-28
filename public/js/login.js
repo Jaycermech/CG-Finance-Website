@@ -28,8 +28,6 @@ async function login() {
         sessionStorage.setItem("Useremail", document.getElementById("email").value);
           // Handle successful login, e.g., redirect to home page
           window.location.href = "home.html";
-        // Redirect to index.html upon successful registration
-        window.location.href = "index.html";
       } else {
         alert(`Error: ${data.message}`);
       }
