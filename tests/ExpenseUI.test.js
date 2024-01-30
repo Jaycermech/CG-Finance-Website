@@ -251,25 +251,25 @@ describe("Testing Edit Modal Delete function", function () {
 
   //-------------------------------------------------------New code END-------------------------------------
 
-  // it("Should be able to navigate to the add expense page and not add expense", async () => {
-  //   await driver.get(
-  //     "http://localhost:" + server.address().port + "/instrumented/expense.html"
-  //   );
+  it("Should be able to navigate to the add expense page and not add expense", async () => {
+    await driver.get(
+      "http://localhost:" + server.address().port + "/instrumented/expense.html"
+    );
 
-  //   // Locate and click on the addExpensebtn1 button
-  //   const addExpensebtn1 = await driver.findElement(By.id("addExpensebtn1"));
-  //   await addExpensebtn1.click();
+    // Locate and click on the addExpensebtn1 button
+    const addExpensebtn1 = await driver.findElement(By.id("addExpensebtn1"));
+    await addExpensebtn1.click();
 
-  //   // Locate and click on the Add Expense button in the modal
-  //   const addExpensebtn2 = await driver.findElement(By.id("addExpensebtn2"));
-  //   await addExpensebtn2.click();
+    // Locate and click on the Add Expense button in the modal
+    const addExpensebtn2 = await driver.findElement(By.id("addExpensebtn2"));
+    await addExpensebtn2.click();
 
-  //   // // Locate and click on the Add Expense button in the modal
-  //   // const AddExModalclsbtn = await driver.findElement(
-  //   //   By.id("AddExModalclsbtn")
-  //   // );
-  //   // await AddExModalclsbtn.click();s
-  // });
+    // // Locate and click on the Add Expense button in the modal
+    // const AddExModalclsbtn = await driver.findElement(
+    //   By.id("AddExModalclsbtn")
+    // );
+    // await AddExModalclsbtn.click();s
+  });
 });
 
 afterEach(async function () {
