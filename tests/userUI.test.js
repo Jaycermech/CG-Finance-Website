@@ -171,7 +171,7 @@ describe("Testing Edit UI", function () {
 //   // this.timeout(10000);
 //   it("Should Login user", async function () {
 //     await driver.get(
-//       "http://localhost:" + server.address().port + "/instrumented/index.html"
+//       "http://localhost:" + server.address().port + "/instrumented"
 //     );
 //     const emailElement1 = await driver.findElement(By.id("email"));
 //     await emailElement1.click();
