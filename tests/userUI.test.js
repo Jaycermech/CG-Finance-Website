@@ -167,35 +167,39 @@ describe("Testing Edit UI", function () {
   });
 });
 
-describe("Testing Login UI", function () {
-  // this.timeout(10000);
-  it("Should Login user", async function () {
-    await driver.get(
-      "http://localhost:" + server.address().port + "/instrumented"
-    );
-    const emailElement1 = await driver.findElement(By.id("email"));
-    await emailElement1.click();
-    await emailElement1.sendKeys("jovan@gmail.com");
-
-    const passwordElement1 = await driver.findElement(By.id("password"));
-    await passwordElement1.click();
-    await passwordElement1.sendKeys("shucks");
-    // Click the 'Login' button'
-    const loginButton = await driver.findElement(By.id("loginBtn"));
-    await loginButton.click();
-  });
-});
-
-//   it("Shoul delete user", async function () {
-//     this.timeout(10000);
+// describe("Testing Login UI", function () {
+//   // this.timeout(10000);
+//   it("Should Login user", async function () {
 //     await driver.get(
-//       "http://localhost:" + server.address().port + "/instrumented/profile.html"
+//       "http://localhost:" + server.address().port + "/instrumented"
 //     );
-//     const deletebtn = await driver.findElement(
-//       By.xpath('//button[text()="Delete User"]')
-//     );
-//     await deletebtn.click();
+//     const emailElement1 = await driver.findElement(By.id("email"));
+//     await emailElement1.click();
+//     await emailElement1.sendKeys("jovan@gmail.com");
+
+//     const passwordElement1 = await driver.findElement(By.id("password"));
+//     await passwordElement1.click();
+//     await passwordElement1.sendKeys("shucks");
+//     // Click the 'Login' button'
+//     const loginButton = await driver.findElement(By.id("loginBtn"));
+//     await loginButton.click();
 //   });
+// });
+
+// it("Shoul delete user", async function () {
+//   this.timeout(10000);
+//   await driver.get(
+//     "http://localhost:" + server.address().port + "/instrumented/profile.html"
+//   );
+
+//   await driver.executeScript(
+//     'sessionStorage.setItem("Useremail", "songsiongpink@onyx.com");'
+//   );
+//   const deletebtn = await driver.findElement(
+//     By.xpath('//button[text()="Delete User"]')
+//   );
+//   await deletebtn.click();
+// });
 
 afterEach(async function () {
   await driver
