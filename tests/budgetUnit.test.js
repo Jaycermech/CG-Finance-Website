@@ -38,7 +38,6 @@ describe("Testing budget related features", () => {
         expect(data[orgContent.length].ammenities).to.equal(req.body.ammenities);
         addedBudgetId = data[orgContent.length].id; // Store the added ID
         orgContent = data;
-        console.log(addedBudgetId, "ids");
       },
 
     };
@@ -102,7 +101,6 @@ describe("Testing budget related features", () => {
     }
   });
   it("Should edit a monthly budget successfully", async () => {
-    console.log(addedBudgetId, "ids ");
     const req = {
       body: {
         "ammenities": "Others",
@@ -162,7 +160,6 @@ describe("Testing budget related features", () => {
   });
 
   it("Should delete a budget successfully", async () => {
-    console.log("Deleting Budget with ID:", addedBudgetId);
   
     const req = {
       params: {
@@ -172,7 +169,6 @@ describe("Testing budget related features", () => {
   
     const res = {
       status: function (code) {
-        console.log("Received status code:", code);
         expect(code).to.equal(201);
         return this;
       },
@@ -181,13 +177,11 @@ describe("Testing budget related features", () => {
       },
       json: function (data) {
         orgContent = data;
-        console.log("Deleted Budget Data:", data);
       },
     };
   
     try {
       await deleteBudget(req, res);
-      console.log("Budget Deleted Successfully");
   
       // Check if the deleted budget is no longer present in the updated orgContent
       const isBudgetDeleted = orgContent.some((budget) => budget.id === addedBudgetId);

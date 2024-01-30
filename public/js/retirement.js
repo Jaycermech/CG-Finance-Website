@@ -63,5 +63,4 @@ function deleteRetirement(id) {
     viewRetirements()
   };
   request.send(JSON.stringify(jsonData));
-  console.log("sending the json data ", jsonData);
 }
