@@ -1,42 +1,37 @@
 async function login() {
-  const email = document.getElementById("emailLogin").value;
-  const password = document.getElementById("passwordLogin").value;
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
 
-  // Check if email contains "@" symbol
-  if (!email.includes("@")) {
-    alert('Invalid email format! Please include "@" in your email.');
-    return;
-  }
-
-  if (password.length < 6) {
-    alert("Password must be at least 6 characters!");
-    return;
-  }
-
-  var response = "";
-  var jsonData = new Object();
-  jsonData.email = email;
-  jsonData.password = password;
-
-  if (jsonData.email == "" || jsonData.password == "") {
-    alert("All Fields required!");
-    return;
-  }
-
-  var request = new XMLHttpRequest();
-  request.open("POST", "/login", true);
-  request.setRequestHeader("Content-Type", "application/json");
-  request.onload = function () {
-    response = JSON.parse(request.responseText);
-    console.log(response.message);
-    if (response.message == "Login successful!") {
-      alert("Login successful!");
-      sessionStorage.setItem("Useremail", email);
-      // Handle successful login, redirect to home page
-      window.location.href = "home.html";
-    } else {
-      alert("Unable to login");
+    // Check if email contains "@" symbol
+    if (!email.includes("@")) {
+      alert('Invalid email format! Please include "@" in your email.');
+      return;
     }
-  };
-  request.send(JSON.stringify(jsonData));
-}
+
+
+    try {
+      const response = await fetch("http://localhost:5050/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email,
+          password,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        alert("Login successful!");
+        sessionStorage.setItem("Useremail", document.getElementById("email").value);
+          // Handle successful login, e.g., redirect to home page
+          window.location.href = "home.html";
+      } else {
+        alert(`Error: ${data.message}`);
+      }
+    } catch (error) {
+      console.error("Error:", error.message);
+    }
+  }
