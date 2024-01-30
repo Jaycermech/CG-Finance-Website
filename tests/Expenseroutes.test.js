@@ -22,6 +22,8 @@ describe("Expense Testing API Routes", () => {
     await fs.writeFile(resourcesFilePath, JSON.stringify(orgResources), "utf8");
   });
 
+
+  // Testing back end addExpense route
   it("Should add an expense with value of 30", (done) => {
     chai
       .request(app)
@@ -39,6 +41,8 @@ describe("Expense Testing API Routes", () => {
       });
   });
 
+
+  // Testing viewExpense
   it("Should retreive expenses from expenses.json", (done) => {
     chai
       .request(app)

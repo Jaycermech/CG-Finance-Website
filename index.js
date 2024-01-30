@@ -32,7 +32,7 @@ const {
   editBudget,
   deleteBudget,
   viewBudgetid,
-  viewBudgetByOwner
+  viewBudgetByOwner,
 } = require("./utils/monthly-budgetUtils");
 app.post("/add-budget", addBudget);
 app.get("/view-budget", viewBudget);
