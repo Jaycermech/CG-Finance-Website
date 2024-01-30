@@ -170,6 +170,27 @@ describe("Testing Edit UI", function () {
 // describe("Testing Login UI", function () {
 //   // this.timeout(10000);
 //   it("Should Login user", async function () {
+<<<<<<< HEAD
+=======
+//     await driver.get(
+//       "http://localhost:" + server.address().port + "/instrumented"
+//     );
+//     const emailElement1 = await driver.findElement(By.id("email"));
+//     await emailElement1.click();
+//     await emailElement1.sendKeys("songsiongpink@onyx.com");
+
+//     const passwordElement1 = await driver.findElement(By.id("password"));
+//     await passwordElement1.click();
+//     await passwordElement1.sendKeys("pink1234");
+//     // Click the 'Login' button'
+//     const loginButton = await driver.findElement(By.id("loginBtn"));
+//     await loginButton.click();
+//   });
+// });
+
+//   it("Shoul delete user", async function () {
+//     this.timeout(10000);
+>>>>>>> parent of f4384b1a (Coverage for both: one file not showing)
 //     await driver.get(
 //       "http://localhost:" + server.address().port + "/instrumented"
 //     );
