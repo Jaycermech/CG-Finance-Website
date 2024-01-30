@@ -9,15 +9,7 @@
       "utils/monthly-budgetUtils.js",
       "utils/RetirementUtil.js",
       "utils/ExpenseUtil.js",
-      "public/js/createRetirement.js",
-      "public/js/editRetirement.js",
-      "public/js/expense.js",
-      "public/js/home.js",
-      "public/js/login.js",
-      "public/js/MonthlyBudget.js",
-      "public/js/profile.js",
-      "public/js/register.js",
-      "public/js/retirement.js",
+      "public/**/*.js",
       "index.js"
     ],
     "exclude": [],
@@ -27,15 +19,15 @@
     ],
     "all": true,
     "check-coverage": true,
-    "branches": 10,
-    "lines": 10,
-    "functions": 10,
-    "statements": 10
+    "branches": 80,
+    "lines": 80,
+    "functions": 80,
+    "statements": 80
   },
   "scripts": {
     "test": "nyc mocha tests/*.test.js",
     "start": "node index.js",
-    "frontend-instrument": "nyc instrument .\\public\\js .\\public\\instrumented\\js && copy .\\public\\*.html .\\public\\instrumented\\ && copy .\\public\\images .\\public\\instrumented\\ && copy .\\public\\css .\\public\\instrumented\\ && del .\\coverage-frontend\\*.json",
+    "frontend-instrument": "nyc instrument .\\public\\js .\\public\\instrumented\\js && copy .\\public\\*.html .\\public\\instrumented\\ && copy .\\public\\images.\\public\\instrumented\\ && copy .\\public\\css .\\public\\instrumented\\ && del.\\coverage-frontend\\*.json",
     "frontend-report": "nyc report --reporter html --reporter text -t coverage-frontend --report-dir coverage-frontend/summary"
   },
   "author": "",
