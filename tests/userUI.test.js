@@ -170,8 +170,7 @@ describe("Testing Edit UI", function () {
 // describe("Testing Login UI", function () {
 //   // this.timeout(10000);
 //   it("Should Login user", async function () {
-<<<<<<< HEAD
-=======
+
 //     await driver.get(
 //       "http://localhost:" + server.address().port + "/instrumented"
 //     );
@@ -190,7 +189,6 @@ describe("Testing Edit UI", function () {
 
 //   it("Shoul delete user", async function () {
 //     this.timeout(10000);
->>>>>>> parent of f4384b1a (Coverage for both: one file not showing)
 //     await driver.get(
 //       "http://localhost:" + server.address().port + "/instrumented"
 //     );
