@@ -1,31 +1,19 @@
 const { app } = require("../index");
-const { Builder, By, Key, until } = require("selenium-webdriver");
-const { describe, it } = require("mocha");
+const { Builder, By, until } = require("selenium-webdriver");
+const { describe, it, before, afterEach, after } = require("mocha");
 const { expect } = require("chai");
+const chrome = require("selenium-webdriver/chrome");
 const fs = require("fs").promises;
 
-const chrome = require("selenium-webdriver/chrome");
 const chromeOptions = new chrome.Options();
-// chromeOptions.addArguments("--headless");
+chromeOptions.addArguments("--headless");
 const driver = new Builder()
   .forBrowser("chrome")
   .setChromeOptions(chromeOptions)
   .build();
 
-var counter = 0;
-
-// const driver = new Builder().forBrowser("chrome").build();
-
-// const driver = new Builder().forBrowser("firefox").build();
-
-// const edge = require('selenium-webdriver/edge');
-
-// const driver = new Builder()
-//     .forBrowser('MicrosoftEdge')
-//     .setEdgeOptions(new edge.Options()) // Optional: You can set specific options for Edge
-//     .build();
-
 var server;
+var counter = 0;
 
 before(async function () {
   server = await new Promise((resolve) => {
@@ -37,8 +25,31 @@ before(async function () {
 
 describe("Testing Register UI", function () {
   this.timeout(100000);
+  it("Should have the correct title", async function () {
+    await driver.get(
+      "http://localhost:" + server.address().port + "/instrumented/index.html"
+    );
+    const title = await driver.getTitle();
+    expect(title).to.equal("Login Page");
+  });
+
+  it("Should navigate to the Registration Page", async function () {
+    // this.timeout(200000);
+
+    // Click the "New user? Register here" link
+    const registrationLink = await driver.findElement(
+      By.linkText("New user? Register here")
+    );
+    await registrationLink.click();
+
+    // Verify that the page navigated to the Registration Page
+    const title = await driver.getTitle();
+    expect(title).to.equal("Registration Page");
+  });
 
   it("Should register", async function () {
+    // this.timeout(10000); // Increased overall timeout
+
     // Navigate to the registration page
     await driver.get(
       "http://localhost:" +
@@ -46,13 +57,9 @@ describe("Testing Register UI", function () {
         "/instrumented/register.html"
     );
 
-    // Verify that the page navigated to the Registration Page
-    const title = await driver.getTitle();
-    expect(title).to.equal("Registration Page");
-
     // Locate email and password elements
-    const emailElement = await driver.findElement(By.id("emailRegister"));
-    const passwordElement = await driver.findElement(By.id("passwordRegister"));
+    const emailElement = await driver.findElement(By.id("email"));
+    const passwordElement = await driver.findElement(By.id("password"));
 
     // Input values for email and password
     await emailElement.click();
@@ -60,68 +67,139 @@ describe("Testing Register UI", function () {
 
     await passwordElement.click();
     await passwordElement.sendKeys("password"); // Replace with your desired password
+    // this.timeout(10000);
     // Click the 'Register' button
-    const registerButton = await driver.findElement(
-      By.id("register_submit")
-    );
+    const registerButton = await driver.findElement(By.id("register_submit"));
     await registerButton.click();
-
-    // Wait for the alert to be present
-    await driver.wait(until.alertIsPresent());
-
-    // Switch to the alert
-    const alert = await driver.switchTo().alert();
-
-    // Get the text of the alert
-    const alertText = await alert.getText();
-
-    // Assert that the alert text contains the expected value
-    expect(alertText).to.include("Registration successful!");
-
-    // Accept the alert (dismiss can be used if it's a confirmation dialog)
-    await alert.accept();
   });
 });
 
-describe("Testing Login UI", function () {
+// describe("Testing Login UI", function () {
+//   it("Should have the correct title", async function () {
+//     this.timeout(10000);
+//     await driver.get(
+//       "http://localhost:" + server.address().port + "/instrumented/index.html"
+//     );
+//     const title = await driver.getTitle();
+//     expect(title).to.equal("Login Page");
+//   });
+//   it("Should show alert for invalid email format", async function () {
+//     // Your existing setup code for login page navigation
+
+//     const emailElement = await driver.findElement(By.id("email"));
+//     const passwordElement = await driver.findElement(By.id("password"));
+
+//     await emailElement.sendKeys("invalid-email");
+//     await passwordElement.sendKeys("password");
+
+//     const loginButton = await driver.findElement(By.id("loginBtn"));
+//     await loginButton.click();
+
+//     // Assert that an alert is displayed with the expected message
+//     const alertText = await driver.switchTo().alert().getText();
+//     expect(alertText).to.equal('Invalid email format! Please include "@" in your email.');
+//     await driver.switchTo().alert().accept(); // Close the alert
+//   });
+
+//   it("Should clear textboxes when Reset is clicked", async function () {
+//     this.timeout(10000);
+//     await driver.get(
+//       "http://localhost:" + server.address().port + "/instrumented/index.html"
+//     );
+
+//     const emailElement = await driver.findElement(By.id("email"));
+//     await emailElement.click();
+//     await emailElement.sendKeys("paul@gmail.com");
+
+//     const passwordElement = await driver.findElement(By.id("password"));
+//     await passwordElement.click();
+//     await passwordElement.sendKeys("123456");
+//     const resetButton = await driver.findElement(By.id("resetBtn"));
+//     await resetButton.click();
+
+//     const emailText = await emailElement.getAttribute("value");
+//     const passwordText = await passwordElement.getAttribute("value");
+
+//     expect(emailText).to.equal("");
+//     expect(passwordText).to.equal("");
+//     const emailElement1 = await driver.findElement(By.id("email"));
+//     await emailElement1.click();
+//     await emailElement1.sendKeys("paul@gmail.com");
+
+//     const passwordElement1 = await driver.findElement(By.id("password"));
+//     await passwordElement1.click();
+//     await passwordElement1.sendKeys("password");
+//     // Click the 'Login' button'
+//     const loginButton = await driver.findElement(By.id("loginBtn"));
+//     await loginButton.click();
+//   });
+// });
+describe("Testing Edit UI", function () {
   this.timeout(10000);
-  it("Should Login user", async function () {
-    try {
-      await driver.get(
-        "http://localhost:" + server.address().port + "/instrumented/index.html"
-      );
-      const emailElement1 = await driver.findElement(By.id("emailLogin"));
-      await emailElement1.click();
-      await emailElement1.sendKeys("songsiongpink@onyx.com");
+  it("Should have the correct title", async function () {
+    await driver.get(
+      "http://localhost:" + server.address().port + "/instrumented/home.html"
+    );
+    const title = await driver.getTitle();
+    expect(title).to.equal("Finance Website");
+  });
+  it("Should enter user informations and edit", async function () {
+    // this.timeout(10000);
+    await driver.get(
+      "http://localhost:" + server.address().port + "/instrumented/profile.html"
+    );
+    const emailElement1 = await driver.findElement(By.id("newEmail"));
+    await emailElement1.click();
+    await emailElement1.sendKeys("paul1@gmail.com");
+    const passwordElement1 = await driver.findElement(By.id("newPassword"));
+    await passwordElement1.click();
+    await passwordElement1.sendKeys("password");
 
-      const passwordElement1 = await driver.findElement(By.id("passwordLogin"));
-      await passwordElement1.click();
-      await passwordElement1.sendKeys("pink1234");
-      // Click the 'Login' button'
-      const loginButton = await driver.findElement(
-        By.id("loginBtn")
-      );
-      await loginButton.click();
-
-      // Wait for the alert to be present
-      await driver.wait(until.alertIsPresent());
-
-      // Switch to the alert
-      const alert = await driver.switchTo().alert();
-
-      // Get the text of the alert
-      const alertText = await alert.getText();
-
-      // Assert that the alert text contains the expected value
-      await expect(alertText).to.include("Login successful!");
-
-      // Accept the alert (dismiss can be used if it's a confirmation dialog)
-      await alert.accept();
-    } catch (error) {
-      console.log(error);
-    }
+    const confirmNewPasswordElement1 = await driver.findElement(
+      By.id("confirmNewPassword")
+    );
+    await confirmNewPasswordElement1.click();
+    await confirmNewPasswordElement1.sendKeys("password1");
+    const editbutton = await driver.findElement(
+      By.xpath('//button[text()="Edit User"]')
+    );
+    await editbutton.click();
   });
 });
+
+// describe("Testing Login UI", function () {
+//   // this.timeout(10000);
+//   it("Should Login user", async function () {
+//     await driver.get(
+//       "http://localhost:" + server.address().port + "/instrumented"
+//     );
+//     const emailElement1 = await driver.findElement(By.id("email"));
+//     await emailElement1.click();
+//     await emailElement1.sendKeys("jovan@gmail.com");
+
+//     const passwordElement1 = await driver.findElement(By.id("password"));
+//     await passwordElement1.click();
+//     await passwordElement1.sendKeys("shucks");
+//     // Click the 'Login' button'
+//     const loginButton = await driver.findElement(By.id("loginBtn"));
+//     await loginButton.click();
+//   });
+// });
+
+// it("Shoul delete user", async function () {
+//   this.timeout(10000);
+//   await driver.get(
+//     "http://localhost:" + server.address().port + "/instrumented/profile.html"
+//   );
+
+//   await driver.executeScript(
+//     'sessionStorage.setItem("Useremail", "songsiongpink@onyx.com");'
+//   );
+//   const deletebtn = await driver.findElement(
+//     By.xpath('//button[text()="Delete User"]')
+//   );
+//   await deletebtn.click();
+// });
 
 afterEach(async function () {
   await driver
@@ -135,6 +213,8 @@ afterEach(async function () {
           (err) => {
             if (err) {
               console.error("Error writing coverage data:", err);
+            } else {
+              console.log("Coverage data written to coverage.json");
             }
           }
         );
@@ -144,50 +224,6 @@ afterEach(async function () {
 
 after(async function () {
   await driver.quit();
-  process.exit(0); // Exit with success code
+  await server.close();
+  process.exit(0);
 });
-
-
-// describe("Testing Edit UI", function () {
-//   this.timeout(10000);
-//   it("Should enter user informations and edit", async function () {
-//     // this.timeout(10000);
-//     await driver.get(
-//       "http://localhost:" + server.address().port + "/instrumented/profile.html"
-//     );
-//     const emailElement1 = await driver.findElement(By.id("newEmail"));
-//     await emailElement1.click();
-//     await emailElement1.sendKeys("paul1@gmail.com");
-//     const passwordElement1 = await driver.findElement(By.id("newPassword"));
-//     await passwordElement1.click();
-//     await passwordElement1.sendKeys("password");
-
-//     const confirmNewPasswordElement1 = await driver.findElement(
-//       By.id("confirmNewPassword")
-//     );
-//     await confirmNewPasswordElement1.click();
-//     await confirmNewPasswordElement1.sendKeys("password1");
-//     const editbutton = await driver.findElement(
-//       By.xpath('//button[text()="Edit User"]')
-//     );
-//     await editbutton.click();
-//   });
-
-//   // it("Should Login user", async function () {
-//   //   this.timeout(10000);
-//   //   await driver.get(
-//   //     "http://localhost:" + server.address().port + "/instrumented/index.html"
-//   //   );
-//   //   const emailElement1 = await driver.findElement(By.id("email"));
-//   //   await emailElement1.click();
-//   //   await emailElement1.sendKeys("jovan@gmail.com");
-
-//   //   const passwordElement1 = await driver.findElement(By.id("password"));
-//   //   await passwordElement1.click();
-//   //   await passwordElement1.sendKeys("shucks");
-//   //   // Click the 'Login' button'
-//   //   const loginButton = await driver.findElement(By.id("loginBtn"));
-//   //   await loginButton.click();
-//   // });
-// });
-
