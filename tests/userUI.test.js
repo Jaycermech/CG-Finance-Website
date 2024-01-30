@@ -136,24 +136,13 @@ describe("Testing Register UI", function () {
 // });
 describe("Testing Edit UI", function () {
   this.timeout(10000);
-  //   it("Should have the correct title", async function () {
-  //     await driver.get(
-  //       "http://localhost:" + server.address().port + "/instrumented/home.html"
-  //     );
-  //     const title = await driver.getTitle();
-  //     expect(title).to.equal("Finance Website");
-  //   });
-  //   it("Should have navigate to Profile page", async function () {
-  //     // this.timeout(10000);
-  //     await driver.get(
-  //       "http://localhost:" + server.address().port + "/instrumented/profile.html"
-  //     );
-  //     const profileTitle = await driver.getTitle();
-  //     expect(profileTitle).to.equal("User Management");
-
-  //     const profileHeading = await driver.findElement(By.tagName("h2")).getText();
-  //     expect(profileHeading).to.equal("Edit User");
-  //   });
+  it("Should have the correct title", async function () {
+    await driver.get(
+      "http://localhost:" + server.address().port + "/instrumented/home.html"
+    );
+    const title = await driver.getTitle();
+    expect(title).to.equal("Finance Website");
+  });
   it("Should enter user informations and edit", async function () {
     // this.timeout(10000);
     await driver.get(
@@ -176,41 +165,37 @@ describe("Testing Edit UI", function () {
     );
     await editbutton.click();
   });
-
-  //     it("Should have ", async function () {
-  //       this.timeout(10000);
-  //       // Logout: Click the 'Log Out' button
-  //       const logoutButton = await driver.findElement(By.id("logoutBtn"));
-  //       await logoutButton.click();
-  //   });
-  //   it("Shoul Login user", async function () {
-  //     this.timeout(10000);
-  //     await driver.get(
-  //       "http://localhost:" + server.address().port + "/instrumented/index.html"
-  //     );
-  //     const emailElement1 = await driver.findElement(By.id("email"));
-  //     await emailElement1.click();
-  //     await emailElement1.sendKeys("jovan@gmail.com");
-
-  //     const passwordElement1 = await driver.findElement(By.id("password"));
-  //     await passwordElement1.click();
-  //     await passwordElement1.sendKeys("shucks");
-  //     // Click the 'Login' button'
-  //     const loginButton = await driver.findElement(By.id("loginBtn"));
-  //     await loginButton.click();
-  //   });
-
-  //   it("Shoul delete user", async function () {
-  //     this.timeout(10000);
-  //     await driver.get(
-  //       "http://localhost:" + server.address().port + "/instrumented/profile.html"
-  //     );
-  //     const deletebtn = await driver.findElement(
-  //       By.xpath('//button[text()="Delete User"]')
-  //     );
-  //     await deletebtn.click();
-  //   });
 });
+
+// describe("Testing Login UI", function () {
+//   // this.timeout(10000);
+//   it("Should Login user", async function () {
+//     await driver.get(
+//       "http://localhost:" + server.address().port + "/instrumented/index.html"
+//     );
+//     const emailElement1 = await driver.findElement(By.id("email"));
+//     await emailElement1.click();
+//     await emailElement1.sendKeys("songsiongpink@onyx.com");
+
+//     const passwordElement1 = await driver.findElement(By.id("password"));
+//     await passwordElement1.click();
+//     await passwordElement1.sendKeys("pink1234");
+//     // Click the 'Login' button'
+//     const loginButton = await driver.findElement(By.id("loginBtn"));
+//     await loginButton.click();
+//   });
+// });
+
+//   it("Shoul delete user", async function () {
+//     this.timeout(10000);
+//     await driver.get(
+//       "http://localhost:" + server.address().port + "/instrumented/profile.html"
+//     );
+//     const deletebtn = await driver.findElement(
+//       By.xpath('//button[text()="Delete User"]')
+//     );
+//     await deletebtn.click();
+//   });
 
 afterEach(async function () {
   await driver
