@@ -19,7 +19,7 @@ var counter = 0;
 // const driver = new Builder().forBrowser("firefox").build();
 
 // const edge = require('selenium-webdriver/edge');
-
+  
 // const driver = new Builder()
 //     .forBrowser('MicrosoftEdge')
 //     .setEdgeOptions(new edge.Options()) // Optional: You can set specific options for Edge
