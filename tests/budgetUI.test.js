@@ -205,6 +205,7 @@ describe("Creating Monthly Budgets", function () {
     await addBudgetbtn.click();
     console.log(addBudgetbtn, "add is clicked");
     const addBudgetvalue = await driver.findElement(By.id("budgetAdd"));
+    this.timeout(10000);
     // Clear the existing value in the input field (optional, depending on your requirements)
     await addBudgetvalue.clear();
     // Set the new value to 100
@@ -229,13 +230,13 @@ describe("Creating Monthly Budgets", function () {
     const ammenitiesAdd = await driver.findElement(
       By.id("ammenitiesAdd")
     );
-    await driver.wait(until.elementIsVisible(ammenitiesAdd), 5000);
+    await driver.wait(until.elementIsVisible(ammenitiesAdd));
     await ammenitiesAdd.click();
 
     const ammenitiesAdd_food = await driver.findElement(
       By.id("Food")
     );
-    await driver.wait(until.elementIsVisible(ammenitiesAdd_food), 5000);
+    await driver.wait(until.elementIsVisible(ammenitiesAdd_food));
     await ammenitiesAdd_food.click();
     await ammenitiesAdd.click();
   });
@@ -244,7 +245,7 @@ describe("Creating Monthly Budgets", function () {
     const addbtn = await driver.findElement(By.id("addbtn"));
 
     await addbtn.click();
-    console.log(addbtn, "add is clicked", 5000);
+    console.log(addbtn, "add is clicked");
 
   });
   describe("Edit budget", function () {
@@ -263,7 +264,6 @@ describe("Creating Monthly Budgets", function () {
       // Click on the edit budget button
       const editBtnModal = await driver.findElement(By.className("openEditBtn"));
       await editBtnModal.click();
-      this.timeout(10000);
 
       const editBudgetvalue = await driver.findElement(By.id("budgetEdit"));
       // Clear the existing value in the input field (optional, depending on your requirements)
@@ -286,7 +286,7 @@ describe("Creating Monthly Budgets", function () {
 
       // Dismiss the alert (Click "OK")
       await alert.dismiss();
-      this.timeout(10000);
+
     });
     it("should enter value in budget", async () => {
       // Execute script to edit value to session storage
@@ -320,13 +320,13 @@ describe("Creating Monthly Budgets", function () {
         By.id("ammenitiesEdit")
       );
 
-      await driver.wait(until.elementIsVisible(ammenitiesEdit), 5000);
+      await driver.wait(until.elementIsVisible(ammenitiesEdit));
       await ammenitiesEdit.click();
 
       const ammenitiesEdit_Others = await driver.findElement(
         By.id("Others")
       );
-      await driver.wait(until.elementIsVisible(ammenitiesEdit_Others), 5000);
+      await driver.wait(until.elementIsVisible(ammenitiesEdit_Others));
       await ammenitiesEdit_Others.click();
       await ammenitiesEdit.click();
     });
@@ -334,7 +334,7 @@ describe("Creating Monthly Budgets", function () {
       const editbtn = await driver.findElement(By.id("editbtn"));
 
       await editbtn.click();
-      console.log(editbtn, "edit is clicked", 5000);
+      console.log(editbtn, "edit is clicked");
 
     });
   });
