@@ -170,7 +170,6 @@ describe("Creating Monthly Budgets", function () {
     // Click on the add budget button
     const addBudgetbtn = await driver.findElement(By.id("addBudgetbtn"));
     await addBudgetbtn.click();
-    this.timeout(10000);
 
     const addbtn = await driver.findElement(By.id("addbtn"));
 
@@ -189,9 +188,9 @@ describe("Creating Monthly Budgets", function () {
 
     // Dismiss the alert (Click "OK")
     await alert.dismiss();
-    this.timeout(10000);
+
   });
-  it("Should open add budget button and check if Owner matches to Useremail in sessionStorage", async () => {
+  it("Should check if Owner matches to Useremail in sessionStorage", async () => {
     this.timeout(10000); // Set timeout as 10 seconds
     await driver.get(
       "http://localhost:" +
