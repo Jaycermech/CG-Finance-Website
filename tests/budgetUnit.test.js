@@ -25,7 +25,7 @@
 //       body: {
 //         ammenities: "Others",
 //         budget: "200",
-//         owner: "Jordy312@gmail.com"
+//         owner: "Jordy312@gmail.com",
 //       },
 //     };
 //     const res = {
@@ -35,14 +35,14 @@
 //       },
 //       json: function (data) {
 //         expect(data).to.have.lengthOf(orgContent.length + 1);
-//         expect(data[orgContent.length].ammenities).to.equal(req.body.ammenities);
+//         expect(data[orgContent.length].ammenities).to.equal(
+//           req.body.ammenities
+//         );
 //         addedBudgetId = data[orgContent.length].id; // Store the added ID
 //         orgContent = data;
 //         console.log(addedBudgetId, "ids");
 //       },
-
 //     };
-
 
 //     // // If the file is initially empty, set orgContent to an empty array
 //     // if (!orgContent || !Array.isArray(orgContent)) {
@@ -88,10 +88,7 @@
 //         return this;
 //       },
 //       json: function (data) {
-
 //         expect(Array.isArray(data)).to.be.true;
-
-
 //       },
 //     };
 //     try {
@@ -105,9 +102,9 @@
 //     console.log(addedBudgetId, "ids ");
 //     const req = {
 //       body: {
-//         "ammenities": "Others",
-//         "budget": "80",
-//         "owner": "Jordy312@gmail.com"
+//         ammenities: "Others",
+//         budget: "80",
+//         owner: "Jordy312@gmail.com",
 //       },
 //       params: {
 //         id: addedBudgetId,
@@ -120,9 +117,7 @@
 //         return this;
 //       },
 //       json: function (data) {
-
 //         orgContent = data;
-
 //       },
 //     };
 
@@ -163,13 +158,13 @@
 
 //   it("Should delete a budget successfully", async () => {
 //     console.log("Deleting Budget with ID:", addedBudgetId);
-  
+
 //     const req = {
 //       params: {
 //         id: addedBudgetId,
 //       },
 //     };
-  
+
 //     const res = {
 //       status: function (code) {
 //         console.log("Received status code:", code);
@@ -184,20 +179,21 @@
 //         console.log("Deleted Budget Data:", data);
 //       },
 //     };
-  
+
 //     try {
 //       await deleteBudget(req, res);
 //       console.log("Budget Deleted Successfully");
-  
+
 //       // Check if the deleted budget is no longer present in the updated orgContent
-//       const isBudgetDeleted = orgContent.some((budget) => budget.id === addedBudgetId);
+//       const isBudgetDeleted = orgContent.some(
+//         (budget) => budget.id === addedBudgetId
+//       );
 //       expect(isBudgetDeleted).to.be.false;
 //     } catch (error) {
 //       console.error("Error during deletion:", error);
 //       expect.fail("Unexpected error occurred");
 //     }
 //   });
-  
 
 //   it("Should not be able to delete budget due to invalid id", async () => {
 //     const req = {
