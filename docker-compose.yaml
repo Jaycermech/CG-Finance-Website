@@ -1,0 +1,8 @@
+version: '1'
+services: 
+  build-rms: 
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    image: jaycedocker312/rms-docker-img:latest
+    container_name: rms-docker-container
