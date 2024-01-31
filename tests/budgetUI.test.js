@@ -171,7 +171,6 @@ describe("Creating Monthly Budgets", function () {
   //   const modalTitle = await driver.findElement(By.id('addModalLabel'));
   //   expect(modalTitle).to.include('Set A New Monthly Budget')
   //   console.log("line 173")
-    
 
   //   const addButtonModal = await driver.findElement(
   //     By.xpath(
@@ -346,22 +345,22 @@ describe("Creating Monthly Budgets", function () {
   // });
 });
 
-// describe("Deleting Monthly Budgets", function () {
-//   it("Should open edit button modal", async () => {
-//     this.timeout(10000); // Set timeout as 10 seconds
-//     const editBtnModal = await driver.wait(
-//       until.elementLocated(By.className("openEditBtn")),
-//       5000
-//     );
-//     editBtnModal.click();
-//   });
-//   it("Should click on  delete button", async () => {
-//     const deleteBtn = await driver.findElement(By.className("deleteBtn"));
+describe("Deleting Monthly Budgets", function () {
+  it("Should open edit button modal", async () => {
+    this.timeout(10000); // Set timeout as 10 seconds
+    const editBtnModal = await driver.wait(
+      until.elementLocated(By.className("openEditBtn")),
+      5000
+    );
+    editBtnModal.click();
+  });
+  it("Should click on  delete button", async () => {
+    const deleteBtn = await driver.findElement(By.className("deleteBtn"));
 
-//     await deleteBtn.click();
-//     console.log(deleteBtn, "delete is clicked", 5000);
-//   });
-// });
+    await deleteBtn.click();
+    console.log(deleteBtn, "delete is clicked", 5000);
+  });
+});
 
 afterEach(async function () {
   await driver
