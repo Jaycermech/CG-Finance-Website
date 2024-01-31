@@ -1,10 +1,10 @@
 function viewExpenses() {
   var userEmailInSession = sessionStorage.getItem("Useremail");
 
-  if (!userEmailInSession) {
-    console.log("User email not found in session storage");
-    return;
-  }
+  // if (!userEmailInSession) {
+  //   console.log("User email not found in session storage");
+  //   return;
+  // }
 
   var response = "";
   var request = new XMLHttpRequest();
