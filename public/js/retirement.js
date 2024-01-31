@@ -39,4 +39,5 @@ async function login() {
     }
   };
   request.send(JSON.stringify(jsonData));
+  console.log("sending the json data ", jsonData);
 }

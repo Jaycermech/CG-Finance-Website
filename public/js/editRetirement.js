@@ -115,7 +115,7 @@ function calculateEdit() {
     jsonData.annual_saving_goal == "" ||
     jsonData.user == ""
   ) {
-    alert("All Fields required!");
+    alert("All Fields required!");  
     return;
   }
   var request = new XMLHttpRequest();
