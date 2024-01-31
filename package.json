@@ -5,10 +5,6 @@
   "main": "index.js",
   "nyc": {
     "include": [
-      "utils/ExpenseUtil.js",
-      "utils/RetirementUtil.js",
-      "utils/UserUtil.js",
-      "utils/MonthlyBudget.js",
       "public/js/MonthlyBudget.js",
       "index.js"
     ],
