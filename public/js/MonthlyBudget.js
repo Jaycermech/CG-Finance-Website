@@ -60,7 +60,24 @@ function viewBudget() {
     };
     request.send();
 }
+function viewBudgetid(id) {
+    var request = new XMLHttpRequest();
+    request.open("GET", "/view-budget/" + id, true);
+    request.setRequestHeader("Content-Type", "application/json");
+    request.onload = function () {
+        var response = JSON.parse(request.responseText);
+        console.log(response);
+        document.getElementById("ammenitiesEdit").value = response.ammenities;
+        document.getElementById("budgetEdit").value = response.budget;
+        document.getElementById("ownerEdit").value = response.owner;
 
+        console.log("budget: ", response.budget);
+        var id = response.id;
+        console.log("HI : ", id);
+        currentId = id;
+    };
+    request.send();
+}
 
 
 async function addBudget() {
@@ -131,24 +148,7 @@ async function editBudget() {
         // Handle error scenario
     }
 }
-function viewBudgetid(id) {
-    var request = new XMLHttpRequest();
-    request.open("GET", "/view-budget/" + id, true);
-    request.setRequestHeader("Content-Type", "application/json");
-    request.onload = function () {
-        var response = JSON.parse(request.responseText);
-        console.log(response);
-        document.getElementById("ammenitiesEdit").value = response.ammenities;
-        document.getElementById("budgetEdit").value = response.budget;
-        document.getElementById("ownerEdit").value = response.owner;
-
-        console.log("budget: ", response.budget);
-        var id = response.id;
-        console.log("HI : ", id);
-        currentId = id;
-    };
-    request.send();
-}
+ 
 async function deleteBudget() {
     console.log("cg: ", currentId);
     try {
