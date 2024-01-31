@@ -13,15 +13,34 @@
 //   .build();
 
 // var server;
-// var counter = 0;
+// var counter = 4;
 
-// before(async function () {
+// beforeEach(async function () {
 //   server = await new Promise((resolve) => {
 //     server = app.listen(0, "localhost", () => {
 //       resolve(server);
 //     });
 //   });
 // });
+
+// describe("Testing Login UI", function () {
+//     this.timeout(10000);
+//     it("Should Login user", async function () {
+//       await driver.get(
+//         "http://localhost:" + server.address().port + "/instrumented/index.html"
+//       );
+//       const emailElement1 = await driver.findElement(By.id("emailLogin"));
+//       await emailElement1.click();
+//       await emailElement1.sendKeys("songsiongpink@onyx.com");
+  
+//       const passwordElement1 = await driver.findElement(By.id("passwordLogin"));
+//       await passwordElement1.click();
+//       await passwordElement1.sendKeys("pink1234");
+//       // Click the 'Login' button'
+//       const loginButton = await driver.findElement(By.id("loginBtn"));
+//       await loginButton.click();
+//     });
+//   });
 
 // describe("Testing Register UI", function () {
 //   this.timeout(100000);
@@ -50,55 +69,6 @@
 //     // Click the 'Register' button
 //     const registerButton = await driver.findElement(By.id("register_submit"));
 //     await registerButton.click();
-
-//     // Wait for the alert to be present
-//     await driver.wait(until.alertIsPresent());
-
-//     // Switch to the alert
-//     const alert = await driver.switchTo().alert();
-
-//     // Get the text of the alert
-//     const alertText = await alert.getText();
-
-//     // Assert that the alert text contains the expected value
-//     expect(alertText).to.include("Registration successful!");
-
-//     // Accept the alert (dismiss can be used if it's a confirmation dialog)
-//     await alert.accept();
-//   });
-// });
-
-// describe("Testing Login UI", function () {
-//   this.timeout(10000);
-//   it("Should Login user", async function () {
-//     await driver.get(
-//       "http://localhost:" + server.address().port + "/instrumented/index.html"
-//     );
-//     const emailElement1 = await driver.findElement(By.id("emailLogin"));
-//     await emailElement1.click();
-//     await emailElement1.sendKeys("songsiongpink@onyx.com");
-
-//     const passwordElement1 = await driver.findElement(By.id("passwordLogin"));
-//     await passwordElement1.click();
-//     await passwordElement1.sendKeys("pink1234");
-//     // Click the 'Login' button'
-//     const loginButton = await driver.findElement(By.id("loginBtn"));
-//     await loginButton.click();
-
-//     // Wait for the alert to be present
-//     await driver.wait(until.alertIsPresent());
-
-//     // Switch to the alert
-//     const alert = await driver.switchTo().alert();
-
-//     // Get the text of the alert
-//     const alertText = await alert.getText();
-
-//     // Assert that the alert text contains the expected value
-//     expect(alertText).to.include("Login successful!");
-
-//     // Accept the alert (dismiss can be used if it's a confirmation dialog)
-//     await alert.accept();
 //   });
 // });
 

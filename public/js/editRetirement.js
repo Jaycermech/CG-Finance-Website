@@ -49,9 +49,8 @@ async function getSpecificRetirement(retirement_id) {
             return;
           }
         }
-        reject(new Error("Retirement not found")); // Reject the promise if retirement is not found
       } catch (error) {
-        reject(error); // Reject the promise if there's an error parsing the response
+        console.log(error);
       }
     };
 
@@ -61,14 +60,9 @@ async function getSpecificRetirement(retirement_id) {
 
 // Example of using the asynchronous function
 async function exampleUsage() {
-  try {
-    const retirementData = await getSpecificRetirement(retirementId);
-    // Do something with the retirementData
-    console.log(retirementData);
-  } catch (error) {
-    // Handle errors
-    console.error(error);
-  }
+  const retirementData = await getSpecificRetirement(retirementId);
+  // Do something with the retirementData
+  console.log(retirementData);
 }
 
 exampleUsage();
@@ -115,7 +109,7 @@ function calculateEdit() {
     jsonData.annual_saving_goal == "" ||
     jsonData.user == ""
   ) {
-    alert("All Fields required!");  
+    alert("All Fields required!");
     return;
   }
   var request = new XMLHttpRequest();
