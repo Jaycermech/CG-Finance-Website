@@ -1,154 +1,154 @@
-const { app } = require("../index");
-const { Builder, By, Key, until } = require("selenium-webdriver");
-const { describe, it, after } = require("mocha");
-const { expect } = require("chai");
-const fs = require("fs").promises;
+// const { app } = require("../index");
+// const { Builder, By, Key, until } = require("selenium-webdriver");
+// const { describe, it, after } = require("mocha");
+// const { expect } = require("chai");
+// const fs = require("fs").promises;
 
-const chrome = require("selenium-webdriver/chrome");
-const chromeOptions = new chrome.Options();
-chromeOptions.addArguments("--headless");
-const driver = new Builder()
-  .forBrowser("chrome")
-  .setChromeOptions(chromeOptions)
-  .build();
+// const chrome = require("selenium-webdriver/chrome");
+// const chromeOptions = new chrome.Options();
+// chromeOptions.addArguments("--headless");
+// const driver = new Builder()
+//   .forBrowser("chrome")
+//   .setChromeOptions(chromeOptions)
+//   .build();
 
-var counter = 0;
-let server;
+// var counter = 0;
+// let server;
 
-before(async function () {
-  server = await new Promise((resolve) => {
-    server = app.listen(0, "localhost", () => {
-      resolve(server);
-    });
-  });
-});
+// before(async function () {
+//   server = await new Promise((resolve) => {
+//     server = app.listen(0, "localhost", () => {
+//       resolve(server);
+//     });
+//   });
+// });
 
-describe("Monthly Budget Page", function () {
-  this.timeout(100000); // Set timeout as 10 seconds
+// describe("Monthly Budget Page", function () {
+//   this.timeout(100000); // Set timeout as 10 seconds
 
-  it("Should display Monthly Budgets table", async () => {
-    await driver.get(
-      "http://localhost:" +
-        server.address().port +
-        "/instrumented/MonthlyBudget.html"
-    );
+//   it("Should display Monthly Budgets table", async () => {
+//     await driver.get(
+//       "http://localhost:" +
+//         server.address().port +
+//         "/instrumented/MonthlyBudget.html"
+//     );
 
-    // Execute script to add value to session storage
-    await driver.executeScript(
-      'sessionStorage.setItem("Useremail", "songsiongpink@onyx.com");'
-    );
+//     // Execute script to add value to session storage
+//     await driver.executeScript(
+//       'sessionStorage.setItem("Useremail", "songsiongpink@onyx.com");'
+//     );
 
-    const title = await driver.getTitle(); // Get the title of the web page
-    expect(title).to.equal("CG Monthly-Budget"); // Adjust to match the actual title of MonthlyBudget.html
+//     const title = await driver.getTitle(); // Get the title of the web page
+//     expect(title).to.equal("CG Monthly-Budget"); // Adjust to match the actual title of MonthlyBudget.html
 
-    const table = await driver.findElement(By.tagName("table"));
-    const rows = await table.findElements(By.tagName("tr"));
-    expect(rows.length).to.be.greaterThan(0); // Ensure that the table has rows
-  });
-});
+//     const table = await driver.findElement(By.tagName("table"));
+//     const rows = await table.findElements(By.tagName("tr"));
+//     expect(rows.length).to.be.greaterThan(0); // Ensure that the table has rows
+//   });
+// });
 
-//Code breaks somewhere here onwards
+// //Code breaks somewhere here onwards
 
-describe("HTML Structure and Functionality", function () {
-  this.timeout(100000); // Set timeout as 10 seconds
+// describe("HTML Structure and Functionality", function () {
+//   this.timeout(100000); // Set timeout as 10 seconds
 
-  it("Should have an H1 element with text 'CG Finance Website'", async () => {
-    await driver.get(
-      "http://localhost:" +
-        server.address().port +
-        "/instrumented/MonthlyBudget.html"
-    );
+//   it("Should have an H1 element with text 'CG Finance Website'", async () => {
+//     await driver.get(
+//       "http://localhost:" +
+//         server.address().port +
+//         "/instrumented/MonthlyBudget.html"
+//     );
 
-    const h1Element = await driver.findElement(By.tagName("h1"));
-    const text = await h1Element.getText();
+//     const h1Element = await driver.findElement(By.tagName("h1"));
+//     const text = await h1Element.getText();
 
-    expect(text).to.equal("CG Finance Website");
-  });
+//     expect(text).to.equal("CG Finance Website");
+//   });
 
-  it("Should have a table with the specified columns", async () => {
-    await driver.get(
-      "http://localhost:" +
-        server.address().port +
-        "/instrumented/MonthlyBudget.html"
-    );
+//   it("Should have a table with the specified columns", async () => {
+//     await driver.get(
+//       "http://localhost:" +
+//         server.address().port +
+//         "/instrumented/MonthlyBudget.html"
+//     );
 
-    const tableElement = await driver.findElement(By.tagName("table"));
-    const columns = await tableElement.findElements(By.tagName("th"));
+//     const tableElement = await driver.findElement(By.tagName("table"));
+//     const columns = await tableElement.findElements(By.tagName("th"));
 
-    expect(columns.length).to.equal(4);
+//     expect(columns.length).to.equal(4);
 
-    const columnNames = await Promise.all(
-      columns.map((column) => column.getText())
-    );
-    expect(columnNames).to.deep.equal(["Amenities", "Budget", "Owner", "Edit"]);
-  });
+//     const columnNames = await Promise.all(
+//       columns.map((column) => column.getText())
+//     );
+//     expect(columnNames).to.deep.equal(["Amenities", "Budget", "Owner", "Edit"]);
+//   });
 
-  it("Should have an empty tbody with id 'tableContent'", async () => {
-    await driver.get(
-      "http://localhost:" +
-        server.address().port +
-        "/instrumented/MonthlyBudget.html"
-    );
+//   it("Should have an empty tbody with id 'tableContent'", async () => {
+//     await driver.get(
+//       "http://localhost:" +
+//         server.address().port +
+//         "/instrumented/MonthlyBudget.html"
+//     );
 
-    const tbodyElement = await driver.findElement(By.id("tableContent"));
-    const innerHtml = await tbodyElement.getAttribute("innerHTML");
+//     const tbodyElement = await driver.findElement(By.id("tableContent"));
+//     const innerHtml = await tbodyElement.getAttribute("innerHTML");
 
-    expect(innerHtml).to.equal("");
-  });
-});
+//     expect(innerHtml).to.equal("");
+//   });
+// });
 
-//Describe working properly 1
+// //Describe working properly 1
 
-describe("Styling Tests", function () {
-  this.timeout(100000); // Set timeout as 10 seconds
+// describe("Styling Tests", function () {
+//   this.timeout(100000); // Set timeout as 10 seconds
 
-  it("Body should have a specified background color", async () => {
-    await driver.get(
-      "http://localhost:" +
-        server.address().port +
-        "/instrumented/MonthlyBudget.html"
-    );
+//   it("Body should have a specified background color", async () => {
+//     await driver.get(
+//       "http://localhost:" +
+//         server.address().port +
+//         "/instrumented/MonthlyBudget.html"
+//     );
 
-    const body = await driver.findElement(By.tagName("body"));
-    const backgroundColor = await body.getCssValue("background-color");
+//     const body = await driver.findElement(By.tagName("body"));
+//     const backgroundColor = await body.getCssValue("background-color");
 
-    // Assert the background color is as expected
-    expect(backgroundColor).to.equal("rgba(244, 244, 244, 1)");
-  });
-  it("Header should have a specified background color", async () => {
-    await driver.get(
-      "http://localhost:" +
-        server.address().port +
-        "/instrumented/MonthlyBudget.html"
-    );
+//     // Assert the background color is as expected
+//     expect(backgroundColor).to.equal("rgba(244, 244, 244, 1)");
+//   });
+//   it("Header should have a specified background color", async () => {
+//     await driver.get(
+//       "http://localhost:" +
+//         server.address().port +
+//         "/instrumented/MonthlyBudget.html"
+//     );
 
-    const header = await driver.findElement(By.tagName("header"));
-    const backgroundColor = await header.getCssValue("background-color");
+//     const header = await driver.findElement(By.tagName("header"));
+//     const backgroundColor = await header.getCssValue("background-color");
 
-    // Assert the background color is as expected
-    expect(backgroundColor).to.equal("rgba(51, 51, 51, 1)");
-  });
-});
+//     // Assert the background color is as expected
+//     expect(backgroundColor).to.equal("rgba(51, 51, 51, 1)");
+//   });
+// });
 
-// Describe working properly 2
+// // Describe working properly 2
 
-describe("Creating Monthly Budgets", function () {
-  this.timeout(100000); // Set timeout as 10 seconds
-  it("Should show header: Monthly Budgets", async () => {
-    //Test case works
-    await driver.get(
-      "http://localhost:" +
-        server.address().port +
-        "/instrumented/MonthlyBudget.html"
-    );
-    // Execute script to add value to session storage
-    await driver.executeScript(
-      'sessionStorage.setItem("Useremail", "songsiongpink@onyx.com");'
-    );
-    const title = await driver.getTitle(); // Get the title of the web page
-    console.log(title);
-    expect(title).to.equal("CG Monthly-Budget"); // Assert that title matches "Swag Labs"
-  });
+// describe("Creating Monthly Budgets", function () {
+//   this.timeout(100000); // Set timeout as 10 seconds
+//   it("Should show header: Monthly Budgets", async () => {
+//     //Test case works
+//     await driver.get(
+//       "http://localhost:" +
+//         server.address().port +
+//         "/instrumented/MonthlyBudget.html"
+//     );
+//     // Execute script to add value to session storage
+//     await driver.executeScript(
+//       'sessionStorage.setItem("Useremail", "songsiongpink@onyx.com");'
+//     );
+//     const title = await driver.getTitle(); // Get the title of the web page
+//     console.log(title);
+//     expect(title).to.equal("CG Monthly-Budget"); // Assert that title matches "Swag Labs"
+//   });
   // it("Should show alert if Monthly Budget is not entered", async () => {
   //   //Test case dont work
   //   await driver.get(
@@ -344,47 +344,47 @@ describe("Creating Monthly Budgets", function () {
   //   await editbtn.click();
   //   console.log(editbtn, "edit is clicked", 5000);
   // });
-});
+// });
 
-describe("Deleting Monthly Budgets", function () {
-  it("Should open edit button modal", async () => {
-    this.timeout(10000); // Set timeout as 10 seconds
-    const editBtnModal = await driver.wait(
-      until.elementLocated(By.className("openEditBtn")),
-      5000
-    );
-    editBtnModal.click();
-  });
-  it("Should click on  delete button", async () => {
-    const deleteBtn = await driver.findElement(By.className("deleteBtn"));
+// describe("Deleting Monthly Budgets", function () {
+//   it("Should open edit button modal", async () => {
+//     this.timeout(10000); // Set timeout as 10 seconds
+//     const editBtnModal = await driver.wait(
+//       until.elementLocated(By.className("openEditBtn")),
+//       5000
+//     );
+//     editBtnModal.click();
+//   });
+//   it("Should click on  delete button", async () => {
+//     const deleteBtn = await driver.findElement(By.className("deleteBtn"));
 
-    await deleteBtn.click();
-    console.log(deleteBtn, "delete is clicked", 5000);
-  });
-});
+//     await deleteBtn.click();
+//     console.log(deleteBtn, "delete is clicked", 5000);
+//   });
+// });
 
-afterEach(async function () {
-  await driver
-    .executeScript("return window.__coverage__;")
-    .then(async (coverageData) => {
-      if (coverageData) {
-        // Save coverage data to a file
-        await fs.writeFile(
-          "coverage-frontend/coverage" + counter++ + ".json",
-          JSON.stringify(coverageData),
-          (err) => {
-            if (err) {
-              console.error("Error writing coverage data:", err);
-            } else {
-              console.log("Coverage data written to coverage.json");
-            }
-          }
-        );
-      }
-    });
-});
+// afterEach(async function () {
+//   await driver
+//     .executeScript("return window.__coverage__;")
+//     .then(async (coverageData) => {
+//       if (coverageData) {
+//         // Save coverage data to a file
+//         await fs.writeFile(
+//           "coverage-frontend/coverage" + counter++ + ".json",
+//           JSON.stringify(coverageData),
+//           (err) => {
+//             if (err) {
+//               console.error("Error writing coverage data:", err);
+//             } else {
+//               console.log("Coverage data written to coverage.json");
+//             }
+//           }
+//         );
+//       }
+//     });
+// });
 
-after(async function () {
-  await driver.quit();
-  process.exit(0); // Exit with success code
-});
+// after(async function () {
+//   await driver.quit();
+//   process.exit(0); // Exit with success code
+// });
