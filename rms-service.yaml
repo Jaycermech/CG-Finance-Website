@@ -3,7 +3,7 @@ kind: Service
 metadata: # metadata about the service
   name: rms-service
 spec: # defines the desired state of the Service
-  selector:
+  selector: 
     app: rms-docker-img
   ports: # defines how the service should handle incoming traffic and which ports to expose
     - protocol: TCP # standard protocol for most web applications
