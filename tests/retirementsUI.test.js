@@ -6,7 +6,7 @@ const fs = require("fs").promises;
 
 const chrome = require("selenium-webdriver/chrome");
 const chromeOptions = new chrome.Options();
-chromeOptions.addArguments("--headless");
+// chromeOptions.addArguments("--headless");
 const driver = new Builder()
   .forBrowser("chrome")
   .setChromeOptions(chromeOptions)
@@ -318,7 +318,6 @@ describe("Creating retirement plans", function () {
     const years_to_retirementDisplay = await driver
       .findElement(By.id("years_to_retirement_display"))
       .getText();
-    console.log("years to retirement display", years_to_retirementDisplay);
     expect(years_to_retirementDisplay.toString()).to.equal(
       years_to_retirement.toString()
     );
@@ -326,7 +325,6 @@ describe("Creating retirement plans", function () {
     const annual_saving_goalDisplay = await driver
       .findElement(By.id("annual_saving_goal_display"))
       .getText();
-    console.log("annual saving goal display", annual_saving_goalDisplay);
     expect(annual_saving_goalDisplay.toString()).to.equal(
       annual_saving_goal.toString()
     );
@@ -348,38 +346,28 @@ describe("Retirement Plans Dashboard", function () {
     );
 
     const editIcon = await driver.findElement(By.id("edit_retirement"));
-    console.log("editcon", editIcon);
     await editIcon.click();
 
     //checking and displaying original values
     const editTitleOriginal = await driver
       .findElement(By.id("edit_title"))
       .getAttribute("value");
-    console.log("edit title original value: ", editTitleOriginal);
     const edit_currentAgeOriginal = await driver
       .findElement(By.id("edit_currentAge"))
       .getAttribute("value");
-    console.log("edit current age original value: ", edit_currentAgeOriginal);
     const edit_retirementAgeOriginal = await driver
       .findElement(By.id("edit_retirementAge"))
       .getAttribute("value");
-    console.log(
-      "edit retirement age origina; value: ",
-      edit_retirementAgeOriginal
-    );
     const editFunGoalOriginal = await driver
       .findElement(By.id("edit_fundGoals"))
       .getAttribute("value");
-    console.log("edit fund goal original value: ", editFunGoalOriginal);
 
     const annualSavingGoalOriginal = await driver
       .findElement(By.id("edit_annual_saving_goal_display"))
       .getText();
-    console.log("annual saving goal original: ", annualSavingGoalOriginal);
     const yearsToRetirementOriginal = await driver
       .findElement(By.id("edit_years_to_retirement_display"))
       .getText();
-    console.log("years to retirement original: ", yearsToRetirementOriginal);
 
     //updating values
     const editTitleNew = await driver.findElement(By.id("edit_title"));

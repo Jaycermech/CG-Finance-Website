@@ -29,11 +29,6 @@ async function addExpense(req, res) {
     const amount = req.body.amount;
     const user = req.body.user;
 
-    // Debugging: Print the values to console
-    console.log("Description:", description);
-    console.log("Amount:", amount);
-    console.log("User:", user);
-
     const newExpense = new Expense(description, amount, user);
     const updatedExpenses = await writeJSON(newExpense, "utils/expenses.json");
     return res.status(201).json(updatedExpenses);
