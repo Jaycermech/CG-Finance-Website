@@ -252,61 +252,61 @@ describe("editUser function", () => {
   // Add more test cases as needed
 });
 
-// describe("deleteUser function", () => {
-//   // Assuming you have a utility function to reset the users.json file to a known state
-//   // before(async () => {
-//   //   await fs.writeFile(
-//   //     "utils/users.json",
-//   //     JSON.stringify([
-//   //       { email: "test@example.com", password: "password" },
-//   //       // Add other users as needed for your tests
-//   //     ]),
-//   //     "utf8"
-//   //   );
-//   // });
+describe("deleteUser function", () => {
+  // Assuming you have a utility function to reset the users.json file to a known state
+  // before(async () => {
+  //   await fs.writeFile(
+  //     "utils/users.json",
+  //     JSON.stringify([
+  //       { email: "test@example.com", password: "password" },
+  //       // Add other users as needed for your tests
+  //     ]),
+  //     "utf8"
+  //   );
+  // });
 
-//   // Assuming you have a utility function to clean up after tests
-//   after(async () => {
-//     // Clean up, reset the users.json file, or perform any necessary actions
-//   });
+  // Assuming you have a utility function to clean up after tests
+  after(async () => {
+    // Clean up, reset the users.json file, or perform any necessary actions
+  });
 
-//   it("should delete user when valid email is provided", async () => {
-//     const req = {
-//       body: {
-//         emailToDelete: "new@example.com",
-//       },
-//     };
-//     const res = {
-//       status: (statusCode) => ({
-//         json: (data) => {
-//           expect(statusCode).to.equal(200);
-//           expect(data).to.deep.equal({ message: "User deleted successfully!" });
-//         },
-//       }),
-//     };
+  it("should delete user when valid email is provided", async () => {
+    const req = {
+      body: {
+        emailToDelete: "new@example.com",
+      },
+    };
+    const res = {
+      status: (statusCode) => ({
+        json: (data) => {
+          expect(statusCode).to.equal(200);
+          expect(data).to.deep.equal({ message: "User deleted successfully!" });
+        },
+      }),
+    };
 
-//     await deleteUser(req, res);
-//   });
+    await deleteUser(req, res);
+  });
 
-//   it("should return an error when trying to delete a non-existing user", async () => {
-//     const req = {
-//       body: {
-//         emailToDelete: "nonexistent@example.com",
-//       },
-//     };
-//     const res = {
-//       status: (statusCode) => ({
-//         json: (data) => {
-//           expect(statusCode).to.equal(404);
-//           expect(data).to.deep.equal({
-//             message: "User not found or unable to delete user!",
-//           });
-//         },
-//       }),
-//     };
+  it("should return an error when trying to delete a non-existing user", async () => {
+    const req = {
+      body: {
+        emailToDelete: "nonexistent@example.com",
+      },
+    };
+    const res = {
+      status: (statusCode) => ({
+        json: (data) => {
+          expect(statusCode).to.equal(404);
+          expect(data).to.deep.equal({
+            message: "User not found or unable to delete user!",
+          });
+        },
+      }),
+    };
 
-//     await deleteUser(req, res);
-//   });
+    await deleteUser(req, res);
+  });
 
-//   // Add more test cases as needed
-// });
+  // Add more test cases as needed
+});

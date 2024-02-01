@@ -14,7 +14,6 @@ const driver = new Builder()
 
 var counter = 0;
 
-// const driver = new Builder().forBrowser("chrome").build();
 
 // const driver = new Builder().forBrowser("firefox").build();
 
@@ -333,6 +332,8 @@ describe("Retirement Plans Dashboard", function () {
     );
 
     const editIcon = await driver.findElement(By.id("edit_retirement"));
+
+    await driver.wait(until.elementIsVisible(editIcon), 5000);
     await editIcon.click();
 
     //checking and displaying original values
@@ -428,8 +429,9 @@ describe("Delete retirement", function () {
     const tableBefore = await driver.findElement(By.tagName("table"));
     const rowsBefore = await tableBefore.findElements(By.tagName("tr"));
     const beforeCount = rowsBefore.length;
-
+    
     const deleteIcon = await driver.findElement(By.id("delete_icon"));
+    await driver.wait(until.elementIsVisible(deleteIcon), 5000);
     await deleteIcon.click();
 
     // Wait for a short duration to allow the deleteRetirement function to complete
