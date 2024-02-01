@@ -21,19 +21,6 @@ var counter = 0;
 // const edge = require('selenium-webdriver/edge');
 
 // const driver = new Builder()
-//   .forBrowser("chrome")
-//   .setChromeOptions(chromeOptions)
-//   .build();
-
-// var counter = 0;
-
-// const driver = new Builder().forBrowser("chrome").build();
-
-// const driver = new Builder().forBrowser("firefox").build();
-
-// const edge = require('selenium-webdriver/edge');
-
-// const driver = new Builder()
 //     .forBrowser('MicrosoftEdge')
 //     .setEdgeOptions(new edge.Options()) // Optional: You can set specific options for Edge
 //     .build();
@@ -49,7 +36,7 @@ before(async function () {
 });
 
 describe("Creating retirement plans", function () {
-  this.timeout(100000); // Set timeout as 10 seconds
+  this.timeout(20000); // Set timeout as 10 seconds
   it("Should show header: Retirement Plans", async () => {
     await driver.get(
       "http://localhost:" +

@@ -1,6 +1,7 @@
 var express = require("express");
 var bodyParser = require("body-parser");
 var app = express();
+const logger = require("./logger");
 
 const PORT = process.env.PORT || 5050;
 var startPage = "index.html";
@@ -8,6 +9,9 @@ var startPage = "index.html";
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(express.static("./public"));
+
+const statusMonitor = require("express-status-monitor");
+app.use(statusMonitor());
 
 //add retirement
 const { add_retirement } = require("./utils/RetirementUtil");
@@ -32,7 +36,7 @@ const {
   editBudget,
   deleteBudget,
   viewBudgetid,
-  viewBudgetByOwner
+  viewBudgetByOwner,
 } = require("./utils/monthly-budgetUtils");
 app.post("/add-budget", addBudget);
 app.get("/view-budget", viewBudget);
@@ -83,5 +87,7 @@ app.get("/home", (req, res) => {
 });
 const server = app.listen(PORT, function () {
   console.log(`Demo project at: http://localhost:${PORT}`);
+  logger.info(`Demo project at: ${PORT}!`);
+  logger.error(`Example or error log`);
 });
 module.exports = { app, server };

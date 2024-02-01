@@ -3,3 +3,5 @@
 
 # Ignore coverage directory
 coverage/
+
+/rms-terraform/.terraform/
