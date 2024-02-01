@@ -1,0 +1,4 @@
+info: Demo project at: 5050! {"timestamp":"2024-02-01T08:02:50.613Z"}
+error: Example or error log {"timestamp":"2024-02-01T08:02:50.615Z"}
+info: Demo project at: http://localhost:5050/status {"timestamp":"2024-02-01T08:04:07.509Z"}
+error: Example or error log {"timestamp":"2024-02-01T08:04:07.514Z"}

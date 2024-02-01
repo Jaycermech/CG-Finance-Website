@@ -4,5 +4,5 @@ services:
     build: 
       context: .
       dockerfile: Dockerfile
-    image: jaycedocker312/rms-docker-img:latest
+    image: jaycedocker312/rms-docker-img:v2
     container_name: rms-docker-container
