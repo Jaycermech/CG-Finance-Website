@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">53.33% </span>
+                <span class="strong">57.14% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>8/15</span>
+                <span class='fraction'>8/14</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">53.33% </span>
+                <span class="strong">57.14% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>8/15</span>
+                <span class='fraction'>8/14</span>
             </div>
         
             
@@ -99,9 +99,7 @@
 <a name='L34'></a><a href='#L34'>34</a>
 <a name='L35'></a><a href='#L35'>35</a>
 <a name='L36'></a><a href='#L36'>36</a>
-<a name='L37'></a><a href='#L37'>37</a>
-<a name='L38'></a><a href='#L38'>38</a>
-<a name='L39'></a><a href='#L39'>39</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L37'></a><a href='#L37'>37</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -111,7 +109,6 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -134,57 +131,54 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">async function login() {
-    const email = document.getElementById("email").value;
-    const password = document.getElementById("password").value;
-  
-    // Check if email contains "@" symbol
-    if (!email.includes("@")) {
-      alert('Invalid email format! Please include "@" in your email.');
-      return;
+  const email = document.getElementById("email").value;
+  const password = document.getElementById("password").value;
+&nbsp;
+  // Check if email contains "@" symbol
+  if (!email.includes("@")) {
+    alert('Invalid email format! Please include "@" in your email.');
+    return;
+  }
+&nbsp;
+  try {
+    const response = await fetch("http://localhost:5050/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email,
+        password,
+      }),
+    });
+&nbsp;
+    const data = <span class="cstat-no" title="statement not covered" >await response.json();</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    if (response.ok) {</span>
+<span class="cstat-no" title="statement not covered" >      alert("Login successful!");</span>
+<span class="cstat-no" title="statement not covered" >      sessionStorage.setItem("Useremail", email);</span>
+      // Handle successful login, e.g., redirect to home page
+<span class="cstat-no" title="statement not covered" >      window.location.href = "home.html";</span>
+    } else {
+<span class="cstat-no" title="statement not covered" >      alert(`Error: ${data.message}`);</span>
     }
-  
-  
-    try {
-      const response = await fetch("http://localhost:5050/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          email,
-          password,
-        }),
-      });
-  
-      const data = <span class="cstat-no" title="statement not covered" >await response.json();</span>
-  
-<span class="cstat-no" title="statement not covered" >      if (response.ok) {</span>
-<span class="cstat-no" title="statement not covered" >        alert("Login successful!");</span>
-<span class="cstat-no" title="statement not covered" >        sessionStorage.setItem("Useremail", document.getElementById("email").value);</span>
-          // Handle successful login, e.g., redirect to home page
-<span class="cstat-no" title="statement not covered" >          window.location.href = "home.html";</span>
-        // Redirect to index.html upon successful registration
-<span class="cstat-no" title="statement not covered" >        window.location.href = "index.html";</span>
-      } else {
-<span class="cstat-no" title="statement not covered" >        alert(`Error: ${data.message}`);</span>
-      }
-    } catch (error) {
-      console.error("Error:", error.message);
-    }
-  }</pre></td></tr></table></pre>
+  } catch (error) {
+    console.error("Error:", error.message);
+  }
+}
+&nbsp;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
             </div><!-- /wrapper -->
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-01-31T15:04:48.758Z
+                at 2024-02-07T06:01:56.339Z
             </div>
         <script src="prettify.js"></script>
         <script>
