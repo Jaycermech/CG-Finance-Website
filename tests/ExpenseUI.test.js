@@ -12,7 +12,7 @@ const driver = new Builder()
   .setChromeOptions(chromeOptions)
   .build();
 
-var counter = 0;
+var counter = 0; 
 
 // const driver = new Builder().forBrowser("chrome").build();
 
