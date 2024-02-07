@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">82.75% </span>
+                <span class="strong">91.95% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>72/87</span>
+                <span class='fraction'>80/87</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">82.35% </span>
+                <span class="strong">91.76% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>70/85</span>
+                <span class='fraction'>78/85</span>
             </div>
         
             
@@ -243,10 +243,10 @@
 <span class="cline-any cline-yes">17x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">20x</span>
-<span class="cline-any cline-yes">20x</span>
-<span class="cline-any cline-yes">20x</span>
-<span class="cline-any cline-yes">20x</span>
+<span class="cline-any cline-yes">22x</span>
+<span class="cline-any cline-yes">22x</span>
+<span class="cline-any cline-yes">22x</span>
+<span class="cline-any cline-yes">22x</span>
 <span class="cline-any cline-yes">19x</span>
 <span class="cline-any cline-yes">19x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -299,7 +299,7 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">20x</span>
+<span class="cline-any cline-yes">22x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">7x</span>
@@ -343,14 +343,14 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -402,11 +402,11 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -519,14 +519,14 @@ async function addBudget() {
             body: JSON.stringify(jsonData),
         });
 &nbsp;
-        const data = <span class="cstat-no" title="statement not covered" >await response.json();</span>
-<span class="cstat-no" title="statement not covered" >        console.log('New budget added:', data);</span>
-<span class="cstat-no" title="statement not covered" >        viewBudget()</span>
+        const data = await response.json();
+        console.log('New budget added:', data);
+        viewBudget()
 &nbsp;
 &nbsp;
         // Handle UI changes or redirection here after successful addition
 &nbsp;
-<span class="cstat-no" title="statement not covered" >        $('#addModal').modal('hide');</span>
+        $('#addModal').modal('hide');
     } catch (error) {
 <span class="cstat-no" title="statement not covered" >        console.error('Error adding budget:', error);</span>
         // Handle error scenario
@@ -578,11 +578,11 @@ async function deleteBudget() {
         console.log(response.status);
         <span class="missing-if-branch" title="else path not taken" >E</span>if (response.status === 201) {
             const data = await response.json();
-<span class="cstat-no" title="statement not covered" >            console.log('Budget deleted:', data);</span>
-<span class="cstat-no" title="statement not covered" >            viewBudget();</span>
+            console.log('Budget deleted:', data);
+            viewBudget();
             // Implement UI changes or redirection after successful deletion
-<span class="cstat-no" title="statement not covered" >            $('#editModal').modal('hide');</span>
-<span class="cstat-no" title="statement not covered" >            location.reload();</span>
+            $('#editModal').modal('hide');
+            location.reload();
         }
     } catch (error) {
 <span class="cstat-no" title="statement not covered" >        console.error('Error deleting budget:', error);</span>
@@ -598,7 +598,7 @@ async function deleteBudget() {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-02-02T17:12:45.906Z
+                at 2024-02-07T06:17:49.755Z
             </div>
         <script src="prettify.js"></script>
         <script>
