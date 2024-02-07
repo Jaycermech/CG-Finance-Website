@@ -4,26 +4,26 @@ const { describe, it } = require("mocha");
 const { expect } = require("chai");
 const fs = require("fs").promises;
 
-const chrome = require("selenium-webdriver/chrome");
-const chromeOptions = new chrome.Options();
-chromeOptions.addArguments("--headless");
-const driver = new Builder()
-  .forBrowser("chrome")
-  .setChromeOptions(chromeOptions)
-  .build();
+// const chrome = require("selenium-webdriver/chrome");
+// const chromeOptions = new chrome.Options();
+// chromeOptions.addArguments("--headless");
+// const driver = new Builder()
+//   .forBrowser("chrome")
+//   .setChromeOptions(chromeOptions)
+//   .build();
 
-var counter = 0; 
+var counter = 0;
 
 // const driver = new Builder().forBrowser("chrome").build();
 
 // const driver = new Builder().forBrowser("firefox").build();
 
-// const edge = require('selenium-webdriver/edge');
+const edge = require("selenium-webdriver/edge");
 
-// const driver = new Builder()
-//     .forBrowser('MicrosoftEdge')
-//     .setEdgeOptions(new edge.Options()) // Optional: You can set specific options for Edge
-//     .build();
+const driver = new Builder()
+  .forBrowser("MicrosoftEdge")
+  .setEdgeOptions(new edge.Options()) // Optional: You can set specific options for Edge
+  .build();
 
 // var server;
 
